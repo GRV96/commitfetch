@@ -10,6 +10,7 @@ from .commit import\
 _KEY_AUTHOR = "author"
 _KEY_COMMIT = "commit"
 _KEY_DATE = "date"
+_KEY_DOCUMENTATION_URL = "documentation_url"
 _KEY_FILENAME = "filename"
 _KEY_FILES = "files"
 _KEY_MESSAGE = "message"
@@ -34,10 +35,20 @@ def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
 		if can_wait:
 			sleep(_TIME_BEFORE_API_AVAILABLE)
 			credentials.reset_token_iter()
+			token = credentials.get_next_token()
 		else:
 			raise api_except
 
 	return token
+
+
+def _catch_github_api_exception(api_except, credentials, can_wait):
+	if _RATE_LIMIT_EXCEEDED in str(api_except):
+		return _catch_api_rate_limit_exception(
+			api_except, credentials, can_wait)
+
+	else:
+		raise api_except
 
 
 def _commit_from_api_data(commit_data):
@@ -73,8 +84,7 @@ def get_repo_commits(repository, credentials, can_wait):
 		list: all the commits from the specified repository
 
 	Raises:
-		RuntimeErro: if the API request rate limit was exceeded for all the
-			tokens in argument credentials
+		RuntimeError: if an error occured upon a request to the GitHub API
 	"""
 	commits = list()
 
@@ -89,17 +99,17 @@ def get_repo_commits(repository, credentials, can_wait):
 				repository, page_num, username, token)
 
 		except RuntimeError as rte:
-			token = _catch_api_rate_limit_exception(rte, credentials, can_wait)
+			token = _catch_github_api_exception(rte, credentials, can_wait)
 			continue
 
-		len_commit_data = len(all_commit_data)
-		if len_commit_data == 0:
+		commit_data_len = len(all_commit_data)
+		if commit_data_len == 0:
 			# Stop the loop if there are no more commits in the pages
 			break
 
 		# Iterate through the list of commits from the page
 		commit_data_index = 0
-		while commit_data_index < len_commit_data:
+		while commit_data_index < commit_data_len:
 			commit_sha = all_commit_data[commit_data_index][_KEY_SHA]
 
 			try:
@@ -107,7 +117,7 @@ def get_repo_commits(repository, credentials, can_wait):
 				commits.append(commit)
 
 			except RuntimeError as rte:
-				token = _catch_api_rate_limit_exception(rte, credentials, can_wait)
+				token = _catch_github_api_exception(rte, credentials, can_wait)
 
 				continue
 
@@ -116,6 +126,15 @@ def get_repo_commits(repository, credentials, can_wait):
 		page_num += 1
 
 	return commits
+
+
+def _raise_github_api_exception(api_data):
+	if isinstance(api_data, dict):
+		message = api_data.get(_KEY_MESSAGE)
+		doc_url = api_data.get(_KEY_DOCUMENTATION_URL)
+
+		if message is not None and doc_url is not None:
+			raise RuntimeError(message + ". Documentation: " + doc_url)
 
 
 def _repo_from_commit_api_url(url):
@@ -138,15 +157,13 @@ def _request_commit(commit_sha, repository, username, token):
 		Commit: an object that contains the wanted commit's data
 
 	Raises:
-		RuntimeError: if the API request rate limit was exceeded for the given
-			token
+		RuntimeError: if the response indicates that an error occured
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
 	commit_response = requests.get(commit_url, auth=(username, token))
 	commit_data = json.loads(commit_response.content)
-	
-	if _response_is_about_rate_limit(commit_data):
-		_raise_api_rate_limit_exception()
+
+	_raise_github_api_exception(commit_data)
 
 	commit = _commit_from_api_data(commit_data)
 	return commit
@@ -166,28 +183,13 @@ def _request_commit_page(repository, page_num, username, token):
 		list: the data of the commits from the wanted page
 
 	Raises:
-		RuntimeError: if the API request rate limit was exceeded for the given
-			token
+		RuntimeError: if the response indicates that an error occured
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
 	commits_response = requests.get(commit_page_url, auth=(username, token))
 	commit_data = json.loads(commits_response.content)
 
-	if _response_is_about_rate_limit(commit_data):
-		_raise_api_rate_limit_exception()
+	_raise_github_api_exception(commit_data)
 
 	return commit_data
-
-
-def _raise_api_rate_limit_exception():
-	raise RuntimeError(_RATE_LIMIT_EXCEEDED)
-
-
-def _response_is_about_rate_limit(api_response):
-	if isinstance(api_response, dict):
-		message = api_response.get(_KEY_MESSAGE)
-
-		return message is not None and _RATE_LIMIT_EXCEEDED in message
-
-	return False
