@@ -130,7 +130,7 @@ class RepoIdentity:
 			+ _QUOTE + self._name + _QUOTE_CLOSING_PAR\
 
 	def __str__(self):
-		return self._owner + _SLASH + self._name
+		return self.get_full_name()
 
 	@staticmethod
 	def from_full_name(full_name):
@@ -154,6 +154,21 @@ class RepoIdentity:
 				"The repository name must be in the format <owner>/<name>.")
 
 		return RepoIdentity(split_name[0], split_name[1])
+
+	def get_full_name(self, separator=_SLASH):
+		"""
+		Provides the repository's full name by joining the owner's name and the
+		repository's name with the given separator.
+
+		Args:
+			separator (str): It comes between the owner's name and the
+				repository's name. Defaults to "/".
+
+		Returns:
+			str: the repository's full name in the format
+				<owner><separator><name>
+		"""
+		return self._owner + separator + self._name
 
 	@property
 	def name(self):
