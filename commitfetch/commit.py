@@ -24,17 +24,26 @@ class Commit:
 
 		Args:
 			sha (str): the SHA hash that identifies this commit
-			repository (RepoIdentity): the repository that contains this commit
+			repository (str or RepoIdentity): the repository that contains this
+				commit. If this argument is a string, it will be processed by
+				RepoIdentity.from_full_name.
 			author (str): the login name of the commit's author
 			moment (str or datetime.datetime): the moment when this commit was
 				made. If it is a string, it must match format
 				"%Y-%m-%dT%H:%M:%SZ".
 			files (container): the paths to the files created, modified or
 				deleted in this commit as strings or pathlib.Path objects
+
+		Raises:
+			ValueError: if argument repository is a string and does not match
+				format <owner>/<name>
 		"""
 		self._sha = sha
-		self._repository = repository
 		self._author = author
+
+		self._repository = repository
+		if isinstance(self._repository, str):
+			self._repository = RepoIdentity.from_full_name(repository)
 
 		self._moment = moment
 		if isinstance(self._moment, str):
@@ -47,7 +56,7 @@ class Commit:
 
 		return self.__class__.__name__ + _OPENING_PAR\
 			+ _QUOTE + self._sha + _QUOTE_COMMA_SPACE\
-			+ repr(self._repository) + _COMMA_SPACE\
+			+ _QUOTE + str(self._repository) + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self._author + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self.moment_to_str() + _QUOTE_COMMA_SPACE\
 			+ str(str_paths) + _CLOSING_PAR
