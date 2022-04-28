@@ -24,7 +24,7 @@ class GitHubCredentials:
 
 	def get_next_token(self):
 		"""
-		Each token allows 2000 authenticated requests to the GitHub API per
+		Each token allows 5000 authenticated requests to the GitHub API per
 		hour. For the purpose of making many requests in a short period, this
 		method allows to obtain the next unused token stored here.
 
