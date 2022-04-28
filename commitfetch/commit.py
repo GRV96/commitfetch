@@ -26,8 +26,8 @@ class Commit:
 			sha (str): the SHA hash that identifies this commit
 			repository (RepoIdentity): the repository that contains this commit
 			author (str): the login name of the commit's author
-			moment (str or datetime. datetime): the moment when this commit
-				was made. If it is a string, it must match format
+			moment (str or datetime.datetime): the moment when this commit was
+				made. If it is a string, it must match format
 				"%Y-%m-%dT%H:%M:%SZ".
 			files (container): the paths to the files created, modified or
 				deleted in this commit as strings or pathlib.Path objects
@@ -47,9 +47,9 @@ class Commit:
 
 		return self.__class__.__name__ + _OPENING_PAR\
 			+ _QUOTE + self._sha + _QUOTE_COMMA_SPACE\
-			+ _QUOTE + repr(self._repository) + _QUOTE_COMMA_SPACE\
+			+ repr(self._repository) + _COMMA_SPACE\
 			+ _QUOTE + self._author + _QUOTE_COMMA_SPACE\
-			+ _QUOTE + _datetime_to_str(self._moment) + _QUOTE_COMMA_SPACE\
+			+ _QUOTE + self.moment_to_str() + _QUOTE_COMMA_SPACE\
 			+ str(str_paths) + _CLOSING_PAR
 
 	@property
