@@ -1,3 +1,6 @@
+# Store your tokens in a text file that matches this pattern.
+*tokens*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
