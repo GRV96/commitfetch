@@ -57,14 +57,17 @@ def _commit_from_api_data(commit_data):
 	api_url = commit_data[_KEY_URL]
 	repo_identity = _repo_from_commit_api_url(api_url)
 
-	author_data = commit_data[_KEY_COMMIT][_KEY_AUTHOR]
-	author = author_data[_KEY_NAME]
-	moment = author_data[_KEY_DATE]
+	commit_struct = commit_data[_KEY_COMMIT]
+	message = commit_struct[_KEY_MESSAGE]
+
+	author_struct = commit_struct[_KEY_AUTHOR]
+	author = author_struct[_KEY_NAME]
+	moment = author_struct[_KEY_DATE]
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),
 
-	return Commit(sha, repo_identity, author, moment, files)
+	return Commit(sha, message, repo_identity, author, moment, files)
 
 
 def get_repo_commits(repository, credentials, can_wait):

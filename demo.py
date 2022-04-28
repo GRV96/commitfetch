@@ -73,8 +73,8 @@ commits = get_repo_commits(repository, credentials, can_wait)
 first_commit = commits[0]
 
 print("First commit")
-print(repr(first_commit))
 print(f"SHA: {first_commit.sha}")
+print(f"Message: {first_commit.message}")
 print(f"Repository: {first_commit.repository}")
 print(f"Author: {first_commit.author}")
 print(f"Moment: {first_commit.moment_to_str()}")

@@ -18,12 +18,14 @@ class Commit:
 	A commit in a GitHub repository
 	"""
 
-	def __init__(self, sha, repository, author, moment, files):
+	def __init__(self, sha, message, repository, author, moment, files):
 		"""
 		The GitHub commit constructor
 
 		Args:
 			sha (str): the SHA hash that identifies this commit
+			message (str): the message that describes the modifications
+				recorded in this commit
 			repository (str or RepoIdentity): the repository that contains this
 				commit. If this argument is a string, it will be processed by
 				RepoIdentity.from_full_name.
@@ -39,6 +41,7 @@ class Commit:
 				format <owner>/<name>
 		"""
 		self._sha = sha
+		self._message = message
 		self._author = author
 
 		self._repository = repository
@@ -75,6 +78,14 @@ class Commit:
 		commit as pathlib.Path objects
 		"""
 		return self._files
+
+	@property
+	def message(self):
+		"""
+		str: the message that describes the modifications recorded in this
+		commit
+		"""
+		return self._message
 
 	@property
 	def moment(self):
