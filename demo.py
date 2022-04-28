@@ -37,10 +37,7 @@ def extract_text_lines(file_path, keep_blank_lines):
 	if keep_blank_lines:
 		return raw_lines
 
-	lines = list()
-	for line in raw_lines:
-		if len(line) > 0:
-			lines.append(line)
+	lines = [line for line in raw_lines if len(line) > 0]
 
 	return lines
 
@@ -76,6 +73,7 @@ commits = get_repo_commits(repository, credentials, can_wait)
 first_commit = commits[0]
 
 print("First commit")
+print(repr(first_commit))
 print(f"SHA: {first_commit.sha}")
 print(f"Repository: {first_commit.repository}")
 print(f"Author: {first_commit.author}")

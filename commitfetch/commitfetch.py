@@ -62,7 +62,7 @@ def _commit_from_api_data(commit_data):
 	moment = author_data[_KEY_DATE]
 
 	file_data = commit_data[_KEY_FILES]
-	files = (fd[_KEY_FILENAME] for fd in file_data)
+	files = *(fd[_KEY_FILENAME] for fd in file_data),
 
 	return Commit(sha, repo_identity, author, moment, files)
 

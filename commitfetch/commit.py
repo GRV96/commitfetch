@@ -40,10 +40,10 @@ class Commit:
 		if isinstance(self._moment, str):
 			self._moment = _datetime_from_str(self._moment)
 
-		self._files = (Path(file) for file in files)
+		self._files = *(Path(file) for file in files),
 
 	def __repr__(self):
-		str_paths = (str(file) for file in self._files)
+		str_paths = *(str(file) for file in self._files),
 
 		return self.__class__.__name__ + _OPENING_PAR\
 			+ _QUOTE + self._sha + _QUOTE_COMMA_SPACE\
