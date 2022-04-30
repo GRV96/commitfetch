@@ -46,6 +46,9 @@ def read_reprs(file_path):
 	can read it to recreate those objects. Each line must contain the string
 	returned by a call to function repr.
 
+	This method works only for instances of Commit and objects whose type does
+	not need to be imported.
+
 	Args:
 		file_path (str or pathlib.Path): the path to a text file that contains
 			object representations

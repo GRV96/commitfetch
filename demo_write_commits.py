@@ -29,7 +29,6 @@ def make_arg_parser():
 
 parser = make_arg_parser()
 args = parser.parse_args()
-
 repository = args.repository
 token_file = args.token_file
 username = args.username
