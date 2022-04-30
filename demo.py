@@ -5,41 +5,10 @@ from pathlib import\
 
 from commitfetch import\
 	get_repo_commits,\
-	GitHubCredentials
-
-
-_ENCODING_UTF8 = "utf-8"
-_MODE_R = "r"
-_NEW_LINE = "\n"
-
-
-def extract_text_lines(file_path, keep_blank_lines):
-	"""
-	Reads a text file and extracts its content as separate lines rather than a
-	single string.
-
-	Args:
-		file_path (str or pathlib.Path): the path to a text file
-		keep_blank_lines (bool): If False, the blank lines will be excluded
-			from this function's output
-
-	Returns:
-		list: the lines of text extracted from the specified text file
-	"""
-	if isinstance(file_path, str):
-		file_path = Path(file_path)
-
-	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
-		text = file.read()
-
-	raw_lines = text.split(_NEW_LINE)
-
-	if keep_blank_lines:
-		return raw_lines
-
-	lines = [line for line in raw_lines if len(line) > 0]
-
-	return lines
+	extract_text_lines,\
+	GitHubCredentials,\
+	read_reprs,\
+	write_reprs
 
 
 def make_arg_parser():
@@ -68,7 +37,8 @@ can_wait = args.can_wait
 
 tokens = extract_text_lines(token_file, False)
 credentials = GitHubCredentials(username, tokens)
-commits = get_repo_commits(repository, credentials, can_wait)
+#commits = get_repo_commits(repository, credentials, can_wait)
+commits = read_reprs("essai.txt")
 
 first_commit = commits[0]
 
@@ -81,3 +51,5 @@ print(f"Moment: {first_commit.moment_to_str()}")
 print("Files:")
 for file in first_commit.files:
 	print(f"\t{file}")
+
+#write_reprs("essai.txt", commits)

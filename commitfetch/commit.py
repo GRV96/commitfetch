@@ -59,6 +59,7 @@ class Commit:
 
 		return self.__class__.__name__ + _OPENING_PAR\
 			+ _QUOTE + self._sha + _QUOTE_COMMA_SPACE\
+			+ repr(self._message) + _COMMA_SPACE\
 			+ _QUOTE + str(self._repository) + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self._author + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self.moment_to_str() + _QUOTE_COMMA_SPACE\
