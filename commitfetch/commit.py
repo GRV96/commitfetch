@@ -170,7 +170,8 @@ class RepoIdentity:
 	def get_full_name(self, separator=_SLASH):
 		"""
 		Provides the repository's full name by joining the owner's name and the
-		repository's name with the given separator.
+		repository's name with the given separator. Calling this method without
+		specifying a separator is equivalent to using function str.
 
 		Args:
 			separator (str): It comes between the owner's name and the
