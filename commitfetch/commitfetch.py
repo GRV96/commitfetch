@@ -76,7 +76,7 @@ def get_repo_commits(repository, credentials, can_wait):
 	GitHub API.
 
 	Args:
-		repository (str): repository's full name in the format <owner>/<name>
+		repository (str): a repository's full name in the format <owner>/<name>
 		credentials (GitHubCredentials): the username and tokens of a GitHub
 			user
 		can_wait (bool): If it is set to True and and the GitHub API request

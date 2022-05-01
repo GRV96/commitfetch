@@ -59,6 +59,7 @@ class Commit:
 
 		return self.__class__.__name__ + _OPENING_PAR\
 			+ _QUOTE + self._sha + _QUOTE_COMMA_SPACE\
+			+ repr(self._message) + _COMMA_SPACE\
 			+ _QUOTE + str(self._repository) + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self._author + _QUOTE_COMMA_SPACE\
 			+ _QUOTE + self.moment_to_str() + _QUOTE_COMMA_SPACE\
@@ -169,7 +170,8 @@ class RepoIdentity:
 	def get_full_name(self, separator=_SLASH):
 		"""
 		Provides the repository's full name by joining the owner's name and the
-		repository's name with the given separator.
+		repository's name with the given separator. Calling this method without
+		specifying a separator is equivalent to using function str.
 
 		Args:
 			separator (str): It comes between the owner's name and the
