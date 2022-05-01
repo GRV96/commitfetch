@@ -18,7 +18,7 @@ def make_arg_parser():
 	parser = ArgumentParser(description=__doc__)
 	parser.add_argument("-c", "--commit-file", type=Path, required=True,
 		help="Each line of this text file contains a representation"
-			+ "of an instance of Commit.")
+			+ " of an instance of Commit.")
 
 	return parser
 
