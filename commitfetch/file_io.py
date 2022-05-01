@@ -42,12 +42,12 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 def read_reprs(file_path):
 	"""
-	If a text file contains the representation of Python objects, this method
+	If a text file contains the representation of Python objects, this function
 	can read it to recreate those objects. Each line must contain the string
 	returned by a call to function repr.
 
-	This method works only for instances of Commit and objects whose type does
-	not need to be imported.
+	This function works only for instances of Commit and objects whose type
+	does not need to be imported.
 
 	Args:
 		file_path (str or pathlib.Path): the path to a text file that contains
@@ -69,7 +69,7 @@ def write_reprs(file_path, objs):
 	"""
 	Writes the representation of Python objects in a text file. Each line
 	contains the string returned by a call to function repr. If the file
-	already exists, this method will overwrite it.
+	already exists, this function will overwrite it.
 
 	Args:
 		file_path (str or pathlib.Path): the path to the text file that will
