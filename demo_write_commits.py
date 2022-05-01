@@ -1,3 +1,11 @@
+"""
+This demo shows how this library allows to obtain commit data through the
+GitHub API and store their written representation in a text file. The
+representations are strings returned by a call of function repr on an instance
+of Commit.
+"""
+
+
 from argparse import\
 	ArgumentParser
 from pathlib import\
@@ -12,7 +20,7 @@ from commitfetch import\
 
 
 def make_arg_parser():
-	parser = ArgumentParser()
+	parser = ArgumentParser(description=__doc__)
 	parser.add_argument("-r", "--repository",
 		type=RepoIdentity.from_full_name,
 		required=True,
