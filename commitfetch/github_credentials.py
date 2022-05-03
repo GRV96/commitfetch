@@ -1,12 +1,13 @@
 class GitHubCredentials:
 	"""
-	The credentials consist of a username and a set of tokens owned by the user
-	in question.
+	The credentials consist of a username and tokens owned by the user in
+	question. Methods get_next_token and reset_token_iter facilitate the
+	iteration through the tokens.
 	"""
 
 	def __init__(self, username, tokens):
 		"""
-		The constructor requires a username and a set of tokens.
+		The constructor requires a username and a container of tokens.
 
 		Args:
 			username (str): a GitHub username
@@ -30,7 +31,7 @@ class GitHubCredentials:
 
 		Returns:
 			str: the next unused token
-			None: when all tokens have been used
+			None: if all tokens have been used
 		"""
 		try:
 			token = next(self._token_iter)
