@@ -23,7 +23,8 @@ Cette classe contient des données extraites d'un commit de GitHub.
 **`GitHubCredentials`**
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
-d'authentification qu'il possède.
+d'authentification qu'il possède. Elle aide à effectuer des requêtes
+authentifiées à l'API de GitHub.
 
 **`RepoIdentity`**
 
@@ -78,7 +79,7 @@ This class contains data extracted from a GitHub commit.
 **`GitHubCredentials`**
 
 This class contains the name of a GitHub user and authentication tokens that
-they own.
+they own. It helps making authenticated requests to the GitHub API.
 
 **`RepoIdentity`**
 
