@@ -27,7 +27,7 @@ du dépôt. L'identité est souvent écrite sous le format `propriétaire`/`nom`
 
 Cette fonction lit le fichier texte spécifié et renvoie ses lignes dans une
 liste. Elle permet par exemple d'accéder à des jetons enregistrés dans un
-fichier texte.
+fichier texte, un par ligne.
 
 **`get_repo_commits`**
 
@@ -63,9 +63,9 @@ dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
 
 `demo_write_commits.py` obtient les commits d'un dépôt GitHub et enregistre
 leur représentation dans un fichier texte. Il a besoin d'un fichier listant les
-jetons d'authentification de l'utilisateur pour effectuer des requêtes à l'API
-GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur nom devrait
-contenir la chaîne «token».
+jetons d'authentification de l'utilisateur un par ligne pour effectuer des
+requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
+nom devrait contenir la chaîne «token».
 
 Exemple d'exécution:
 
@@ -119,7 +119,7 @@ repository's name. The identity is often written in the format `owner`/`name`.
 **`extract_text_lines`**
 
 This function reads the specified text file and returns its lines in a list. It
-allows for example to access tokens stored in a text file.
+allows for example to access tokens stored in a text file, one per line.
 
 **`get_repo_commits`**
 
@@ -153,8 +153,9 @@ code repository to know how to use library `commitfetch`.
 
 `demo_write_commits.py` obtains a GitHub repository's commits and writes their
 representation in a text file. It needs a file that lists the user's
-authentication tokens to perform requests to the GitHub API. This repository
-will ignore the token files if their name contains the string "token".
+authentication tokens one per line to perform requests to the GitHub API. This
+repository will ignore the token files if their name contains the string
+"token".
 
 Execution example:
 

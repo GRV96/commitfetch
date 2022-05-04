@@ -26,7 +26,7 @@ def make_arg_parser():
 		required=True,
 		help="A GitHub repository name in the form <owner>/<name>")
 	parser.add_argument("-t", "--token-file", type=Path, required=True,
-		help="This file must list GitHub tokens owned by -u one by line.")
+		help="This file must list GitHub tokens owned by -u one per line.")
 	parser.add_argument("-u", "--username", type=str, required=True,
 		help="A GitHub username")
 	parser.add_argument("-w", "--can-wait", action="store_true",
