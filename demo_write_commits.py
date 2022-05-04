@@ -1,8 +1,8 @@
 """
 This demo shows how this library allows to obtain commit data through the
-GitHub API and store their written representation in a text file. The
-representations are strings returned by a call of function repr on an instance
-of Commit.
+GitHub API and store the written representation of Commit objects in a text
+file. The representations are strings returned by a call of function repr on an
+instance of Commit.
 """
 
 

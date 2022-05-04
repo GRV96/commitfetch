@@ -37,8 +37,8 @@ class Commit:
 				deleted in this commit as strings or pathlib.Path objects
 
 		Raises:
-			ValueError: if argument repository is a string and does not match
-				format <owner>/<name>
+			ValueError: if argument repository or moment is a string and does
+				not match the expected format
 		"""
 		self._sha = sha
 		self._message = message
@@ -157,7 +157,7 @@ class RepoIdentity:
 			RepoIdentity: an object that identifies the indicated repository
 
 		Raises:
-			ValueError: if parameter full_name is not in the right format
+			ValueError: if parameter full_name is not in the expected format
 		"""
 		split_name = full_name.split(_SLASH)
 

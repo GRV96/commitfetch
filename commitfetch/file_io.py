@@ -18,8 +18,8 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	Args:
 		file_path (str or pathlib.Path): the path to a text file
-		keep_blank_lines (bool): If False, the blank lines will be excluded
-			from this function's output
+		keep_blank_lines (bool): If it is False, the blank lines will be
+			excluded from this function's output
 
 	Returns:
 		list: the lines of text extracted from the specified text file
