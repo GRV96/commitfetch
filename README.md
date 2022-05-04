@@ -96,7 +96,7 @@ Exemple d'exécution:
 python demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ```
 
-# English
+## English
 
 This library helps obtaining the data of a repository's commits through the
 GitHub API. Authentication with GitHub credentials is required.
