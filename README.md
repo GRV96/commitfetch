@@ -10,7 +10,7 @@ d'authentification.
 
 **`Commit`**
 
-Cette classe contient des données extraites d'un commit de GitHub.
+Cette classe contient des données d'un commit de GitHub.
 
 **`GitHubCredentials`**
 
@@ -103,7 +103,7 @@ GitHub API. Authentication with GitHub credentials is required.
 
 **`Commit`**
 
-This class contains data extracted from a GitHub commit.
+This class contains data of a GitHub commit.
 
 **`GitHubCredentials`**
 
