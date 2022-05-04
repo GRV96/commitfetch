@@ -6,15 +6,7 @@ Cette bibliothèque aide à obtenir les données des commits d'un dépôt au moy
 de l'API de GitHub. L'utilisateur doit fournir ses informations
 d'authentification.
 
-Exécutez cette commande pour installer les dépendances.
-
-```
-pip install -r requirements.txt
-```
-
-`commitfetch` contient les classes et fonctions suivantes. Consultez les
-scripts `demo_write_commits.py` et `demo_read_commits.py` pour savoir comment
-les utiliser.
+### Contenu
 
 **`Commit`**
 
@@ -24,7 +16,7 @@ Cette classe contient des données extraites d'un commit de GitHub.
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
 d'authentification qu'il possède. Elle aide à effectuer des requêtes
-authentifiées à l'API de GitHub.
+authentifiées à l'API de GitHub. Chaque jeton permet 2000 requêtes par heure.
 
 **`RepoIdentity`**
 
@@ -58,19 +50,56 @@ Les représetations sont des chaînes de caractères renvoyées par la fonction
 `repr`. Chaque ligne du fichier contient une représentation. La fonction
 `read_reprs` peut lire ce fichier.
 
-# English
+### Démos
 
-This library helps obtaining the data of a repository's commits through the
-GitHub API. Authentication with GitHub credentials is required.
-
-Execute this command to install the dependecies.
+Exécutez cette commande pour installer les dépendances.
 
 ```
 pip install -r requirements.txt
 ```
 
-`commitfetch` contains the following classes and functions. See scripts
-`demo_write_commits.py` and `demo_read_commits.py` to know how to use them.
+Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
+dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
+
+`demo_write_commits.py` obtient les commits d'un dépôt GitHub et enregistre
+leur représentation dans un fichier texte. Il a besoin d'un fichier listant les
+jetons d'authentification de l'utilisateur pour effectuer des requêtes à l'API
+GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur nom devrait
+contenir la chaîne «token».
+
+Exemple d'exécution:
+
+```
+python demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+```
+
+Pour essayer `demo_write_commits.py` avec des nombres de commits variés,
+utilisez les dépôts ci-dessous.
+
+| Dépôt                     | Nombre de commits |
+|---------------------------|:-----------------:|
+| k9mail/k-9                | 10 985            |
+| Skyscanner/backpack       | 7075              |
+| mendhak/gpslogger         | 2239              |
+| PeterIJia/android_xlight  | 397               |
+| scottyab/rootbeer         | 191               |
+
+`demo_read_commits.py` montre comment lire les représentations de commits
+enregistrées par `demo_write_commits.py`. Pour confirmer que la lecture a
+fonctionné, il affiche les données d'un commit dans la console.
+
+Exemple d'exécution:
+
+```
+python demo_read_commits.py -c scottyab_rootbeer_commits.txt
+```
+
+# English
+
+This library helps obtaining the data of a repository's commits through the
+GitHub API. Authentication with GitHub credentials is required.
+
+### Content
 
 **`Commit`**
 
@@ -79,7 +108,8 @@ This class contains data extracted from a GitHub commit.
 **`GitHubCredentials`**
 
 This class contains the name of a GitHub user and authentication tokens that
-they own. It helps making authenticated requests to the GitHub API.
+they own. It helps making authenticated requests to the GitHub API. Each token
+allows 2000 requests per hour.
 
 **`RepoIdentity`**
 
@@ -109,3 +139,45 @@ must contain one representation.
 This function writes the representations of Python objects in a text file. The
 representations are strings returned by function `repr`. Each line of the file
 contains one representation. Function `read_reprs` can read this file.
+
+### Demos
+
+Execute this command to install the dependecies.
+
+```
+pip install -r requirements.txt
+```
+
+See scripts `demo_write_commits.py` and `demo_read_commits.py` in the source
+code repository to know how to use library `commitfetch`.
+
+`demo_write_commits.py` obtains a GitHub repository's commits and writes their
+representation in a text file. It needs a file that lists the user's
+authentication tokens to perform requests to the GitHub API. This repository
+will ignore the token files if their name contains the string "token".
+
+Execution example:
+
+```
+python demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+```
+To try `demo_write_commits.py` with varied numbers of commits, use the
+repositories below.
+
+| Repository                | Number of commits |
+|---------------------------|:-----------------:|
+| k9mail/k-9                | 10 985            |
+| Skyscanner/backpack       | 7075              |
+| mendhak/gpslogger         | 2239              |
+| PeterIJia/android_xlight  | 397               |
+| scottyab/rootbeer         | 191               |
+
+`demo_read_commits.py` shows how to read the commit representations recorded by
+`demo_write_commits.py`. It confirms that the reading was successful by
+displaying a commit's data in the console.
+
+Execution example:
+
+```
+python demo_read_commits.py -c scottyab_rootbeer_commits.txt
+```
