@@ -81,14 +81,17 @@ def get_repo_commits(repository, credentials, can_wait):
 			user
 		can_wait (bool): If it is set to True and and the GitHub API request
 			rate limit is exceeded for all the user's tokens, the function
-			waits for one hour until it can make more requests
+			waits for one hour until it can make more requests.
 
 	Returns:
-		list: all the commits from the specified repository
+		list: all the commits (Commit) from the specified repository
 
 	Raises:
 		RuntimeError: if an error occured upon a request to the GitHub API
 	"""
+	# Inspiration:
+	# https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py
+
 	commits = list()
 
 	page_num = 1

@@ -1,5 +1,5 @@
 # Store your tokens in a text file whose name matches this pattern.
-*tokens*
+*token*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

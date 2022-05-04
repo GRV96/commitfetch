@@ -18,8 +18,8 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	Args:
 		file_path (str or pathlib.Path): the path to a text file
-		keep_blank_lines (bool): If False, the blank lines will be excluded
-			from this function's output
+		keep_blank_lines (bool): If it is False, the blank lines will be
+			excluded from this function's output
 
 	Returns:
 		list: the lines of text extracted from the specified text file
@@ -43,8 +43,8 @@ def extract_text_lines(file_path, keep_blank_lines):
 def read_reprs(file_path):
 	"""
 	If a text file contains the representation of Python objects, this function
-	can read it to recreate those objects. Each line must contain the string
-	returned by a call to function repr.
+	can read it to recreate those objects. Each line must contain a string
+	returned by function repr.
 
 	This function works only for instances of Commit and objects whose type
 	does not need to be imported.
@@ -68,8 +68,8 @@ def read_reprs(file_path):
 def write_reprs(file_path, objs):
 	"""
 	Writes the representation of Python objects in a text file. Each line
-	contains the string returned by a call to function repr. If the file
-	already exists, this function will overwrite it.
+	contains a string returned by function repr. If the file already exists,
+	this function will overwrite it.
 
 	Args:
 		file_path (str or pathlib.Path): the path to the text file that will
