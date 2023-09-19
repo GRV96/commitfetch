@@ -16,7 +16,7 @@ from commitfetch import\
 	extract_text_lines,\
 	GitHubCredentials,\
 	RepoIdentity,\
-	write_reprs
+	write_commit_reprs
 
 
 def make_arg_parser():
@@ -46,4 +46,4 @@ tokens = extract_text_lines(token_file, False)
 credentials = GitHubCredentials(username, tokens)
 commits = get_repo_commits(str(repository), credentials, can_wait)
 
-write_reprs(repository.get_full_name("_") + "_commits.txt", commits)
+write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commits)

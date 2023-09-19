@@ -11,7 +11,7 @@ from pathlib import\
 	Path
 
 from commitfetch import\
-	read_reprs
+	read_commit_reprs
 
 
 def make_arg_parser():
@@ -27,7 +27,7 @@ parser = make_arg_parser()
 args = parser.parse_args()
 commit_path = args.commit_file
 
-commits = read_reprs(commit_path)
+commits = read_commit_reprs(commit_path)
 
 first_commit = commits[0]
 
