@@ -73,7 +73,7 @@ def write_reprs(file_path, objs):
 
 	Args:
 		file_path (str or pathlib.Path): the path to the text file that will
-			contains the object representations
+			contain the object representations
 		objs (container): the objects whose representation will be written
 	"""
 	if isinstance(file_path, str):

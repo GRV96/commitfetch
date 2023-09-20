@@ -1,7 +1,7 @@
 """
 This demo shows how this library allows to read commit representations from a
 text file and convert them to Commit instances. The representations are strings
-returned by a call of function repr on an instance of Commit.
+returned by a call of function repr on a Commit instance.
 """
 
 
@@ -18,7 +18,7 @@ def make_arg_parser():
 	parser = ArgumentParser(description=__doc__)
 	parser.add_argument("-c", "--commit-file", type=Path, required=True,
 		help="Each line of this text file contains a representation"
-			+ " of an instance of Commit.")
+			+ " of a Commit instance.")
 
 	return parser
 
