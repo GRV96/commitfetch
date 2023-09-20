@@ -8,7 +8,6 @@ from repr_rw import\
 
 _COMMIT_READING_IMPORTATION =\
 	{"from commit import Commit": Path(".").resolve()}
-print(_COMMIT_READING_IMPORTATION)
 
 
 def read_commit_reprs(file_path):
