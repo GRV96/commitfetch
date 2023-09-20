@@ -11,7 +11,8 @@ class GitHubCredentials:
 
 		Args:
 			username (str): a GitHub username
-			tokens: a container of GitHub tokens (str)
+			tokens (list, set or tuple): GitHub tokens (str) owned by the
+				specified user
 
 		Raises:
 			ValueError: if tokens contains less than one element
