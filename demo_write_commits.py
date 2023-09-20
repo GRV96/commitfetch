@@ -12,10 +12,10 @@ from pathlib import\
 	Path
 
 from commitfetch import\
-	get_repo_commits,\
-	extract_text_lines,\
 	GitHubCredentials,\
 	RepoIdentity,\
+	extract_text_lines,\
+	get_repo_commits,\
 	write_commit_reprs
 
 
