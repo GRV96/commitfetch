@@ -15,7 +15,8 @@ def read_commit_reprs(file_path):
 	"""
 	If a text file contains the representation of Commit instances, this
 	function can read it to recreate those objects. Each line must be a string
-	returned by a call of function repr on a Commit instance.
+	returned by a call of function repr on a Commit instance. Empty lines are
+	ignored.
 
 	Args:
 		file_path (str or pathlib.Path): the path to a text file that contains
