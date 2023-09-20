@@ -8,18 +8,11 @@ from repr_rw import\
 
 _LOCAL_DIR = Path(__file__).resolve().parent
 _COMMIT_READING_IMPORTATION =\
-	{"from commit import Commit": str(_LOCAL_DIR)}
-print(_COMMIT_READING_IMPORTATION)
+	{"from commit import Commit": _LOCAL_DIR}
 
 
 def read_commit_reprs(file_path):
-	try:
-		commits = read_reprs(file_path, _COMMIT_READING_IMPORTATION)
-	except:
-		exit(1)
-	finally:
-		import sys
-		print(sys.path)
+	commits = read_reprs(file_path, _COMMIT_READING_IMPORTATION)
 	return commits
 
 
