@@ -106,7 +106,7 @@ GitHub API. Authentication with GitHub credentials is required.
 
 **`Commit`**
 
-This class contains data of a GitHub commit.
+This class contains data about a GitHub commit.
 
 **`GitHubCredentials`**
 
