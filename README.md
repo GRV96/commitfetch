@@ -38,19 +38,20 @@ instance de `GitHubCredentials`. La fonction `get_repo_commits` est inspirée de
 la fonction `countfiles` du script
 [CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
 
-**`read_reprs`**
+**`read_commit_reprs`**
 
-Cette fonction lit un fichier texte contenant les représentations d'objets
-Python puis recrée ces objets et les renvoie dans une liste. Les représetations
-sont des chaînes de caractères renvoyées par la fonction `repr`. Chaque ligne
-du fichier doit contenir une représentation.
+Cette fonction lit un fichier texte contenant les représentations d'instances
+de `Commit` puis recrée ces objets et les renvoie dans une liste. Les
+représetations sont des chaînes de caractères renvoyées par la fonction `repr`.
+Chaque ligne du fichier doit être une représentation. Les lignes vides sont
+ignorées.
 
-**`write_reprs`**
+**`write_commit_reprs`**
 
-Cette fonction écrit les représentations d'objets Python dans un fichier texte.
-Les représetations sont des chaînes de caractères renvoyées par la fonction
-`repr`. Chaque ligne du fichier contient une représentation. La fonction
-`read_reprs` peut lire ce fichier.
+Cette fonction écrit les représentations d'instances de `Commit` dans un
+fichier texte. Les représetations sont des chaînes de caractères renvoyées par
+la fonction `repr`. Chaque ligne du fichier est une représentation. La fonction
+`read_commit_reprs` peut lire ce fichier.
 
 ### Démos
 
@@ -131,18 +132,18 @@ their credentials in a `GitHubCredentials` instance. Function
 `get_repo_commits` is based on function `countfiles` from script
 [CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
 
-**`read_reprs`**
+**`read_commit_reprs`**
 
-This function reads a text file that contains the representations of Python
-objects then recreates those objects and returns them in a list. The
+This function reads a text file that contains the representations of `Commit`
+instances then recreates those objects and returns them in a list. The
 representations are strings returned by function `repr`. Each line of the file
-must contain one representation.
+must be a representation. Empty lines are ignored.
 
-**`write_reprs`**
+**`write_commit_reprs`**
 
-This function writes the representations of Python objects in a text file. The
-representations are strings returned by function `repr`. Each line of the file
-contains one representation. Function `read_reprs` can read this file.
+This function writes the representations of `Commit` instances in a text file.
+The representations are strings returned by function `repr`. Each line of the
+file is a representation. Function `read_commit_reprs` can read this file.
 
 ### Demos
 
