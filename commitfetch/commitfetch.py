@@ -95,7 +95,7 @@ def get_repo_commits(repository, credentials, can_wait):
 	username = credentials.username
 	token = credentials.get_next_token()
 
-	# Loop through all the commit pages until the last returned empty page
+	# Loop through all the commit pages until an empty page is encountered.
 	while True:
 		try:
 			all_commit_data = _request_commit_page(
@@ -107,10 +107,10 @@ def get_repo_commits(repository, credentials, can_wait):
 
 		commit_data_len = len(all_commit_data)
 		if commit_data_len == 0:
-			# Stop the loop if there are no more commits in the pages
+			# Stop the loop if there are no more commits in the pages.
 			break
 
-		# Iterate through the list of commits from the page
+		# Iterate through the list of commits from the page.
 		commit_data_index = 0
 		while commit_data_index < commit_data_len:
 			commit_sha = all_commit_data[commit_data_index][_KEY_SHA]
