@@ -1,6 +1,6 @@
 # commitfetch
 
-## Français
+## FRANÇAIS
 
 Cette bibliothèque aide à obtenir les données des commits d'un dépôt au moyen
 de l'API de GitHub. L'utilisateur doit fournir ses informations
@@ -97,7 +97,7 @@ Exemple d'exécution:
 python demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ```
 
-## English
+## ENGLISH
 
 This library helps obtaining the data of a repository's commits through the
 GitHub API. Authentication with GitHub credentials is required.
