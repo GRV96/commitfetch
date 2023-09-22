@@ -34,9 +34,7 @@ fichier texte, un par ligne.
 Cette fonction est l'élément principal de `commitfetch`. C'est elle qui
 effectue les requêtes à l'API de GitHub pour obtenir les données des commits
 d'un dépôt. Il faut lui fournir des informations d'authentification dans une
-instance de `GitHubCredentials`. La fonction `get_repo_commits` est inspirée de
-la fonction `countfiles` du script
-[CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
+instance de `GitHubCredentials`.
 
 **`read_commit_reprs`**
 
@@ -128,9 +126,7 @@ allows for example to access tokens stored in a text file, one per line.
 
 This function is the main element of `commitfetch`. It performs requests to the
 GitHub API to obtain data about a repository's commits. The user must provide
-their credentials in a `GitHubCredentials` instance. Function
-`get_repo_commits` is based on function `countfiles` from script
-[CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
+their credentials in a `GitHubCredentials` instance.
 
 **`read_commit_reprs`**
 
