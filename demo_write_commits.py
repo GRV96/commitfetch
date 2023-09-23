@@ -1,8 +1,8 @@
 """
 This demo shows how this library allows to obtain commit data through the
 GitHub API and store the written representation of Commit objects in a text
-file. The representations are strings returned by a call of function repr on an
-instance of Commit.
+file. The representations are strings returned by a call of function repr on a
+Commit instance.
 """
 
 
@@ -12,11 +12,11 @@ from pathlib import\
 	Path
 
 from commitfetch import\
-	get_repo_commits,\
-	extract_text_lines,\
 	GitHubCredentials,\
 	RepoIdentity,\
-	write_reprs
+	extract_text_lines,\
+	get_repo_commits,\
+	write_commit_reprs
 
 
 def make_arg_parser():
@@ -46,4 +46,4 @@ tokens = extract_text_lines(token_file, False)
 credentials = GitHubCredentials(username, tokens)
 commits = get_repo_commits(str(repository), credentials, can_wait)
 
-write_reprs(repository.get_full_name("_") + "_commits.txt", commits)
+write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commits)

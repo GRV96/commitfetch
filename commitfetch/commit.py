@@ -33,8 +33,9 @@ class Commit:
 			moment (str or datetime.datetime): the moment when this commit was
 				made. If it is a string, it must match format
 				"%Y-%m-%dT%H:%M:%SZ".
-			files (container): the paths to the files created, modified or
-				deleted in this commit as strings or pathlib.Path objects
+			files (list, set or tuple): the paths to the files created,
+				modified or deleted in this commit as strings or pathlib.Path
+				objects
 
 		Raises:
 			ValueError: if argument repository or moment is a string and does

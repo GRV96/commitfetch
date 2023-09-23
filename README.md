@@ -1,6 +1,6 @@
 # commitfetch
 
-## Français
+## FRANÇAIS
 
 Cette bibliothèque aide à obtenir les données des commits d'un dépôt au moyen
 de l'API de GitHub. L'utilisateur doit fournir ses informations
@@ -34,23 +34,22 @@ fichier texte, un par ligne.
 Cette fonction est l'élément principal de `commitfetch`. C'est elle qui
 effectue les requêtes à l'API de GitHub pour obtenir les données des commits
 d'un dépôt. Il faut lui fournir des informations d'authentification dans une
-instance de `GitHubCredentials`. La fonction `get_repo_commits` est inspirée de
-la fonction `countfiles` du script
-[CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
+instance de `GitHubCredentials`.
 
-**`read_reprs`**
+**`read_commit_reprs`**
 
-Cette fonction lit un fichier texte contenant les représentations d'objets
-Python puis recrée ces objets et les renvoie dans une liste. Les représetations
-sont des chaînes de caractères renvoyées par la fonction `repr`. Chaque ligne
-du fichier doit contenir une représentation.
+Cette fonction lit un fichier texte contenant les représentations d'instances
+de `Commit` puis recrée ces objets et les renvoie dans une liste. Les
+représetations sont des chaînes de caractères renvoyées par la fonction `repr`.
+Chaque ligne du fichier doit être une représentation. Les lignes vides sont
+ignorées.
 
-**`write_reprs`**
+**`write_commit_reprs`**
 
-Cette fonction écrit les représentations d'objets Python dans un fichier texte.
-Les représetations sont des chaînes de caractères renvoyées par la fonction
-`repr`. Chaque ligne du fichier contient une représentation. La fonction
-`read_reprs` peut lire ce fichier.
+Cette fonction écrit les représentations d'instances de `Commit` dans un
+fichier texte. Les représetations sont des chaînes de caractères renvoyées par
+la fonction `repr`. Chaque ligne du fichier est une représentation. La fonction
+`read_commit_reprs` peut lire ce fichier.
 
 ### Démos
 
@@ -80,9 +79,9 @@ utilisez les dépôts ci-dessous.
 
 | Dépôt                     | Nombre de commits |
 |---------------------------|:-----------------:|
-| k9mail/k-9                | 10 985            |
-| Skyscanner/backpack       | 7075              |
-| mendhak/gpslogger         | 2239              |
+| k9mail/k-9                | 12 840            |
+| Skyscanner/backpack       | 7788              |
+| mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
@@ -96,7 +95,7 @@ Exemple d'exécution:
 python demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ```
 
-## English
+## ENGLISH
 
 This library helps obtaining the data of a repository's commits through the
 GitHub API. Authentication with GitHub credentials is required.
@@ -105,7 +104,7 @@ GitHub API. Authentication with GitHub credentials is required.
 
 **`Commit`**
 
-This class contains data of a GitHub commit.
+This class contains data about a GitHub commit.
 
 **`GitHubCredentials`**
 
@@ -127,22 +126,20 @@ allows for example to access tokens stored in a text file, one per line.
 
 This function is the main element of `commitfetch`. It performs requests to the
 GitHub API to obtain data about a repository's commits. The user must provide
-their credentials in a `GitHubCredentials` instance. Function
-`get_repo_commits` is based on function `countfiles` from script
-[CollectFiles.py](https://github.com/ETS-LOG530/sre/blob/main/sre2021/CollectFiles.py).
+their credentials in a `GitHubCredentials` instance.
 
-**`read_reprs`**
+**`read_commit_reprs`**
 
-This function reads a text file that contains the representations of Python
-objects then recreates those objects and returns them in a list. The
+This function reads a text file that contains the representations of `Commit`
+instances then recreates those objects and returns them in a list. The
 representations are strings returned by function `repr`. Each line of the file
-must contain one representation.
+must be a representation. Empty lines are ignored.
 
-**`write_reprs`**
+**`write_commit_reprs`**
 
-This function writes the representations of Python objects in a text file. The
-representations are strings returned by function `repr`. Each line of the file
-contains one representation. Function `read_reprs` can read this file.
+This function writes the representations of `Commit` instances in a text file.
+The representations are strings returned by function `repr`. Each line of the
+file is a representation. Function `read_commit_reprs` can read this file.
 
 ### Demos
 
@@ -171,9 +168,9 @@ repositories below.
 
 | Repository                | Number of commits |
 |---------------------------|:-----------------:|
-| k9mail/k-9                | 10 985            |
-| Skyscanner/backpack       | 7075              |
-| mendhak/gpslogger         | 2239              |
+| k9mail/k-9                | 12 840            |
+| Skyscanner/backpack       | 7788              |
+| mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
