@@ -79,9 +79,9 @@ utilisez les dépôts ci-dessous.
 
 | Dépôt                     | Nombre de commits |
 |---------------------------|:-----------------:|
-| k9mail/k-9                | 10 985            |
-| Skyscanner/backpack       | 7075              |
-| mendhak/gpslogger         | 2239              |
+| k9mail/k-9                | 12 840            |
+| Skyscanner/backpack       | 7788              |
+| mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
@@ -168,9 +168,9 @@ repositories below.
 
 | Repository                | Number of commits |
 |---------------------------|:-----------------:|
-| k9mail/k-9                | 10 985            |
-| Skyscanner/backpack       | 7075              |
-| mendhak/gpslogger         | 2239              |
+| k9mail/k-9                | 12 840            |
+| Skyscanner/backpack       | 7788              |
+| mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
