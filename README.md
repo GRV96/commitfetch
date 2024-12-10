@@ -31,10 +31,11 @@ fichier texte, un par ligne.
 
 **`get_repo_commits`**
 
-Cette fonction est l'élément principal de `commitfetch`. C'est elle qui
-effectue les requêtes à l'API de GitHub pour obtenir les données des commits
-d'un dépôt. Il faut lui fournir des informations d'authentification dans une
-instance de `GitHubCredentials`.
+Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
+les requêtes à l'API de GitHub pour obtenir les données des commits d'un dépôt.
+Chaque iteration produit une instance de `Commit`. Il faut fournir à ce
+générateur des informations d'authentification dans une instance de
+`GitHubCredentials`.
 
 **`read_commit_reprs`**
 
@@ -124,9 +125,10 @@ allows for example to access tokens stored in a text file, one per line.
 
 **`get_repo_commits`**
 
-This function is the main element of `commitfetch`. It performs requests to the
-GitHub API to obtain data about a repository's commits. The user must provide
-their credentials in a `GitHubCredentials` instance.
+This generator is the core element of `commitfetch`. It performs requests to
+the GitHub API to obtain data about a repository's commits. Each iteration
+yields a `Commit` instance. The user must provide their credentials in a
+`GitHubCredentials` instance.
 
 **`read_commit_reprs`**
 

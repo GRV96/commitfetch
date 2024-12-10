@@ -38,7 +38,7 @@ def write_commit_reprs(file_path, commits):
 	Args:
 		file_path (str or pathlib.Path): the path to the text file that will
 			contain the Commit representations
-		commits (list, set or tuple): the Commit instances whose representation
-			will be written
+		commits (generator, list, set or tuple): the Commit instances whose
+			representation will be written
 	"""
 	write_reprs(file_path, commits)
