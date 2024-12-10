@@ -13,17 +13,18 @@ _COMMIT_READING_IMPORTATION =\
 
 def read_commit_reprs(file_path):
 	"""
-	If a text file contains the representation of Commit instances, this
-	generator can read it to recreate those objects. Each line must be a string
-	returned by a call of function repr on a Commit instance. Empty lines are
-	ignored. Each iteration yields a Commit instance.
+	This generator reads a text file that contains the representations of
+	Commit instances and recreates those objects. Each iteration yields a
+	Commit instance. The representations are strings returned by function
+	repr. Each line in the file must be a Commit representation. Empty lines
+	are ignored.
 
 	Parameters:
 		file_path (str or pathlib.Path): the path to a text file that contains
 			Commit representations.
 
 	Yields:
-		Commit: the Commit instances recreated from their representation.
+		Commit: a Commit instance recreated from its representation.
 
 	Raises:
 		FileNotFoundError: if argument file_path does not exist.

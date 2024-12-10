@@ -16,7 +16,7 @@ Cette classe contient des données d'un commit de GitHub.
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
 d'authentification qu'il possède. Elle aide à effectuer des requêtes
-authentifiées à l'API de GitHub. Chaque jeton permet 2000 requêtes par heure.
+authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
 **`RepoIdentity`**
 
@@ -39,11 +39,11 @@ générateur des informations d'authentification dans une instance de
 
 **`read_commit_reprs`**
 
-Cette fonction lit un fichier texte contenant les représentations d'instances
-de `Commit` puis recrée ces objets et les renvoie dans une liste. Les
-représetations sont des chaînes de caractères renvoyées par la fonction `repr`.
-Chaque ligne du fichier doit être une représentation. Les lignes vides sont
-ignorées.
+Ce générateur lit un fichier texte contenant les représentations d'instances
+de `Commit` et recrée ces objets. Chaque itération produit une instance de
+`Commit`. Les représetations sont des chaînes de caractères renvoyées par la
+fonction `repr`. Chaque ligne du fichier doit être une représentation d'un
+`Commit`. Les lignes vides sont ignorées.
 
 **`write_commit_reprs`**
 
@@ -67,7 +67,7 @@ dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
 leur représentation dans un fichier texte. Il a besoin d'un fichier listant les
 jetons d'authentification de l'utilisateur un par ligne pour effectuer des
 requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
-nom devrait contenir la chaîne «token».
+nom devrait contenir la chaîne «`token`».
 
 Exemple d'exécution:
 
@@ -87,7 +87,7 @@ utilisez les dépôts ci-dessous.
 | scottyab/rootbeer         | 191               |
 
 `demo_read_commits.py` montre comment lire les représentations de commits
-enregistrées par `demo_write_commits.py`. Pour confirmer que la lecture a
+enregistrées dans un fichier texte. Pour confirmer que la lecture a
 fonctionné, il affiche les données d'un commit dans la console.
 
 Exemple d'exécution:
@@ -111,7 +111,7 @@ This class contains data about a GitHub commit.
 
 This class contains the name of a GitHub user and authentication tokens that
 they own. It helps making authenticated requests to the GitHub API. Each token
-allows 2000 requests per hour.
+allows 5000 requests per hour.
 
 **`RepoIdentity`**
 
@@ -133,10 +133,10 @@ yields a `Commit` instance. The user must provide their credentials in a
 
 **`read_commit_reprs`**
 
-This function reads a text file that contains the representations of `Commit`
-instances then recreates those objects and returns them in a list. The
-representations are strings returned by function `repr`. Each line of the file
-must be a representation. Empty lines are ignored.
+This generator reads a text file that contains the representations of `Commit`
+instances and recreates those objects. Each iteration yields a `Commit`
+instance. The representations are strings returned by function `repr`. Each
+line in the file must be a `Commit` representation. Empty lines are ignored.
 
 **`write_commit_reprs`**
 
@@ -159,7 +159,7 @@ code repository to know how to use library `commitfetch`.
 representation in a text file. It needs a file that lists the user's
 authentication tokens one per line to perform requests to the GitHub API. This
 repository will ignore the token files if their name contains the string
-"token".
+"`token`".
 
 Execution example:
 
@@ -177,9 +177,9 @@ repositories below.
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
-`demo_read_commits.py` shows how to read the commit representations recorded by
-`demo_write_commits.py`. It confirms that the reading was successful by
-displaying a commit's data in the console.
+`demo_read_commits.py` shows how to read the commit representations recorded
+in a text file. It confirms that the reading was successful by displaying a
+commit's data in the console.
 
 Execution example:
 
