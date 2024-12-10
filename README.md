@@ -52,13 +52,15 @@ fichier texte. Les représetations sont des chaînes de caractères renvoyées p
 la fonction `repr`. Chaque ligne du fichier est une représentation. La fonction
 `read_commit_reprs` peut lire ce fichier.
 
-### Démos
+### Dépendances
 
 Exécutez cette commande pour installer les dépendances.
 
 ```
 pip install -r requirements.txt
 ```
+
+### Démos
 
 Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
 dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
@@ -144,13 +146,15 @@ This function writes the representations of `Commit` instances in a text file.
 The representations are strings returned by function `repr`. Each line of the
 file is a representation. Function `read_commit_reprs` can read this file.
 
-### Demos
+### Dependencies
 
 Execute this command to install the dependecies.
 
 ```
 pip install -r requirements.txt
 ```
+
+### Demos
 
 See scripts `demo_write_commits.py` and `demo_read_commits.py` in the source
 code repository to know how to use library `commitfetch`.
