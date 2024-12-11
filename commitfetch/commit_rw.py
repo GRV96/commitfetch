@@ -29,6 +29,8 @@ def read_commit_reprs(file_path):
 	Raises:
 		FileNotFoundError: if argument file_path does not exist.
 		TypeError: if argument file_path is not of type str or pathlib.Path.
+		Exception: any exception raised upon the parsing of a Commit
+			representation.
 	"""
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATION)
 	return commit_generator
