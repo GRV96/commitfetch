@@ -9,5 +9,7 @@ from .file_io import\
 	extract_text_lines
 from .github_credentials import\
 	GitHubCredentials
+from .github_user import\
+	GitHubUser
 from .repo_identity import\
 	RepoIdentity
