@@ -1,6 +1,5 @@
 from .commit import\
-	Commit,\
-	RepoIdentity
+	Commit
 from .commitfetch import\
 	get_repo_commits
 from .commit_rw import\
@@ -10,3 +9,5 @@ from .file_io import\
 	extract_text_lines
 from .github_credentials import\
 	GitHubCredentials
+from .repo_identity import\
+	RepoIdentity
