@@ -72,25 +72,24 @@ def _commit_from_api_data(commit_data):
 
 def get_repo_commits(repository, credentials, can_wait):
 	"""
-	Obtains data about all the commits in a GitHub repository through the
-	GitHub API.
+	This generator obtains data about all the commits in a GitHub repository
+	through the GitHub API. Each iteration yields data about one commit.
 
-	Args:
-		repository (str): a repository's full name in the format <owner>/<name>
+	Parameters:
+		repository (str): a repository's full name in the format
+			<owner>/<name>.
 		credentials (GitHubCredentials): the username and tokens of a GitHub
-			user
+			user.
 		can_wait (bool): If it is set to True and and the GitHub API request
 			rate limit is exceeded for all the user's tokens, the function
 			waits for one hour until it can make more requests.
 
-	Returns:
-		list: all the commits (Commit) from the specified repository
+	Yields:
+		Commit: data about one commit from the specified repository.
 
 	Raises:
-		RuntimeError: if an error occured upon a request to the GitHub API
+		RuntimeError: if an error occured upon a request to the GitHub API.
 	"""
-	commits = list()
-
 	page_num = 1
 	username = credentials.username
 	token = credentials.get_next_token()
@@ -117,18 +116,15 @@ def get_repo_commits(repository, credentials, can_wait):
 
 			try:
 				commit = _request_commit(commit_sha, repository, username, token)
-				commits.append(commit)
+				yield commit
 
 			except RuntimeError as rte:
 				token = _catch_github_api_exception(rte, credentials, can_wait)
-
 				continue
 
 			commit_data_index += 1
 
 		page_num += 1
-
-	return commits
 
 
 def _raise_github_api_exception(api_data):
@@ -142,7 +138,7 @@ def _raise_github_api_exception(api_data):
 
 def _repo_from_commit_api_url(url):
 	path_commits_index = url.index(_PATH_COMMITS)
-	repo_full_name =  url[_PATH_REPOS_LEN:path_commits_index]
+	repo_full_name =  url[_PATH_REPOS_LEN: path_commits_index]
 	return RepoIdentity.from_full_name(repo_full_name)
 
 
@@ -150,7 +146,7 @@ def _request_commit(commit_sha, repository, username, token):
 	"""
 	Requests a commit from the GitHub API.
 
-	Args:
+	Parameters:
 		commit_sha (str): a SHA hash that identifies a commit
 		repository (str): a GitHub repository name in the format <owner>/<name>
 		username (str): a GitHub username
@@ -176,7 +172,7 @@ def _request_commit_page(repository, page_num, username, token):
 	"""
 	Requests a page of commit data from the GitHub API.
 
-	Args:
+	Parameters:
 		repository (str): a GitHub repository name in the format <owner>/<name>
 		page_num (int): the number of a commit page on the GitHub API, >= 1
 		username (str): a GitHub username

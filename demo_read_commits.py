@@ -27,9 +27,9 @@ parser = make_arg_parser()
 args = parser.parse_args()
 commit_path = args.commit_file
 
-commits = read_commit_reprs(commit_path)
+commit_generator = read_commit_reprs(commit_path)
 
-first_commit = commits[0]
+first_commit = next(commit_generator)
 
 print("First commit")
 print(f"SHA: {first_commit.sha}")

@@ -16,7 +16,7 @@ Cette classe contient des données d'un commit de GitHub.
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
 d'authentification qu'il possède. Elle aide à effectuer des requêtes
-authentifiées à l'API de GitHub. Chaque jeton permet 2000 requêtes par heure.
+authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
 **`RepoIdentity`**
 
@@ -25,24 +25,25 @@ du dépôt. L'identité est souvent écrite sous le format `propriétaire`/`nom`
 
 **`extract_text_lines`**
 
-Cette fonction lit le fichier texte spécifié et renvoie ses lignes dans une
-liste. Elle permet par exemple d'accéder à des jetons enregistrés dans un
-fichier texte, un par ligne.
+Ce générateur lit le fichier texte spécifié et renvoie une de ses lignes à
+chaque itération. Il permet par exemple d'accéder à des jetons enregistrés
+dans un fichier texte, un par ligne.
 
 **`get_repo_commits`**
 
-Cette fonction est l'élément principal de `commitfetch`. C'est elle qui
-effectue les requêtes à l'API de GitHub pour obtenir les données des commits
-d'un dépôt. Il faut lui fournir des informations d'authentification dans une
-instance de `GitHubCredentials`.
+Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
+les requêtes à l'API de GitHub pour obtenir les données des commits d'un dépôt.
+Chaque iteration produit une instance de `Commit`. Il faut fournir à ce
+générateur des informations d'authentification dans une instance de
+`GitHubCredentials`.
 
 **`read_commit_reprs`**
 
-Cette fonction lit un fichier texte contenant les représentations d'instances
-de `Commit` puis recrée ces objets et les renvoie dans une liste. Les
-représetations sont des chaînes de caractères renvoyées par la fonction `repr`.
-Chaque ligne du fichier doit être une représentation. Les lignes vides sont
-ignorées.
+Ce générateur lit un fichier texte contenant les représentations d'instances
+de `Commit` et recrée ces objets. Chaque itération produit une instance de
+`Commit`. Les représetations sont des chaînes de caractères renvoyées par la
+fonction `repr`. Chaque ligne du fichier doit être une représentation d'un
+`Commit`. Les lignes vides sont ignorées.
 
 **`write_commit_reprs`**
 
@@ -51,7 +52,7 @@ fichier texte. Les représetations sont des chaînes de caractères renvoyées p
 la fonction `repr`. Chaque ligne du fichier est une représentation. La fonction
 `read_commit_reprs` peut lire ce fichier.
 
-### Démos
+### Dépendances
 
 Exécutez cette commande pour installer les dépendances.
 
@@ -59,14 +60,18 @@ Exécutez cette commande pour installer les dépendances.
 pip install -r requirements.txt
 ```
 
+### Démos
+
 Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
 dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
 
-`demo_write_commits.py` obtient les commits d'un dépôt GitHub et enregistre
-leur représentation dans un fichier texte. Il a besoin d'un fichier listant les
+#### Enregistrement des commits
+
+`demo_write_commits.py` obtient les commits d'un dépôt GitHub et écrit leur
+représentation dans un fichier texte. Il a besoin d'un fichier listant les
 jetons d'authentification de l'utilisateur un par ligne pour effectuer des
 requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
-nom devrait contenir la chaîne «token».
+nom devrait contenir la chaîne «`token`».
 
 Exemple d'exécution:
 
@@ -85,8 +90,10 @@ utilisez les dépôts ci-dessous.
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
+#### Lecture des commits
+
 `demo_read_commits.py` montre comment lire les représentations de commits
-enregistrées par `demo_write_commits.py`. Pour confirmer que la lecture a
+enregistrées dans un fichier texte. Pour confirmer que la lecture a
 fonctionné, il affiche les données d'un commit dans la console.
 
 Exemple d'exécution:
@@ -110,7 +117,7 @@ This class contains data about a GitHub commit.
 
 This class contains the name of a GitHub user and authentication tokens that
 they own. It helps making authenticated requests to the GitHub API. Each token
-allows 2000 requests per hour.
+allows 5000 requests per hour.
 
 **`RepoIdentity`**
 
@@ -119,21 +126,23 @@ repository's name. The identity is often written in the format `owner`/`name`.
 
 **`extract_text_lines`**
 
-This function reads the specified text file and returns its lines in a list. It
-allows for example to access tokens stored in a text file, one per line.
+This generator reads the specified text file and yields one of its lines at
+each iteration. It allows for example to access tokens stored in a text file,
+one per line.
 
 **`get_repo_commits`**
 
-This function is the main element of `commitfetch`. It performs requests to the
-GitHub API to obtain data about a repository's commits. The user must provide
-their credentials in a `GitHubCredentials` instance.
+This generator is the core element of `commitfetch`. It performs requests to
+the GitHub API to obtain data about a repository's commits. Each iteration
+yields a `Commit` instance. The user must provide their credentials in a
+`GitHubCredentials` instance.
 
 **`read_commit_reprs`**
 
-This function reads a text file that contains the representations of `Commit`
-instances then recreates those objects and returns them in a list. The
-representations are strings returned by function `repr`. Each line of the file
-must be a representation. Empty lines are ignored.
+This generator reads a text file that contains the representations of `Commit`
+instances and recreates those objects. Each iteration yields a `Commit`
+instance. The representations are strings returned by function `repr`. Each
+line in the file must be a `Commit` representation. Empty lines are ignored.
 
 **`write_commit_reprs`**
 
@@ -141,7 +150,7 @@ This function writes the representations of `Commit` instances in a text file.
 The representations are strings returned by function `repr`. Each line of the
 file is a representation. Function `read_commit_reprs` can read this file.
 
-### Demos
+### Dependencies
 
 Execute this command to install the dependecies.
 
@@ -149,14 +158,18 @@ Execute this command to install the dependecies.
 pip install -r requirements.txt
 ```
 
+### Demos
+
 See scripts `demo_write_commits.py` and `demo_read_commits.py` in the source
 code repository to know how to use library `commitfetch`.
+
+#### Recording commits
 
 `demo_write_commits.py` obtains a GitHub repository's commits and writes their
 representation in a text file. It needs a file that lists the user's
 authentication tokens one per line to perform requests to the GitHub API. This
 repository will ignore the token files if their name contains the string
-"token".
+"`token`".
 
 Execution example:
 
@@ -174,9 +187,11 @@ repositories below.
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
-`demo_read_commits.py` shows how to read the commit representations recorded by
-`demo_write_commits.py`. It confirms that the reading was successful by
-displaying a commit's data in the console.
+#### Reading commits
+
+`demo_read_commits.py` shows how to read the commit representations recorded
+in a text file. It confirms that the reading was successful by displaying a
+commit's data in the console.
 
 Execution example:
 

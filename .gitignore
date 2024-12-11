@@ -1,6 +1,9 @@
 # Store your tokens in a text file whose name matches this pattern.
 *token*
 
+# The files created by demo_write_commits.py
+*_commits.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

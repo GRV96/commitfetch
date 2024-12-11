@@ -42,8 +42,8 @@ token_file = args.token_file
 username = args.username
 can_wait = args.can_wait
 
-tokens = extract_text_lines(token_file, False)
-credentials = GitHubCredentials(username, tokens)
-commits = get_repo_commits(str(repository), credentials, can_wait)
+token_generator = extract_text_lines(token_file, False)
+credentials = GitHubCredentials(username, token_generator)
+commit_generator = get_repo_commits(str(repository), credentials, can_wait)
 
-write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commits)
+write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commit_generator)

@@ -1,2 +1,2 @@
-repr_rw==1.0.4
+repr_rw==2.0.0
 requests==2.27.1

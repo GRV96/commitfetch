@@ -9,19 +9,19 @@ class GitHubCredentials:
 		"""
 		The constructor requires a username and a container of tokens.
 
-		Args:
-			username (str): a GitHub username
-			tokens (list, set or tuple): GitHub tokens (str) owned by the
-				specified user
+		Parameters:
+			username (str): a GitHub username.
+			tokens (generator, list, set or tuple): GitHub tokens (str) owned
+				by the specified user.
 
 		Raises:
-			ValueError: if tokens contains less than one element
+			ValueError: if argument tokens contains less than one element.
 		"""
-		if len(tokens) < 1:
-			raise ValueError("At least one token must be provided.")
-
 		self._username = username
 		self._tokens = tuple(tokens)
+		if len(self._tokens) < 1:
+			raise ValueError("At least one token must be provided.")
+
 		self.reset_token_iter()
 
 	def get_next_token(self):
@@ -31,8 +31,8 @@ class GitHubCredentials:
 		method allows to obtain the next unused token stored here.
 
 		Returns:
-			str: the next unused token
-			None: if all tokens have been used
+			str: the next unused token.
+			None: if all tokens have been used.
 		"""
 		try:
 			token = next(self._token_iter)
@@ -50,13 +50,13 @@ class GitHubCredentials:
 	@property
 	def tokens(self):
 		"""
-		tuple: tokens (str) owned by this GitHub user
+		tuple: tokens (str) owned by this GitHub user.
 		"""
 		return self._tokens
 
 	@property
 	def username(self):
 		"""
-		str: this GitHub user's name
+		str: this GitHub user's name.
 		"""
 		return self._username
