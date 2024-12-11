@@ -1,7 +1,6 @@
 from datetime import datetime
 from pathlib import Path
 
-from .github_user import GitHubUser
 from . import recurring_strings as rs
 from .repo_identity import RepoIdentity
 
