@@ -45,7 +45,7 @@ class Commit:
 		"""
 		self._sha = sha
 		self._message = message
-		self._author = eval(author) if isinstance(author, str) else author
+		self._author = author
 
 		self._repository = repository
 		if isinstance(self._repository, str):
@@ -65,7 +65,7 @@ class Commit:
 			+ repr(self._message) + rs.COMMA_SPACE\
 			+ rs.QUOTE + str(self._repository) + rs.QUOTE_COMMA_SPACE\
 			+ rs.QUOTE + self.moment_to_str() + rs.QUOTE_COMMA_SPACE\
-			+ rs.DOUBLE_QUOTE + repr(self._author) + rs.DOUBLE_QUOTE_COMMA_SPACE\
+			+ repr(self._author) + rs.COMMA_SPACE\
 			+ str(str_paths) + rs.PAR_CLOSING
 
 	@property

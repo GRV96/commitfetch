@@ -7,8 +7,9 @@ from repr_rw import\
 
 
 _REPO_DIR = Path(__file__).resolve().parents[1]
-_COMMIT_READING_IMPORTATION =\
-	{"from commitfetch import Commit": _REPO_DIR}
+_COMMIT_READING_IMPORTATIONS = {
+	"from commitfetch import GitHubUser": _REPO_DIR,
+	"from commitfetch import Commit": _REPO_DIR}
 
 
 def read_commit_reprs(file_path):
@@ -32,7 +33,7 @@ def read_commit_reprs(file_path):
 		Exception: any exception raised upon the parsing of a Commit
 			representation.
 	"""
-	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATION)
+	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
 	return commit_generator
 
 
