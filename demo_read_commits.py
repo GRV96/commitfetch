@@ -25,9 +25,9 @@ def make_arg_parser():
 
 parser = make_arg_parser()
 args = parser.parse_args()
-commit_path = args.commit_file
+commit_file = args.commit_file
 
-commit_generator = read_commit_reprs(commit_path)
+commit_generator = read_commit_reprs(commit_file)
 
 first_commit = next(commit_generator)
 
