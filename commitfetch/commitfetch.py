@@ -3,7 +3,10 @@ import requests
 from time import sleep
 
 from .commit import\
-	Commit,\
+	Commit
+from .github_user_requester import\
+	GitHubUserRequester
+from .repo_identity import\
 	RepoIdentity
 
 
@@ -13,8 +16,8 @@ _KEY_DATE = "date"
 _KEY_DOCUMENTATION_URL = "documentation_url"
 _KEY_FILENAME = "filename"
 _KEY_FILES = "files"
+_KEY_LOGIN = "login"
 _KEY_MESSAGE = "message"
-_KEY_NAME = "name"
 _KEY_SHA = "sha"
 _KEY_URL = "url"
 
@@ -26,6 +29,8 @@ _PATH_REPOS_LEN = len(_PATH_REPOS)
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
 _TIME_BEFORE_API_AVAILABLE = 3602
+
+_GITHUB_USER_REQUESTER = GitHubUserRequester()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -51,7 +56,7 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 		raise api_except
 
 
-def _commit_from_api_data(commit_data):
+def _commit_from_api_data(commit_data, username, token):
 	sha = commit_data[_KEY_SHA]
 
 	api_url = commit_data[_KEY_URL]
@@ -59,15 +64,17 @@ def _commit_from_api_data(commit_data):
 
 	commit_struct = commit_data[_KEY_COMMIT]
 	message = commit_struct[_KEY_MESSAGE]
+	commit_author_struct = commit_struct[_KEY_AUTHOR]
+	moment = commit_author_struct[_KEY_DATE]
 
-	author_struct = commit_struct[_KEY_AUTHOR]
-	author = author_struct[_KEY_NAME]
-	moment = author_struct[_KEY_DATE]
+	author_struct = commit_data[_KEY_AUTHOR]
+	author_login = author_struct[_KEY_LOGIN]
+	author = _GITHUB_USER_REQUESTER.get_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),
 
-	return Commit(sha, message, repo_identity, author, moment, files)
+	return Commit(sha, message, repo_identity, moment, author, files)
 
 
 def get_repo_commits(repository, credentials, can_wait):
@@ -164,7 +171,7 @@ def _request_commit(commit_sha, repository, username, token):
 
 	_raise_github_api_exception(commit_data)
 
-	commit = _commit_from_api_data(commit_data)
+	commit = _commit_from_api_data(commit_data, username, token)
 	return commit
 
 

@@ -1,6 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 
+from .github_user import GitHubUser
 from . import recurring_strings as rs
 from .repo_identity import RepoIdentity
 
@@ -19,7 +20,7 @@ class Commit:
 	A commit in a GitHub repository.
 	"""
 
-	def __init__(self, sha, message, repository, author, moment, files):
+	def __init__(self, sha, message, repository, moment, author, files):
 		"""
 		The GitHub commit constructor.
 
@@ -30,10 +31,10 @@ class Commit:
 			repository (str or RepoIdentity): the repository that contains this
 				commit. If this argument is a string, it will be processed by
 				RepoIdentity.from_full_name.
-			author (str): the name of the commit's author.
 			moment (str or datetime.datetime): the moment when this commit was
 				made. If it is a string, it must match format
 				%Y-%m-%dT%H:%M:%SZ.
+			author (GitHubUser): the GitHub user who made this commit.
 			files (generator, list, set or tuple): the paths
 				(str or pathlib.Path) to the files created, modified or deleted
 				in this commit.
@@ -44,7 +45,7 @@ class Commit:
 		"""
 		self._sha = sha
 		self._message = message
-		self._author = author
+		self._author = eval(author) if isinstance(author, str) else author
 
 		self._repository = repository
 		if isinstance(self._repository, str):
@@ -63,14 +64,14 @@ class Commit:
 			+ rs.QUOTE + self._sha + rs.QUOTE_COMMA_SPACE\
 			+ repr(self._message) + rs.COMMA_SPACE\
 			+ rs.QUOTE + str(self._repository) + rs.QUOTE_COMMA_SPACE\
-			+ rs.QUOTE + self._author + rs.QUOTE_COMMA_SPACE\
 			+ rs.QUOTE + self.moment_to_str() + rs.QUOTE_COMMA_SPACE\
+			+ rs.DOUBLE_QUOTE + repr(self._author) + rs.DOUBLE_QUOTE_COMMA_SPACE\
 			+ str(str_paths) + rs.PAR_CLOSING
 
 	@property
 	def author(self):
 		"""
-		str: the name of the commit's author.
+		GitHubUser: the GitHub user who made this commit.
 		"""
 		return self._author
 
