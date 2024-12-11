@@ -4,8 +4,11 @@ from time import sleep
 
 from .commit import\
 	Commit
-from .github_user_requester import\
-	GitHubUserRequester
+from .github_user import\
+	GitHubUser
+from .github_user_repository import\
+	get_github_user,\
+	register_github_user
 from .repo_identity import\
 	RepoIdentity
 
@@ -16,8 +19,10 @@ _KEY_DATE = "date"
 _KEY_DOCUMENTATION_URL = "documentation_url"
 _KEY_FILENAME = "filename"
 _KEY_FILES = "files"
+_KEY_ID = "id"
 _KEY_LOGIN = "login"
 _KEY_MESSAGE = "message"
+_KEY_NAME = "name"
 _KEY_SHA = "sha"
 _KEY_URL = "url"
 
@@ -25,12 +30,11 @@ _PATH_COMMITS = "/commits/"
 
 _PATH_REPOS = "https://api.github.com/repos/"
 _PATH_REPOS_LEN = len(_PATH_REPOS)
+_PATH_USERS = "https://api.github.com/users/"
 
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
 _TIME_BEFORE_API_AVAILABLE = 3602
-
-_USER_REQUESTER = GitHubUserRequester()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -69,7 +73,11 @@ def _commit_from_api_data(commit_data, username, token):
 
 	author_struct = commit_data[_KEY_AUTHOR]
 	author_login = author_struct[_KEY_LOGIN]
-	author = _USER_REQUESTER.get_github_user(author_login, username, token)
+
+	author = get_github_user(author_login)
+	if author is None:
+		author = _request_github_user(author_login, username, token)
+		register_github_user(author)
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),
@@ -134,6 +142,13 @@ def get_repo_commits(repository, credentials, can_wait):
 			commit_data_index += 1
 
 		page_num += 1
+
+
+def _github_user_from_api_data(github_user_data):
+	id = github_user_data[_KEY_ID]
+	login = github_user_data[_KEY_LOGIN]
+	name = github_user_data[_KEY_NAME]
+	return GitHubUser(id, login, name)
 
 
 def _raise_github_api_exception(api_data):
@@ -204,3 +219,31 @@ def _request_commit_page(repository, page_num, username, token):
 	_raise_github_api_exception(commit_data)
 
 	return commit_data
+
+
+def _request_github_user(user_login, username, token):
+	"""
+	Obtains data about a GitHub user through the GitHub API. The caller
+	must provide GitHub credentials to authenticate the requests to the
+	GitHub API.
+
+	Parameters:
+		user_login (str): the wanted user's login name.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by
+			argument username.
+
+	Returns:
+		GitHubUser: data about the specified GitHub user.
+
+	Raises:
+		RuntimeError: if the response indicates that an error occured.
+	"""
+	user_url = _PATH_USERS + user_login
+	user_response = requests.get(user_url, auth=(username, token))
+	github_user_data = json.loads(user_response.content)
+
+	_raise_github_api_exception(github_user_data)
+
+	github_user = _github_user_from_api_data(github_user_data)
+	return github_user
