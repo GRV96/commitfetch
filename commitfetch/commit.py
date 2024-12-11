@@ -59,13 +59,13 @@ class Commit:
 	def __repr__(self):
 		str_paths = *(str(file) for file in self._files),
 
-		return self.__class__.__name__ + rs.OPENING_PAR\
+		return self.__class__.__name__ + rs.PAR_OPENING\
 			+ rs.QUOTE + self._sha + rs.QUOTE_COMMA_SPACE\
 			+ repr(self._message) + rs.COMMA_SPACE\
 			+ rs.QUOTE + str(self._repository) + rs.QUOTE_COMMA_SPACE\
 			+ rs.QUOTE + self._author + rs.QUOTE_COMMA_SPACE\
 			+ rs.QUOTE + self.moment_to_str() + rs.QUOTE_COMMA_SPACE\
-			+ str(str_paths) + rs.CLOSING_PAR
+			+ str(str_paths) + rs.PAR_CLOSING
 
 	@property
 	def author(self):

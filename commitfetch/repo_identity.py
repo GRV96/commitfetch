@@ -22,9 +22,9 @@ class RepoIdentity:
 		self._name = name
 
 	def __repr__(self):
-		return self.__class__.__name__ + rs.OPENING_PAR\
+		return self.__class__.__name__ + rs.PAR_OPENING\
 			+ rs.QUOTE + self._owner + rs.QUOTE_COMMA_SPACE\
-			+ rs.QUOTE + self._name + rs.QUOTE_CLOSING_PAR\
+			+ rs.QUOTE + self._name + rs.QUOTE_PAR_CLOSING\
 
 	def __str__(self):
 		return self.get_full_name()
