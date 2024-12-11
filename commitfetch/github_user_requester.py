@@ -45,7 +45,7 @@ class GitHubUserRequester:
 		Returns:
 			GitHubUser: data about the specified GitHub user.
 		"""
-		github_user = self._github_user_cache.get(username)
+		github_user = self._github_user_cache.get(user_login)
 
 		if github_user is None:
 			user_url = _PATH_USERS + user_login
@@ -53,6 +53,6 @@ class GitHubUserRequester:
 			user_data = json.loads(user_response.content)
 
 			github_user = _github_user_from_api_data(user_data)
-			self._github_user_cache[username] = github_user
+			self._github_user_cache[user_login] = github_user
 
 		return github_user
