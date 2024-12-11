@@ -30,7 +30,7 @@ _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
 _TIME_BEFORE_API_AVAILABLE = 3602
 
-_GITHUB_USER_REQUESTER = GitHubUserRequester()
+_USER_REQUESTER = GitHubUserRequester()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -69,7 +69,7 @@ def _commit_from_api_data(commit_data, username, token):
 
 	author_struct = commit_data[_KEY_AUTHOR]
 	author_login = author_struct[_KEY_LOGIN]
-	author = _GITHUB_USER_REQUESTER.get_github_user(author_login, username, token)
+	author = _USER_REQUESTER.get_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),
@@ -80,7 +80,9 @@ def _commit_from_api_data(commit_data, username, token):
 def get_repo_commits(repository, credentials, can_wait):
 	"""
 	This generator obtains data about all the commits in a GitHub repository
-	through the GitHub API. Each iteration yields data about one commit.
+	through the GitHub API. Each iteration yields data about one commit. The
+	caller must provide GitHub credentials to authenticate the requests to the
+	GitHub API.
 
 	Parameters:
 		repository (str): a repository's full name in the format
@@ -154,16 +156,18 @@ def _request_commit(commit_sha, repository, username, token):
 	Requests a commit from the GitHub API.
 
 	Parameters:
-		commit_sha (str): a SHA hash that identifies a commit
-		repository (str): a GitHub repository name in the format <owner>/<name>
-		username (str): a GitHub username
-		token (str): a token owned by the specified GitHub user
+		commit_sha (str): a SHA hash that identifies a commit.
+		repository (str): a GitHub repository name in the format
+			<owner>/<name>.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by argument
+			username.
 	
 	Returns:
-		Commit: an object that contains the wanted commit's data
+		Commit: an object that contains the wanted commit's data.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured
+		RuntimeError: if the response indicates that an error occured.
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
 	commit_response = requests.get(commit_url, auth=(username, token))
@@ -180,16 +184,17 @@ def _request_commit_page(repository, page_num, username, token):
 	Requests a page of commit data from the GitHub API.
 
 	Parameters:
-		repository (str): a GitHub repository name in the format <owner>/<name>
-		page_num (int): the number of a commit page on the GitHub API, >= 1
-		username (str): a GitHub username
-		token (str): a token owned by the specified GitHub user
+		repository (str): a GitHub repository name in the format <owner>/<name>.
+		page_num (int): the number of a commit page on the GitHub API, >= 1.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by argument
+			username.
 
 	Returns:
-		list: the data of the commits from the wanted page
+		list: the data of the commits from the wanted page.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured
+		RuntimeError: if the response indicates that an error occured.
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)

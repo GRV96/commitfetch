@@ -20,7 +20,7 @@ def _github_user_from_api_data(github_user_data):
 
 class GitHubUserRequester:
 	"""
-	This class makes requests for GitHub user data to the GitHub API.
+	This class performs requests for GitHub user data to the GitHub API.
 	Obtained data is cached to avoid repetitive requests.
 	"""
 
@@ -31,6 +31,20 @@ class GitHubUserRequester:
 		self._github_user_cache = dict()
 
 	def get_github_user(self, user_login, username, token):
+		"""
+		Obtains data about a GitHub user through the GitHub API. The caller
+		must provide GitHub credentials to authenticate the requests to the
+		GitHub API.
+
+		Parameters:
+			user_login (str): the wanted user's login name.
+			username (str): a GitHub username for request authentication.
+			token (str): a token owned by the GitHub user identified by
+				argument username.
+
+		Returns:
+			GitHubUser: data about the specified GitHub user.
+		"""
 		github_user = self._github_user_cache.get(username)
 
 		if github_user is None:
