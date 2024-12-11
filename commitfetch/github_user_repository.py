@@ -39,6 +39,5 @@ def register_github_user(github_user):
 	if user_login not in _repository_content:
 		_repository_content[user_login] = github_user
 		was_user_registered = True
-		print(github_user)
 
 	return was_user_registered

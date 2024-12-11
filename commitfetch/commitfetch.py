@@ -60,31 +60,6 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 		raise api_except
 
 
-def _commit_from_api_data(commit_data, username, token):
-	sha = commit_data[_KEY_SHA]
-
-	api_url = commit_data[_KEY_URL]
-	repo_identity = _repo_from_commit_api_url(api_url)
-
-	commit_struct = commit_data[_KEY_COMMIT]
-	message = commit_struct[_KEY_MESSAGE]
-	commit_author_struct = commit_struct[_KEY_AUTHOR]
-	moment = commit_author_struct[_KEY_DATE]
-
-	author_struct = commit_data[_KEY_AUTHOR]
-	author_login = author_struct[_KEY_LOGIN]
-
-	author = get_github_user(author_login)
-	if author is None:
-		author = _request_github_user(author_login, username, token)
-		register_github_user(author)
-
-	file_data = commit_data[_KEY_FILES]
-	files = *(fd[_KEY_FILENAME] for fd in file_data),
-
-	return Commit(sha, message, repo_identity, moment, author, files)
-
-
 def get_repo_commits(repository, credentials, can_wait):
 	"""
 	This generator obtains data about all the commits in a GitHub repository
@@ -144,7 +119,32 @@ def get_repo_commits(repository, credentials, can_wait):
 		page_num += 1
 
 
-def _github_user_from_api_data(github_user_data):
+def _make_commit_from_api_data(commit_data, username, token):
+	sha = commit_data[_KEY_SHA]
+
+	api_url = commit_data[_KEY_URL]
+	repo_identity = _repo_from_commit_api_url(api_url)
+
+	commit_struct = commit_data[_KEY_COMMIT]
+	message = commit_struct[_KEY_MESSAGE]
+	commit_author_struct = commit_struct[_KEY_AUTHOR]
+	moment = commit_author_struct[_KEY_DATE]
+
+	author_struct = commit_data[_KEY_AUTHOR]
+	author_login = author_struct[_KEY_LOGIN]
+
+	author = get_github_user(author_login)
+	if author is None:
+		author = _request_github_user(author_login, username, token)
+		register_github_user(author)
+
+	file_data = commit_data[_KEY_FILES]
+	files = *(fd[_KEY_FILENAME] for fd in file_data),
+
+	return Commit(sha, message, repo_identity, moment, author, files)
+
+
+def _make_github_user_from_api_data(github_user_data):
 	id = github_user_data[_KEY_ID]
 	login = github_user_data[_KEY_LOGIN]
 	name = github_user_data[_KEY_NAME]
@@ -168,7 +168,8 @@ def _repo_from_commit_api_url(url):
 
 def _request_commit(commit_sha, repository, username, token):
 	"""
-	Requests a commit from the GitHub API.
+	Requests a commit from the GitHub API. The caller must provide GitHub
+	credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
 		commit_sha (str): a SHA hash that identifies a commit.
@@ -190,13 +191,14 @@ def _request_commit(commit_sha, repository, username, token):
 
 	_raise_github_api_exception(commit_data)
 
-	commit = _commit_from_api_data(commit_data, username, token)
+	commit = _make_commit_from_api_data(commit_data, username, token)
 	return commit
 
 
 def _request_commit_page(repository, page_num, username, token):
 	"""
-	Requests a page of commit data from the GitHub API.
+	Requests a page of commit data from the GitHub API. The caller must provide
+	GitHub credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
 		repository (str): a GitHub repository name in the format <owner>/<name>.
@@ -223,9 +225,8 @@ def _request_commit_page(repository, page_num, username, token):
 
 def _request_github_user(user_login, username, token):
 	"""
-	Obtains data about a GitHub user through the GitHub API. The caller
-	must provide GitHub credentials to authenticate the requests to the
-	GitHub API.
+	Request data about a GitHub user from the GitHub API. The caller must
+	provide GitHub credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
 		user_login (str): the wanted user's login name.
@@ -245,5 +246,5 @@ def _request_github_user(user_login, username, token):
 
 	_raise_github_api_exception(github_user_data)
 
-	github_user = _github_user_from_api_data(github_user_data)
+	github_user = _make_github_user_from_api_data(github_user_data)
 	return github_user
