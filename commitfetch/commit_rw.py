@@ -6,9 +6,9 @@ from repr_rw import\
 	write_reprs
 
 
-_LOCAL_DIR = Path(__file__).resolve().parent
+_REPO_DIR = Path(__file__).resolve().parents[1]
 _COMMIT_READING_IMPORTATION =\
-	{"from commit import Commit": _LOCAL_DIR}
+	{"from commitfetch import Commit": _REPO_DIR}
 
 
 def read_commit_reprs(file_path):
