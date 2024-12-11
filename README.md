@@ -65,7 +65,7 @@ pip install -r requirements.txt
 Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
 dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
 
-#### Enregistrer des commits
+#### Enregistrement des commits
 
 `demo_write_commits.py` obtient les commits d'un dépôt GitHub et écrit leur
 représentation dans un fichier texte. Il a besoin d'un fichier listant les
@@ -90,7 +90,7 @@ utilisez les dépôts ci-dessous.
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
 
-#### Lire des commits
+#### Lecture des commits
 
 `demo_read_commits.py` montre comment lire les représentations de commits
 enregistrées dans un fichier texte. Pour confirmer que la lecture a
