@@ -65,8 +65,10 @@ pip install -r requirements.txt
 Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
 dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
 
-`demo_write_commits.py` obtient les commits d'un dépôt GitHub et enregistre
-leur représentation dans un fichier texte. Il a besoin d'un fichier listant les
+#### Enregistrer des commits
+
+`demo_write_commits.py` obtient les commits d'un dépôt GitHub et écrit leur
+représentation dans un fichier texte. Il a besoin d'un fichier listant les
 jetons d'authentification de l'utilisateur un par ligne pour effectuer des
 requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
 nom devrait contenir la chaîne «`token`».
@@ -87,6 +89,8 @@ utilisez les dépôts ci-dessous.
 | mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
+
+#### Lire des commits
 
 `demo_read_commits.py` montre comment lire les représentations de commits
 enregistrées dans un fichier texte. Pour confirmer que la lecture a
@@ -159,6 +163,8 @@ pip install -r requirements.txt
 See scripts `demo_write_commits.py` and `demo_read_commits.py` in the source
 code repository to know how to use library `commitfetch`.
 
+#### Recording commits
+
 `demo_write_commits.py` obtains a GitHub repository's commits and writes their
 representation in a text file. It needs a file that lists the user's
 authentication tokens one per line to perform requests to the GitHub API. This
@@ -180,6 +186,8 @@ repositories below.
 | mendhak/gpslogger         | 2811              |
 | PeterIJia/android_xlight  | 397               |
 | scottyab/rootbeer         | 191               |
+
+#### Reading commits
 
 `demo_read_commits.py` shows how to read the commit representations recorded
 in a text file. It confirms that the reading was successful by displaying a
