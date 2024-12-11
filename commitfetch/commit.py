@@ -15,31 +15,31 @@ _SLASH = "/"
 
 class Commit:
 	"""
-	A commit in a GitHub repository
+	A commit in a GitHub repository.
 	"""
 
 	def __init__(self, sha, message, repository, author, moment, files):
 		"""
-		The GitHub commit constructor
+		The GitHub commit constructor.
 
-		Args:
-			sha (str): the SHA hash that identifies this commit
-			message (str): the message that describes the modifications
-				recorded in this commit
+		Parameters:
+			sha (str): the SHA hash that identifies this commit.
+			message (str): the description of the modifications recorded in
+				this commit.
 			repository (str or RepoIdentity): the repository that contains this
 				commit. If this argument is a string, it will be processed by
 				RepoIdentity.from_full_name.
-			author (str): the login name of the commit's author
+			author (str): the name of the commit's author.
 			moment (str or datetime.datetime): the moment when this commit was
 				made. If it is a string, it must match format
-				"%Y-%m-%dT%H:%M:%SZ".
-			files (list, set or tuple): the paths to the files created,
-				modified or deleted in this commit as strings or pathlib.Path
-				objects
+				%Y-%m-%dT%H:%M:%SZ.
+			files (generator, list, set or tuple): the paths
+				(str or pathlib.Path) to the files created, modified or deleted
+				in this commit.
 
 		Raises:
 			ValueError: if argument repository or moment is a string and does
-				not match the expected format
+				not match the expected format.
 		"""
 		self._sha = sha
 		self._message = message
@@ -69,7 +69,7 @@ class Commit:
 	@property
 	def author(self):
 		"""
-		str: the login name of the commit's author
+		str: the name of the commit's author.
 		"""
 		return self._author
 
@@ -77,22 +77,21 @@ class Commit:
 	def files(self):
 		"""
 		tuple: the paths to the files created, modified or deleted in this
-		commit as pathlib.Path objects
+		commit as pathlib.Path objects.
 		"""
 		return self._files
 
 	@property
 	def message(self):
 		"""
-		str: the message that describes the modifications recorded in this
-		commit
+		str: the description of the modifications recorded in this commit.
 		"""
 		return self._message
 
 	@property
 	def moment(self):
 		"""
-		datetime.datetime: the moment when this commit was made
+		datetime.datetime: the moment when this commit was made.
 		"""
 		return self._moment
 
@@ -102,37 +101,38 @@ class Commit:
 		%Y-%m-%dT%H:%M:%SZ.
 
 		Returns:
-			str: the moment when this commit was made
+			str: the moment when this commit was made.
 		"""
 		return _datetime_to_str(self._moment)
 
 	@property
 	def repository(self):
 		"""
-		RepoIdentity: the repository that contains this commit
+		RepoIdentity: the repository that contains this commit.
 		"""
 		return self._repository
 
 	@property
 	def sha(self):
 		"""
-		str: the SHA hash that identifies this commit
+		str: the SHA hash that identifies this commit.
 		"""
 		return self._sha
 
 
 class RepoIdentity:
 	"""
-	The identity of a GitHub repository
+	This class groups the name of a GitHub repository's owner and the
+	repository's name, which constitute the repository's identity.
 	"""
 
 	def __init__(self, owner, name):
 		"""
 		The constructor requires the repository's owner and name.
 
-		Args:
-			owner (str): the name of the repository's owner
-			name (str): the repository's name
+		Parameters:
+			owner (str): the name of the repository's owner.
+			name (str): the repository's name.
 		"""
 		self._owner = owner
 		self._name = name
@@ -151,14 +151,14 @@ class RepoIdentity:
 		Makes a RepoIdentity from a repository's full name, in the format
 		<owner>/<name>.
 
-		Args:
-			full_name (str): a repository's full name in the prescibed format
+		Parameters:
+			full_name (str): a repository's full name in the prescibed format.
 
 		Returns:
-			RepoIdentity: an object that identifies the indicated repository
+			RepoIdentity: an object that identifies the indicated repository.
 
 		Raises:
-			ValueError: if parameter full_name is not in the expected format
+			ValueError: if parameter full_name is not in the expected format.
 		"""
 		split_name = full_name.split(_SLASH)
 
@@ -174,27 +174,27 @@ class RepoIdentity:
 		repository's name with the given separator. Calling this method without
 		specifying a separator is equivalent to using function str.
 
-		Args:
+		Parameters:
 			separator (str): It comes between the owner's name and the
-				repository's name. Defaults to "/".
+				repository's name. Defaults to '/'.
 
 		Returns:
 			str: the repository's full name in the format
-				<owner><separator><name>
+				<owner><separator><name>.
 		"""
 		return self._owner + separator + self._name
 
 	@property
 	def name(self):
 		"""
-		str: the repository's name
+		str: the repository's name.
 		"""
 		return self._name
 
 	@property
 	def owner(self):
 		"""
-		str: the name of the repository's owner
+		str: the name of the repository's owner.
 		"""
 		return self._owner
 
