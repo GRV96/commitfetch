@@ -25,8 +25,8 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	Parameters:
 		file_path (str or pathlib.Path): the path to a text file.
-		keep_blank_lines (bool): If it is False, the blank lines will be
-			excluded from this function's output.
+		keep_blank_lines (bool): The blank lines are yeilded if and only if
+			this argument is True.
 
 	Yields:
 		str: a line of text extracted from the specified text file.
