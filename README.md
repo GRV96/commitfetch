@@ -20,7 +20,13 @@ authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
 **`GitHubUser`**
 
-Cette classe contient les données d'un utilisateur de GitHub.
+Cette classe contient des données d'un utilisateur de GitHub.
+
+**`github_user_repository`**
+
+Ce module conserve des instances de `GitHubUser`. Il utilise leur propriété
+`login` comme une clé pour y donner accès. Ainsi, ce module aide à éviter la
+création de nombreuses instances identiques de `GitHubUser`.
 
 **`RepoIdentity`**
 
@@ -37,7 +43,7 @@ dans un fichier texte, un par ligne.
 
 Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
 les requêtes à l'API de GitHub pour obtenir les données des commits d'un dépôt.
-Chaque iteration produit une instance de `Commit`. Il faut fournir à ce
+Chaque itération produit une instance de `Commit`. Il faut fournir à ce
 générateur des informations d'authentification dans une instance de
 `GitHubCredentials`.
 
@@ -126,6 +132,12 @@ allows 5000 requests per hour.
 **`GitHubUser`**
 
 This class contains data about a GitHub user.
+
+**`github_user_repository`**
+
+This module stores `GitHubUser` instances. It uses their property `login` as a
+key to grant access to them. Thus, this module helps preventing the creation of
+many identical `GitHubUser` instances.
 
 **`RepoIdentity`**
 

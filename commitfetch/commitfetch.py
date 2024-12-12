@@ -32,7 +32,7 @@ _PATH_USERS = "https://api.github.com/users/"
 
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
-_TIME_BEFORE_API_AVAILABLE = 3602
+_TIME_BEFORE_API_AVAILABLE = 3602 # seconds
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -227,10 +227,11 @@ def _request_github_user(user_login, username, token):
 	provide GitHub credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
-		user_login (str): the wanted user's login name.
+		user_login (str): the wanted user's login name, which corresponds to
+			property GitHubUser.login.
 		username (str): a GitHub username for request authentication.
-		token (str): a token owned by the GitHub user identified by
-			argument username.
+		token (str): a token owned by the GitHub user identified by argument
+			username.
 
 	Returns:
 		GitHubUser: data about the specified GitHub user.

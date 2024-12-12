@@ -1,8 +1,12 @@
 class GitHubCredentials:
 	"""
-	The credentials consist of a username and tokens owned by the user in
-	question. Methods get_next_token and reset_token_iter facilitate the
-	iteration through the tokens.
+	The credentials consist of a username and personal authentication tokens
+	(PATs) owned by the user in question. The username and a token can
+	constitute an authentication for a request to the GitHub API.
+
+	The GitHub API allows 5000 authenticated requests per hour. To facilitate
+	sending many requests in a short period, this class allows to iterate
+	through the tokens.
 	"""
 
 	def __init__(self, username, tokens):
@@ -26,13 +30,11 @@ class GitHubCredentials:
 
 	def get_next_token(self):
 		"""
-		Each token allows 2000 authenticated requests to the GitHub API per
-		hour. For the purpose of making many requests in a short period, this
-		method allows to obtain the next unused token stored here.
+		The next unused token becomes the current token unless all tokens have
+		been used.
 
 		Returns:
-			str: the next unused token.
-			None: if all tokens have been used.
+			str: the next unused token, None if all tokens have been used.
 		"""
 		try:
 			token = next(self._token_iter)
@@ -43,7 +45,8 @@ class GitHubCredentials:
 
 	def reset_token_iter(self):
 		"""
-		Resets the token itertion performed by method get_next_token.
+		Resets the itertion through the tokens performed by method
+		get_next_token.
 		"""
 		self._token_iter = iter(self._tokens)
 

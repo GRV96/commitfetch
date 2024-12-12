@@ -77,8 +77,8 @@ class Commit:
 	@property
 	def files(self):
 		"""
-		tuple: the paths to the files created, modified or deleted in this
-		commit as pathlib.Path objects.
+		tuple: the paths (pathlib.Path) to the files created, modified or
+			deleted in this commit.
 		"""
 		return self._files
 

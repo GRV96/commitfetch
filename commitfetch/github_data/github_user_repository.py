@@ -1,7 +1,7 @@
 """
 This module stores GitHubUser instances. It uses their property login as a key
-to grant access to them. Using this module can prevent the creation of many
-identical GitHubUser instances.
+to grant access to them. Thus, this module helps preventing the creation of
+many identical GitHubUser instances.
 """
 
 
@@ -10,7 +10,8 @@ _repository_content = dict()
 
 def get_github_user(user_login):
 	"""
-	Obtains data about a GitHub user specified by their login name.
+	Obtains data about a GitHub user specified by their login name, which
+	corresponds to property GitHubUser.login.
 
 	Parameters:
 		user_login (str): the wanted user's login name.

@@ -6,7 +6,7 @@ _SLASH = "/"
 
 class RepoIdentity:
 	"""
-	This class groups the name of a GitHub repository's owner and the
+	This class comprises the name of a GitHub repository's owner and the
 	repository's name, which constitute the repository's identity.
 	"""
 
