@@ -18,6 +18,10 @@ Cette classe contient le nom d'un utilisateur de GitHub et des jetons
 d'authentification qu'il possède. Elle aide à effectuer des requêtes
 authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
+**`GitHubUser`**
+
+Cette classe contient les données d'un utilisateur de GitHub.
+
 **`RepoIdentity`**
 
 Cette classe identifie un dépôt GitHub par le nom de son propriétaire et le nom
@@ -118,6 +122,10 @@ This class contains data about a GitHub commit.
 This class contains the name of a GitHub user and authentication tokens that
 they own. It helps making authenticated requests to the GitHub API. Each token
 allows 5000 requests per hour.
+
+**`GitHubUser`**
+
+This class contains data about a GitHub user.
 
 **`RepoIdentity`**
 
