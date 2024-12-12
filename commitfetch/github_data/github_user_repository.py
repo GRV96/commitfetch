@@ -10,7 +10,8 @@ _repository_content = dict()
 
 def get_github_user(user_login):
 	"""
-	Obtains data about a GitHub user specified by their login name.
+	Obtains data about a GitHub user specified by their login name, which
+	corresponds to property GitHubUser.login.
 
 	Parameters:
 		user_login (str): the wanted user's login name.
