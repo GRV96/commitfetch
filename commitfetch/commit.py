@@ -19,7 +19,7 @@ class Commit:
 	A commit in a GitHub repository.
 	"""
 
-	def __init__(self, sha, message, repository, author, moment, files):
+	def __init__(self, sha, message, repository, moment, author, files):
 		"""
 		The GitHub commit constructor.
 
@@ -30,10 +30,10 @@ class Commit:
 			repository (str or RepoIdentity): the repository that contains this
 				commit. If this argument is a string, it will be processed by
 				RepoIdentity.from_full_name.
-			author (str): the name of the commit's author.
 			moment (str or datetime.datetime): the moment when this commit was
 				made. If it is a string, it must match format
 				%Y-%m-%dT%H:%M:%SZ.
+			author (GitHubUser): the GitHub user who made this commit.
 			files (generator, list, set or tuple): the paths
 				(str or pathlib.Path) to the files created, modified or deleted
 				in this commit.
@@ -59,18 +59,18 @@ class Commit:
 	def __repr__(self):
 		str_paths = *(str(file) for file in self._files),
 
-		return self.__class__.__name__ + rs.OPENING_PAR\
+		return self.__class__.__name__ + rs.PAR_OPENING\
 			+ rs.QUOTE + self._sha + rs.QUOTE_COMMA_SPACE\
 			+ repr(self._message) + rs.COMMA_SPACE\
 			+ rs.QUOTE + str(self._repository) + rs.QUOTE_COMMA_SPACE\
-			+ rs.QUOTE + self._author + rs.QUOTE_COMMA_SPACE\
 			+ rs.QUOTE + self.moment_to_str() + rs.QUOTE_COMMA_SPACE\
-			+ str(str_paths) + rs.CLOSING_PAR
+			+ repr(self._author) + rs.COMMA_SPACE\
+			+ str(str_paths) + rs.PAR_CLOSING
 
 	@property
 	def author(self):
 		"""
-		str: the name of the commit's author.
+		GitHubUser: the GitHub user who made this commit.
 		"""
 		return self._author
 

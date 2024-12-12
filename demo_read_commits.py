@@ -25,9 +25,9 @@ def make_arg_parser():
 
 parser = make_arg_parser()
 args = parser.parse_args()
-commit_path = args.commit_file
+commit_file = args.commit_file
 
-commit_generator = read_commit_reprs(commit_path)
+commit_generator = read_commit_reprs(commit_file)
 
 first_commit = next(commit_generator)
 
@@ -35,8 +35,8 @@ print("First commit")
 print(f"SHA: {first_commit.sha}")
 print(f"Message: {first_commit.message}")
 print(f"Repository: {first_commit.repository}")
-print(f"Author: {first_commit.author}")
 print(f"Moment: {first_commit.moment_to_str()}")
+print(f"Author: {first_commit.author}")
 print("Files:")
 for file in first_commit.files:
 	print(f"\t{file}")

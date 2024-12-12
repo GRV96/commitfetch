@@ -3,7 +3,13 @@ import requests
 from time import sleep
 
 from .commit import\
-	Commit,\
+	Commit
+from .github_user import\
+	GitHubUser
+from .github_user_repository import\
+	get_github_user,\
+	register_github_user
+from .repo_identity import\
 	RepoIdentity
 
 
@@ -13,6 +19,8 @@ _KEY_DATE = "date"
 _KEY_DOCUMENTATION_URL = "documentation_url"
 _KEY_FILENAME = "filename"
 _KEY_FILES = "files"
+_KEY_ID = "id"
+_KEY_LOGIN = "login"
 _KEY_MESSAGE = "message"
 _KEY_NAME = "name"
 _KEY_SHA = "sha"
@@ -22,6 +30,7 @@ _PATH_COMMITS = "/commits/"
 
 _PATH_REPOS = "https://api.github.com/repos/"
 _PATH_REPOS_LEN = len(_PATH_REPOS)
+_PATH_USERS = "https://api.github.com/users/"
 
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
@@ -51,29 +60,12 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 		raise api_except
 
 
-def _commit_from_api_data(commit_data):
-	sha = commit_data[_KEY_SHA]
-
-	api_url = commit_data[_KEY_URL]
-	repo_identity = _repo_from_commit_api_url(api_url)
-
-	commit_struct = commit_data[_KEY_COMMIT]
-	message = commit_struct[_KEY_MESSAGE]
-
-	author_struct = commit_struct[_KEY_AUTHOR]
-	author = author_struct[_KEY_NAME]
-	moment = author_struct[_KEY_DATE]
-
-	file_data = commit_data[_KEY_FILES]
-	files = *(fd[_KEY_FILENAME] for fd in file_data),
-
-	return Commit(sha, message, repo_identity, author, moment, files)
-
-
 def get_repo_commits(repository, credentials, can_wait):
 	"""
 	This generator obtains data about all the commits in a GitHub repository
-	through the GitHub API. Each iteration yields data about one commit.
+	through the GitHub API. Each iteration yields data about one commit. The
+	caller must provide GitHub credentials to authenticate the requests to the
+	GitHub API.
 
 	Parameters:
 		repository (str): a repository's full name in the format
@@ -127,6 +119,38 @@ def get_repo_commits(repository, credentials, can_wait):
 		page_num += 1
 
 
+def _make_commit_from_api_data(commit_data, username, token):
+	sha = commit_data[_KEY_SHA]
+
+	api_url = commit_data[_KEY_URL]
+	repo_identity = _repo_from_commit_api_url(api_url)
+
+	commit_struct = commit_data[_KEY_COMMIT]
+	message = commit_struct[_KEY_MESSAGE]
+	commit_author_struct = commit_struct[_KEY_AUTHOR]
+	moment = commit_author_struct[_KEY_DATE]
+
+	author_struct = commit_data[_KEY_AUTHOR]
+	author_login = author_struct[_KEY_LOGIN]
+
+	author = get_github_user(author_login)
+	if author is None:
+		author = _request_github_user(author_login, username, token)
+		register_github_user(author)
+
+	file_data = commit_data[_KEY_FILES]
+	files = *(fd[_KEY_FILENAME] for fd in file_data),
+
+	return Commit(sha, message, repo_identity, moment, author, files)
+
+
+def _make_github_user_from_api_data(github_user_data):
+	id = github_user_data[_KEY_ID]
+	login = github_user_data[_KEY_LOGIN]
+	name = github_user_data[_KEY_NAME]
+	return GitHubUser(id, login, name)
+
+
 def _raise_github_api_exception(api_data):
 	if isinstance(api_data, dict):
 		message = api_data.get(_KEY_MESSAGE)
@@ -144,19 +168,22 @@ def _repo_from_commit_api_url(url):
 
 def _request_commit(commit_sha, repository, username, token):
 	"""
-	Requests a commit from the GitHub API.
+	Requests a commit from the GitHub API. The caller must provide GitHub
+	credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
-		commit_sha (str): a SHA hash that identifies a commit
-		repository (str): a GitHub repository name in the format <owner>/<name>
-		username (str): a GitHub username
-		token (str): a token owned by the specified GitHub user
+		commit_sha (str): a SHA hash that identifies a commit.
+		repository (str): a GitHub repository name in the format
+			<owner>/<name>.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by argument
+			username.
 	
 	Returns:
-		Commit: an object that contains the wanted commit's data
+		Commit: an object that contains the wanted commit's data.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured
+		RuntimeError: if the response indicates that an error occured.
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
 	commit_response = requests.get(commit_url, auth=(username, token))
@@ -164,25 +191,27 @@ def _request_commit(commit_sha, repository, username, token):
 
 	_raise_github_api_exception(commit_data)
 
-	commit = _commit_from_api_data(commit_data)
+	commit = _make_commit_from_api_data(commit_data, username, token)
 	return commit
 
 
 def _request_commit_page(repository, page_num, username, token):
 	"""
-	Requests a page of commit data from the GitHub API.
+	Requests a page of commit data from the GitHub API. The caller must provide
+	GitHub credentials to authenticate the requests to the GitHub API.
 
 	Parameters:
-		repository (str): a GitHub repository name in the format <owner>/<name>
-		page_num (int): the number of a commit page on the GitHub API, >= 1
-		username (str): a GitHub username
-		token (str): a token owned by the specified GitHub user
+		repository (str): a GitHub repository name in the format <owner>/<name>.
+		page_num (int): the number of a commit page on the GitHub API, >= 1.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by argument
+			username.
 
 	Returns:
-		list: the data of the commits from the wanted page
+		list: the data of the commits from the wanted page.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured
+		RuntimeError: if the response indicates that an error occured.
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
@@ -192,3 +221,30 @@ def _request_commit_page(repository, page_num, username, token):
 	_raise_github_api_exception(commit_data)
 
 	return commit_data
+
+
+def _request_github_user(user_login, username, token):
+	"""
+	Request data about a GitHub user from the GitHub API. The caller must
+	provide GitHub credentials to authenticate the requests to the GitHub API.
+
+	Parameters:
+		user_login (str): the wanted user's login name.
+		username (str): a GitHub username for request authentication.
+		token (str): a token owned by the GitHub user identified by
+			argument username.
+
+	Returns:
+		GitHubUser: data about the specified GitHub user.
+
+	Raises:
+		RuntimeError: if the response indicates that an error occured.
+	"""
+	user_url = _PATH_USERS + user_login
+	user_response = requests.get(user_url, auth=(username, token))
+	github_user_data = json.loads(user_response.content)
+
+	_raise_github_api_exception(github_user_data)
+
+	github_user = _make_github_user_from_api_data(github_user_data)
+	return github_user
