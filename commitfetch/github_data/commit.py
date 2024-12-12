@@ -46,13 +46,15 @@ class Commit:
 		self._message = message
 		self._author = author
 
-		self._repository = repository
-		if isinstance(self._repository, str):
-			self._repository = RepoIdentity.from_full_name(repository)
+		self._repository =\
+			RepoIdentity.from_full_name(repository)\
+			if isinstance(repository, str)\
+			else repository
 
-		self._moment = moment
-		if isinstance(self._moment, str):
-			self._moment = _datetime_from_str(self._moment)
+		self._moment =\
+			_datetime_from_str(moment)\
+			if isinstance(moment, str)\
+			else moment
 
 		self._files = *(Path(file) for file in files),
 
