@@ -37,14 +37,9 @@ def extract_text_lines(file_path, keep_blank_lines):
 	"""
 	file_path = _ensure_is_path(file_path)
 
-	if keep_blank_lines:
-		is_line_accepted = lambda line: True
-	else:
-		is_line_accepted = lambda line: len(line) > 0
-
 	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
 		for line in file:
 			line = line[:-1] # Remove '\n' at the end.
 
-			if is_line_accepted(line):
+			if keep_blank_lines or len(line) > 0:
 				yield line
