@@ -39,7 +39,7 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
 		for line in file:
-			line = line[:-1] # Remove '\n' at the end.
+			line = line[:-1] # Remove '\n' from the line's end.
 
 			if keep_blank_lines or len(line) > 0:
 				yield line
