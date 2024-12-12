@@ -25,8 +25,8 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	Parameters:
 		file_path (str or pathlib.Path): the path to a text file.
-		keep_blank_lines (bool): If it is False, the blank lines will be
-			excluded from this function's output.
+		keep_blank_lines (bool): The blank lines are yeilded if and only if
+			this argument is True.
 
 	Yields:
 		str: a line of text extracted from the specified text file.
@@ -37,13 +37,9 @@ def extract_text_lines(file_path, keep_blank_lines):
 	"""
 	file_path = _ensure_is_path(file_path)
 
-	if keep_blank_lines:
-		is_line_accepted = lambda line: True
-	else:
-		is_line_accepted = lambda line: len(line) > 0
-
 	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
 		for line in file:
-			line = line.strip() # Remove '\n' at the end.
-			if is_line_accepted(line):
+			line = line[:-1] # Remove '\n' from the line's end.
+
+			if keep_blank_lines or len(line) > 0:
 				yield line
