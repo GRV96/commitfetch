@@ -20,7 +20,7 @@ authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
 **`GitHubUser`**
 
-Cette classe contient les données d'un utilisateur de GitHub.
+Cette classe contient des données d'un utilisateur de GitHub.
 
 **`github_user_repository`**
 
