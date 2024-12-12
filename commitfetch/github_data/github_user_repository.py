@@ -1,7 +1,7 @@
 """
 This module stores GitHubUser instances. It uses their property login as a key
-to grant access to them. Using this module can prevent the creation of many
-identical GitHubUser instances.
+to grant access to them. Thus, this module helps preventing the creation of
+many identical GitHubUser instances.
 """
 
 
