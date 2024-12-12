@@ -1,9 +1,9 @@
-from . import recurring_strings as rs
+from . import _recurring_strings as rs
 
 
 class GitHubUser:
 	"""
-	Data of a GitHub account.
+	Data of a GitHub user.
 	"""
 
 	def __init__(self, id, login, name):

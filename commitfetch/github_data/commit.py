@@ -1,7 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 
-from . import recurring_strings as rs
+from . import _recurring_strings as rs
 from .repo_identity import RepoIdentity
 
 

@@ -2,15 +2,13 @@ import json
 import requests
 from time import sleep
 
-from .commit import\
-	Commit
-from .github_user import\
-	GitHubUser
-from .github_user_repository import\
+from .github_data import\
+	Commit,\
+	GitHubUser,\
+	RepoIdentity
+from .github_data.github_user_repository import\
 	get_github_user,\
 	register_github_user
-from .repo_identity import\
-	RepoIdentity
 
 
 _KEY_AUTHOR = "author"

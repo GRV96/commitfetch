@@ -1,5 +1,3 @@
-from .commit import\
-	Commit
 from .commitfetch import\
 	get_repo_commits
 from .commit_rw import\
@@ -7,9 +5,9 @@ from .commit_rw import\
 	write_commit_reprs
 from .file_io import\
 	extract_text_lines
-from .github_credentials import\
-	GitHubCredentials
-from .github_user import\
-	GitHubUser
-from .repo_identity import\
+from .github_data import\
+	Commit,\
+	GitHubCredentials,\
+	GitHubUser,\
+	github_user_repository,\
 	RepoIdentity
