@@ -39,7 +39,7 @@ def read_commit_reprs(file_path):
 
 def write_commit_reprs(file_path, commits):
 	"""
-	Writes the representation of Commit instances in a text file. Each line is
+	Writes the representations of Commit instances in a text file. Each line is
 	a string returned by function repr. If the file already exists, this
 	function will overwrite it.
 
