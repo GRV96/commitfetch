@@ -43,7 +43,7 @@ dans un fichier texte, un par ligne.
 
 Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
 les requêtes à l'API de GitHub pour obtenir les données des commits d'un dépôt.
-Chaque iteration produit une instance de `Commit`. Il faut fournir à ce
+Chaque itération produit une instance de `Commit`. Il faut fournir à ce
 générateur des informations d'authentification dans une instance de
 `GitHubCredentials`.
 
