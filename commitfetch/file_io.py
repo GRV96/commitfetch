@@ -44,6 +44,7 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
 		for line in file:
-			line = line.strip() # Remove '\n' at the end.
+			line = line[:-1] # Remove '\n' at the end.
+
 			if is_line_accepted(line):
 				yield line
