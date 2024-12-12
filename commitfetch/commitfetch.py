@@ -32,7 +32,7 @@ _PATH_USERS = "https://api.github.com/users/"
 
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
-_TIME_BEFORE_API_AVAILABLE = 3602
+_TIME_BEFORE_API_AVAILABLE = 3602 # seconds
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
