@@ -11,12 +11,19 @@ from argparse import\
 from pathlib import\
 	Path
 
+from syspathmodif import\
+	sp_append,\
+	sp_remove
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+sp_append(_REPO_ROOT)
 from commitfetch import\
 	GitHubCredentials,\
 	RepoIdentity,\
 	extract_text_lines,\
 	get_repo_commits,\
 	write_commit_reprs
+sp_remove(_REPO_ROOT)
 
 
 def make_arg_parser():
