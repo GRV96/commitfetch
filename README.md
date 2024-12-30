@@ -72,8 +72,8 @@ pip install -r requirements.txt
 
 ### Démos
 
-Consultez les scripts `demo_write_commits.py` et `demo_read_commits.py` dans le
-dépôt de code pour savoir comment utiliser la bibliothèque `commitfetch`.
+Consultez les scripts dans le dossier `demos` pour savoir comment utiliser la
+bibliothèque `commitfetch`.
 
 #### Enregistrement des commits
 
@@ -83,10 +83,20 @@ jetons d'authentification de l'utilisateur un par ligne pour effectuer des
 requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
 nom devrait contenir la chaîne «`token`».
 
-Exemple d'exécution:
+Aide:
 
 ```
-python demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+python demos/demo_write_commits.py -h
+```
+
+Exemples d'exécution:
+
+```
+python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r GRV96/commitfetch
+```
+
+```
+python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
 ```
 
 Pour essayer `demo_write_commits.py` avec des nombres de commits variés,
@@ -106,10 +116,20 @@ utilisez les dépôts ci-dessous.
 enregistrées dans un fichier texte. Pour confirmer que la lecture a
 fonctionné, il affiche les données d'un commit dans la console.
 
-Exemple d'exécution:
+Aide:
 
 ```
-python demo_read_commits.py -c scottyab_rootbeer_commits.txt
+python demos/demo_read_commits.py -h
+```
+
+Exemples d'exécution:
+
+```
+python demos/demo_read_commits.py -c GRV96_commitfetch_commits.txt
+```
+
+```
+python demos/demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ```
 
 ## ENGLISH
@@ -180,8 +200,7 @@ pip install -r requirements.txt
 
 ### Demos
 
-See scripts `demo_write_commits.py` and `demo_read_commits.py` in the source
-code repository to know how to use library `commitfetch`.
+See scripts in directory `demos` to know how to use library `commitfetch`.
 
 #### Recording commits
 
@@ -191,11 +210,22 @@ authentication tokens one per line to perform requests to the GitHub API. This
 repository will ignore the token files if their name contains the string
 "`token`".
 
-Execution example:
+Help:
 
 ```
-python demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+python demos/demo_write_commits.py -h
 ```
+
+Execution examples:
+
+```
+python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r GRV96/commitfetch
+```
+
+```
+python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+```
+
 To try `demo_write_commits.py` with varied numbers of commits, use the
 repositories below.
 
@@ -213,8 +243,18 @@ repositories below.
 in a text file. It confirms that the reading was successful by displaying a
 commit's data in the console.
 
-Execution example:
+Help:
 
 ```
-python demo_read_commits.py -c scottyab_rootbeer_commits.txt
+python demos/demo_read_commits.py -h
+```
+
+Execution examples:
+
+```
+python demos/demo_read_commits.py -c GRV96_commitfetch_commits.txt
+```
+
+```
+python demos/demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ```
