@@ -1,15 +1,12 @@
-from pathlib import\
-	Path
-
 from repr_rw import\
 	read_reprs,\
 	write_reprs
 
 
-_REPO_DIR = Path(__file__).resolve().parents[1]
-_COMMIT_READING_IMPORTATIONS = {
-	"from commitfetch import GitHubUser": _REPO_DIR,
-	"from commitfetch import Commit": _REPO_DIR}
+_COMMIT_READING_IMPORTATIONS = [
+	"from commitfetch import GitHubUser",
+	"from commitfetch import Commit"
+]
 
 
 def read_commit_reprs(file_path):
