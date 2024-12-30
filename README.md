@@ -83,6 +83,12 @@ jetons d'authentification de l'utilisateur un par ligne pour effectuer des
 requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
 nom devrait contenir la chaîne «`token`».
 
+Aide:
+
+```
+python demos/demo_write_commits.py -h
+```
+
 Exemples d'exécution:
 
 ```
@@ -109,6 +115,12 @@ utilisez les dépôts ci-dessous.
 `demo_read_commits.py` montre comment lire les représentations de commits
 enregistrées dans un fichier texte. Pour confirmer que la lecture a
 fonctionné, il affiche les données d'un commit dans la console.
+
+Aide:
+
+```
+python demos/demo_read_commits.py -h
+```
 
 Exemples d'exécution:
 
@@ -198,6 +210,12 @@ authentication tokens one per line to perform requests to the GitHub API. This
 repository will ignore the token files if their name contains the string
 "`token`".
 
+Help:
+
+```
+python demos/demo_write_commits.py -h
+```
+
 Execution examples:
 
 ```
@@ -224,6 +242,12 @@ repositories below.
 `demo_read_commits.py` shows how to read the commit representations recorded
 in a text file. It confirms that the reading was successful by displaying a
 commit's data in the console.
+
+Help:
+
+```
+python demos/demo_read_commits.py -h
+```
 
 Execution examples:
 
