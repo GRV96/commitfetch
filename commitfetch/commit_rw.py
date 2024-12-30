@@ -30,6 +30,9 @@ def read_commit_reprs(file_path):
 		Exception: any exception raised upon the parsing of a Commit
 			representation.
 	"""
+	# When this generator is being used, package commitfetch has been imported
+	# at least once and included in sys.modules. This makes commitfetch
+	# available for import with no modification to sys.path.
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
 	return commit_generator
 
