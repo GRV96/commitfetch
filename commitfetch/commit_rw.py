@@ -3,10 +3,10 @@ from repr_rw import\
 	write_reprs
 
 
-_COMMIT_READING_IMPORTATIONS = [
+_COMMIT_READING_IMPORTATIONS = (
 	"from commitfetch import GitHubUser",
 	"from commitfetch import Commit"
-]
+)
 
 
 def read_commit_reprs(file_path):
