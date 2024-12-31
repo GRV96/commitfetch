@@ -1,12 +1,27 @@
+from pathlib import\
+	Path
+
 from repr_rw import\
 	read_reprs,\
 	write_reprs
+from syspathmodif import\
+	sp_append,\
+	sp_remove
 
+
+_LIB_NAME = "commitfetch"
+
+_REPO_ROOT = str(Path(__file__).resolve().parents[1])
 
 _COMMIT_READING_IMPORTATIONS = (
 	"from commitfetch import GitHubUser",
 	"from commitfetch import Commit"
 )
+# _COMMIT_READING_IMPORTATIONS = (
+# 	"from src import GitHubUser",
+# 	"from src import Commit"
+# )
+import sys
 
 
 def read_commit_reprs(file_path):
@@ -30,10 +45,24 @@ def read_commit_reprs(file_path):
 		Exception: any exception raised upon the parsing of a Commit
 			representation.
 	"""
-	# When this generator is being used, package commitfetch has been imported
-	# at least once and included in sys.modules. This makes commitfetch
-	# available for import with no modifications to sys.path.
+	# When this generator is being used, package commitfetch has presumably
+	# been imported at least once and thus, included in sys.modules. This makes
+	# commitfetch available for import with no modifications to sys.path.
+
+	# The next block ensures the presence of commitfetch in sys.modules.
+	if _LIB_NAME not in sys.modules:
+		print("Add root " + _REPO_ROOT)
+		#sys.path.insert(0, _REPO_ROOT)
+		was_repo_root_appended = sp_append(_REPO_ROOT)
+		print(f"Repository root appended: {was_repo_root_appended}")
+		import commitfetch
+		print(commitfetch)
+		print(f"'{_LIB_NAME}' in sys.modules: {_LIB_NAME in sys.modules}")
+		sp_remove(_REPO_ROOT)
+
+	print("sys.path:\n\t" + "\n\t".join(sys.path))
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
+
 	return commit_generator
 
 
