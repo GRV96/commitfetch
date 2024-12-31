@@ -16,10 +16,7 @@ _LIB_NAME = "commitfetch"
 # Storing a string rather than a Path avoids the conversion by syspathmodif.
 _REPO_ROOT = str(Path(__file__).resolve().parents[1])
 
-_COMMIT_READING_IMPORTATIONS = (
-	"from commitfetch import GitHubUser",
-	"from commitfetch import Commit"
-)
+_COMMIT_READING_IMPORTATIONS = ("from commitfetch import GitHubUser, Commit",)
 
 
 def read_commit_reprs(file_path):
