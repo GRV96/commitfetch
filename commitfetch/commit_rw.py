@@ -13,7 +13,7 @@ from syspathmodif import\
 
 _LIB_NAME = "commitfetch"
 
-# Using a string rather than a Path avoids the conversion by syspathmodif.
+# Storing a string rather than a Path avoids the conversion by syspathmodif.
 _REPO_ROOT = str(Path(__file__).resolve().parents[1])
 
 _COMMIT_READING_IMPORTATIONS = (
