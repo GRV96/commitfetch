@@ -1,4 +1,4 @@
-from .commitfetch import\
+from .commit_requests import\
 	get_repo_commits
 from .commit_rw import\
 	read_commit_reprs,\
