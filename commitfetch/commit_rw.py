@@ -58,7 +58,7 @@ def read_commit_reprs(file_path):
 		_add_lib_to_sys_modules()
 
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
-	return commit_generator
+	yield from commit_generator
 
 
 def write_commit_reprs(file_path, commits):
