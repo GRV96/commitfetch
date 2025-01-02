@@ -1,11 +1,3 @@
-__all__ = [
-	"Commit",
-	"GitHubCredentials",
-	"GitHubUser",
-	"GitHubUserRepository",
-	"RepoIdentity"
-]
-
 from .commit import\
 	Commit
 from .github_credentials import\
@@ -16,3 +8,11 @@ from .github_user_repository import\
 	GitHubUserRepository
 from .repo_identity import\
 	RepoIdentity
+
+__all__ = [
+	Commit.__name__,
+	GitHubCredentials.__name__,
+	GitHubUser.__name__,
+	GitHubUserRepository.__name__,
+	RepoIdentity.__name__
+]

@@ -1,4 +1,4 @@
-__all__ = ["GitHubUser"]
+# __all__ declared at the module's end
 
 
 class GitHubUser:
@@ -52,3 +52,6 @@ class GitHubUser:
 		str: this user's real name.
 		"""
 		return self._name
+
+
+__all__ = [GitHubUser.__name__]

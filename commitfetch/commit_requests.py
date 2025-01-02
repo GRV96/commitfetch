@@ -1,4 +1,4 @@
-__all__ = ["get_repo_commits"]
+# __all__ declared at the module's end
 
 import json
 import requests
@@ -254,3 +254,6 @@ def _request_github_user(user_login, username, token):
 
 	github_user = _make_github_user_from_api_data(github_user_data)
 	return github_user
+
+
+__all__ = [get_repo_commits.__name__]

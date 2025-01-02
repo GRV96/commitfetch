@@ -1,7 +1,4 @@
-__all__ = [
-	"read_commit_reprs",
-	"write_commit_reprs"
-]
+# __all__ declared at the module's end
 
 from sys import\
 	modules as sys_modules
@@ -80,3 +77,9 @@ def write_commit_reprs(file_path, commits):
 			representation will be written.
 	"""
 	write_reprs(file_path, commits)
+
+
+__all__ = [
+	read_commit_reprs.__name__,
+	write_commit_reprs.__name__
+]

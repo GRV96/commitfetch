@@ -1,4 +1,4 @@
-__all__ = ["RepoIdentity"]
+# __all__ declared at the module's end
 
 
 _SLASH = "/"
@@ -86,3 +86,6 @@ class RepoIdentity:
 		str: the name of the repository's owner.
 		"""
 		return self._owner
+
+
+__all__ = [RepoIdentity.__name__]

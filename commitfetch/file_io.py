@@ -1,4 +1,4 @@
-__all__ = ["extract_text_lines"]
+# __all__ declared at the module's end
 
 # strath is an indirect dependency of repr_rw.
 from strath import\
@@ -34,3 +34,6 @@ def extract_text_lines(file_path, keep_blank_lines):
 
 			if keep_blank_lines or len(line) > 0:
 				yield line
+
+
+__all__ = [extract_text_lines.__name__]

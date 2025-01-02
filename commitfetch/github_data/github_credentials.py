@@ -1,4 +1,4 @@
-__all__ = ["GitHubCredentials"]
+# __all__ declared at the module's end
 
 
 class GitHubCredentials:
@@ -66,3 +66,6 @@ class GitHubCredentials:
 		str: this GitHub user's name.
 		"""
 		return self._username
+
+
+__all__ = [GitHubCredentials.__name__]

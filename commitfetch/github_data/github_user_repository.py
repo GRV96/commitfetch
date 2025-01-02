@@ -1,4 +1,4 @@
-__all__ = ["GitHubUserRepository"]
+# __all__ declared at the module's end
 
 
 class GitHubUserRepository:
@@ -51,3 +51,6 @@ class GitHubUserRepository:
 			was_user_registered = True
 
 		return was_user_registered
+
+
+__all__ = [GitHubUserRepository.__name__]
