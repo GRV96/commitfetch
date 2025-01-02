@@ -1,6 +1,3 @@
-__all__ = ["GitHubCredentials"]
-
-
 class GitHubCredentials:
 	"""
 	The credentials consist of a username and personal authentication tokens
@@ -66,3 +63,6 @@ class GitHubCredentials:
 		str: this GitHub user's name.
 		"""
 		return self._username
+
+
+__all__ = [GitHubCredentials.__name__]

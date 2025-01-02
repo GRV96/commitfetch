@@ -1,6 +1,3 @@
-__all__ = ["RepoIdentity"]
-
-
 _SLASH = "/"
 
 
@@ -86,3 +83,6 @@ class RepoIdentity:
 		str: the name of the repository's owner.
 		"""
 		return self._owner
+
+
+__all__ = [RepoIdentity.__name__]

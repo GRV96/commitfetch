@@ -1,5 +1,3 @@
-__all__ = ["Commit"]
-
 from datetime import datetime
 from pathlib import Path
 
@@ -125,3 +123,6 @@ class Commit:
 		str: the SHA hash that identifies this commit.
 		"""
 		return self._sha
+
+
+__all__ = [Commit.__name__]

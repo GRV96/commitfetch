@@ -1,6 +1,3 @@
-__all__ = ["GitHubUserRepository"]
-
-
 class GitHubUserRepository:
 	"""
 	This singleton stores GitHubUser instances identified by their property
@@ -51,3 +48,6 @@ class GitHubUserRepository:
 			was_user_registered = True
 
 		return was_user_registered
+
+
+__all__ = [GitHubUserRepository.__name__]

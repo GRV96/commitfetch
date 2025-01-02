@@ -1,6 +1,3 @@
-__all__ = ["GitHubUser"]
-
-
 class GitHubUser:
 	"""
 	This immutable class contains data about a GitHub user.
@@ -52,3 +49,6 @@ class GitHubUser:
 		str: this user's real name.
 		"""
 		return self._name
+
+
+__all__ = [GitHubUser.__name__]
