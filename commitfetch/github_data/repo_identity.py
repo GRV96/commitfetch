@@ -30,6 +30,12 @@ class RepoIdentity:
 	def __str__(self):
 		return self.get_full_name()
 
+	def __eq__(self, value):
+		if not isinstance(value, RepoIdentity):
+			return False
+
+		return self._owner == value._owner and self._name == value._name
+
 	@staticmethod
 	def from_full_name(full_name):
 		"""

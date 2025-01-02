@@ -25,6 +25,15 @@ class GitHubUser:
 		return self.__class__.__name__\
 			+ f"({self._id}, \"{self._login}\", \"{self._name}\")"
 
+	def __eq__(self, value):
+		if not isinstance(value, GitHubUser):
+			return False
+
+		return\
+			self._id == value._id\
+			and self._login == value._login\
+			and self._name == value._name
+
 	@property
 	def id(self):
 		"""
