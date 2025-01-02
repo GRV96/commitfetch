@@ -22,11 +22,11 @@ authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
 
 Cette classe contient des données d'un utilisateur de GitHub.
 
-**`github_user_repository`**
+**`GitHubUserRepository`**
 
-Ce module conserve des instances de `GitHubUser`. Il utilise leur propriété
-`login` comme une clé pour y donner accès. Ainsi, ce module aide à éviter la
-création de nombreuses instances identiques de `GitHubUser`.
+Ce singleton conserve des instances de `GitHubUser` identifiées par leur
+proprité `login`. Ainsi, il aide à éviter la création de nombreuses instances
+identiques de `GitHubUser`.
 
 **`RepoIdentity`**
 
@@ -153,11 +153,11 @@ allows 5000 requests per hour.
 
 This class contains data about a GitHub user.
 
-**`github_user_repository`**
+**`GitHubUserRepository`**
 
-This module stores `GitHubUser` instances. It uses their property `login` as a
-key to grant access to them. Thus, this module helps preventing the creation of
-many identical `GitHubUser` instances.
+This singleton stores `GitHubUser` instances identified by their property
+`login`. Thus, it helps preventing the creation of many identical `GitHubUser`
+instances.
 
 **`RepoIdentity`**
 
