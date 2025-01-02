@@ -2,7 +2,7 @@ from .commitfetch import\
 	Commit,\
 	GitHubCredentials,\
 	GitHubUser,\
-	github_user_repository,\
+	GitHubUserRepository,\
 	RepoIdentity,\
 	extract_text_lines,\
 	get_repo_commits,\

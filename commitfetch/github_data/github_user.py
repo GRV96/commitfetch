@@ -3,7 +3,7 @@ from . import _recurring_strings as rs
 
 class GitHubUser:
 	"""
-	Data of a GitHub user.
+	This immutable class contains data about a GitHub user.
 	"""
 
 	def __init__(self, id, login, name):

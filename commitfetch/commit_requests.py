@@ -5,10 +5,8 @@ from time import sleep
 from .github_data import\
 	Commit,\
 	GitHubUser,\
+	GitHubUserRepository,\
 	RepoIdentity
-from .github_data.github_user_repository import\
-	get_github_user,\
-	register_github_user
 
 
 _KEY_AUTHOR = "author"
@@ -33,6 +31,8 @@ _PATH_USERS = "https://api.github.com/users/"
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
 _TIME_BEFORE_API_AVAILABLE = 3602 # seconds
+
+user_repo = GitHubUserRepository()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -131,10 +131,10 @@ def _make_commit_from_api_data(commit_data, username, token):
 	author_struct = commit_data[_KEY_AUTHOR]
 	author_login = author_struct[_KEY_LOGIN]
 
-	author = get_github_user(author_login)
+	author = user_repo.get_github_user(author_login)
 	if author is None:
 		author = _request_github_user(author_login, username, token)
-		register_github_user(author)
+		user_repo.register_github_user(author)
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),

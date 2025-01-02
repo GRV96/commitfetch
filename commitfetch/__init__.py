@@ -9,5 +9,5 @@ from .github_data import\
 	Commit,\
 	GitHubCredentials,\
 	GitHubUser,\
-	github_user_repository,\
+	GitHubUserRepository,\
 	RepoIdentity
