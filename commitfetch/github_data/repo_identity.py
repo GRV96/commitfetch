@@ -1,7 +1,5 @@
 __all__ = ["RepoIdentity"]
 
-from . import recurring_strings as rs
-
 
 _SLASH = "/"
 
