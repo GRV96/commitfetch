@@ -14,7 +14,7 @@ class GitHubUserRepository:
 
 		return cls._instance
 
-	def get_github_user(self, user_login):
+	def get_user(self, user_login):
 		"""
 		Obtains a GitHubUser instance identified by the user's login name,
 		which corresponds to property GitHubUser.login.
@@ -29,7 +29,7 @@ class GitHubUserRepository:
 		github_user = self._content.get(user_login)
 		return github_user
 
-	def register_github_user(self, github_user):
+	def register_user(self, github_user):
 		"""
 		Registers a GitHubUser instance in this repository if the repository
 		does not already contain it.

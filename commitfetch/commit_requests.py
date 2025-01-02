@@ -144,7 +144,7 @@ def _make_github_user_from_api_data(github_user_data):
 	name = github_user_data[_KEY_NAME]
 
 	github_user = GitHubUser(id, login, name)
-	_USER_REPO.register_github_user(github_user)
+	_USER_REPO.register_user(github_user)
 
 	return github_user
 
@@ -239,7 +239,7 @@ def _request_github_user(user_login, username, token):
 	Raises:
 		RuntimeError: if the response indicates that an error occured.
 	"""
-	github_user = _USER_REPO.get_github_user(user_login)
+	github_user = _USER_REPO.get_user(user_login)
 	if github_user is not None:
 		return github_user
 
