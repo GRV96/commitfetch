@@ -4,7 +4,7 @@ from .github_credentials import\
 	GitHubCredentials
 from .github_user import\
 	GitHubUser
-from . import\
-	github_user_repository
+from .github_user_repository import\
+	GitHubUserRepository
 from .repo_identity import\
 	RepoIdentity

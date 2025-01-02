@@ -5,10 +5,8 @@ from time import sleep
 from .github_data import\
 	Commit,\
 	GitHubUser,\
+	GitHubUserRepository,\
 	RepoIdentity
-from .github_data.github_user_repository import\
-	get_github_user,\
-	register_github_user
 
 
 _KEY_AUTHOR = "author"
@@ -33,6 +31,8 @@ _PATH_USERS = "https://api.github.com/users/"
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
 _TIME_BEFORE_API_AVAILABLE = 3602 # seconds
+
+_USER_REPO = GitHubUserRepository()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
@@ -130,11 +130,7 @@ def _make_commit_from_api_data(commit_data, username, token):
 
 	author_struct = commit_data[_KEY_AUTHOR]
 	author_login = author_struct[_KEY_LOGIN]
-
-	author = get_github_user(author_login)
-	if author is None:
-		author = _request_github_user(author_login, username, token)
-		register_github_user(author)
+	author = _request_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
 	files = *(fd[_KEY_FILENAME] for fd in file_data),
@@ -146,7 +142,11 @@ def _make_github_user_from_api_data(github_user_data):
 	id = github_user_data[_KEY_ID]
 	login = github_user_data[_KEY_LOGIN]
 	name = github_user_data[_KEY_NAME]
-	return GitHubUser(id, login, name)
+
+	github_user = GitHubUser(id, login, name)
+	_USER_REPO.register_user(github_user)
+
+	return github_user
 
 
 def _raise_github_api_exception(api_data):
@@ -239,6 +239,10 @@ def _request_github_user(user_login, username, token):
 	Raises:
 		RuntimeError: if the response indicates that an error occured.
 	"""
+	github_user = _USER_REPO.get_user(user_login)
+	if github_user is not None:
+		return github_user
+
 	user_url = _PATH_USERS + user_login
 	user_response = requests.get(user_url, auth=(username, token))
 	github_user_data = json.loads(user_response.content)
