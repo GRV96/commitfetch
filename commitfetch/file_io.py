@@ -1,5 +1,6 @@
 __all__ = ["extract_text_lines"]
 
+# strath is an indirect dependency of repr_rw.
 from strath import\
 	ensure_path_is_pathlib
 
