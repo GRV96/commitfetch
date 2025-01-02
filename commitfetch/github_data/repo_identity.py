@@ -23,7 +23,7 @@ class RepoIdentity:
 
 	def __repr__(self):
 		return self.__class__.__name__\
-			+ f"(\"{self._owner}\", \"{self._name}\")"
+			+ f"('{self._owner}', '{self._name}')"
 
 	def __str__(self):
 		return self.get_full_name()
