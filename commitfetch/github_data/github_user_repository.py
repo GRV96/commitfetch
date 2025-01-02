@@ -1,3 +1,6 @@
+# __all__ declared at the module's end
+
+
 class GitHubUserRepository:
 	"""
 	This singleton stores GitHubUser instances identified by their property

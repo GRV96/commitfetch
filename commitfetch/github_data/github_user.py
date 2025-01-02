@@ -1,3 +1,6 @@
+# __all__ declared at the module's end
+
+
 class GitHubUser:
 	"""
 	This immutable class contains data about a GitHub user.

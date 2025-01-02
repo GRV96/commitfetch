@@ -1,3 +1,6 @@
+# __all__ declared at the module's end
+
+
 class GitHubCredentials:
 	"""
 	The credentials consist of a username and personal authentication tokens

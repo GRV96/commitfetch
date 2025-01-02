@@ -1,3 +1,5 @@
+# __all__ declared at the module's end
+
 # strath is an indirect dependency of repr_rw.
 from strath import\
 	ensure_path_is_pathlib

@@ -1,3 +1,5 @@
+# __all__ declared at the module's end
+
 from sys import\
 	modules as sys_modules
 
