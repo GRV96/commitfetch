@@ -1,3 +1,5 @@
+__all__ = ["GitHubUser"]
+
 from . import _recurring_strings as rs
 
 

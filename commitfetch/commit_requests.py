@@ -1,3 +1,5 @@
+__all__ = ["get_repo_commits"]
+
 import json
 import requests
 from time import sleep

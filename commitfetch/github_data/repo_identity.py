@@ -1,3 +1,5 @@
+__all__ = ["RepoIdentity"]
+
 from . import _recurring_strings as rs
 
 

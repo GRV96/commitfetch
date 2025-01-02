@@ -1,3 +1,5 @@
+__all__ = ["extract_text_lines"]
+
 from pathlib import\
 	Path
 

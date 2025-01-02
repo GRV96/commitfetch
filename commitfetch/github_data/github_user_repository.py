@@ -1,3 +1,6 @@
+__all__ = ["GitHubUserRepository"]
+
+
 class GitHubUserRepository:
 	"""
 	This singleton stores GitHubUser instances identified by their property
