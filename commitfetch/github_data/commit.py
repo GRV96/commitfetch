@@ -66,15 +66,18 @@ class Commit:
 		self._files = *(Path(file) for file in files),
 
 	def __repr__(self):
-		str_paths = *(str(file) for file in self._files),
+		paths_as_strings = *(str(file) for file in self._files),
 
-		return self.__class__.__name__ + PAR_OPENING\
-			+ QUOTE + self._sha + QUOTE_COMMA_SPACE\
-			+ repr(self._message) + COMMA_SPACE\
-			+ QUOTE + str(self._repository) + QUOTE_COMMA_SPACE\
-			+ QUOTE + self.moment_to_str() + QUOTE_COMMA_SPACE\
-			+ repr(self._author) + COMMA_SPACE\
-			+ str(str_paths) + PAR_CLOSING
+		arguments = (
+			self._sha,
+			self._message,
+			str(self._repository),
+			self.moment_to_str(),
+			self._author,
+			paths_as_strings
+		)
+
+		return self.__class__.__name__ + repr(arguments)
 
 	@property
 	def author(self):
