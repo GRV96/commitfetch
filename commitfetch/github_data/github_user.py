@@ -22,10 +22,8 @@ class GitHubUser:
 		self._name = name
 
 	def __repr__(self):
-		return self.__class__.__name__ + rs.PAR_OPENING\
-			+ str(self._id) + rs.COMMA_SPACE\
-			+ rs.QUOTE + self._login + rs.QUOTE + rs.COMMA_SPACE\
-			+ rs.QUOTE + self._name + rs.QUOTE + rs.PAR_CLOSING
+		return self.__class__.__name__\
+			+ f"({self._id}, \"{self._login}\", \"{self._name}\")"
 
 	@property
 	def id(self):
