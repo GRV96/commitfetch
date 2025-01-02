@@ -1,6 +1,9 @@
+__all__ = ["get_repo_commits"]
+
 import json
 import requests
-from time import sleep
+from time import\
+	sleep
 
 from .github_data import\
 	Commit,\

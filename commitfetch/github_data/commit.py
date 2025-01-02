@@ -1,7 +1,9 @@
+__all__ = ["Commit"]
+
 from datetime import datetime
 from pathlib import Path
 
-from . import _recurring_strings as rs
+from . import recurring_strings as rs
 from .repo_identity import RepoIdentity
 
 

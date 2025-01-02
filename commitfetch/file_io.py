@@ -1,21 +1,12 @@
-from pathlib import\
-	Path
+__all__ = ["extract_text_lines"]
+
+# strath is an indirect dependency of repr_rw.
+from strath import\
+	ensure_path_is_pathlib
 
 
 _ENCODING_UTF8 = "utf-8"
 _MODE_R = "r"
-
-
-def _ensure_is_path(obj):
-	if isinstance(obj, Path):
-		return obj
-
-	elif isinstance(obj, str):
-		return Path(obj)
-
-	else:
-		raise TypeError(
-			"An argument of type str or pathlib.Path is expected.")
 
 
 def extract_text_lines(file_path, keep_blank_lines):
@@ -35,7 +26,7 @@ def extract_text_lines(file_path, keep_blank_lines):
 		FileNotFoundError: if argument file_path does not exist.
 		TypeError: if argument file_path is not of type str or pathlib.Path.
 	"""
-	file_path = _ensure_is_path(file_path)
+	file_path = ensure_path_is_pathlib(file_path, False)
 
 	with file_path.open(mode=_MODE_R, encoding=_ENCODING_UTF8) as file:
 		for line in file:

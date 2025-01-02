@@ -1,3 +1,11 @@
+__all__ = [
+	"Commit",
+	"GitHubCredentials",
+	"GitHubUser",
+	"GitHubUserRepository",
+	"RepoIdentity"
+]
+
 from .commit import\
 	Commit
 from .github_credentials import\
