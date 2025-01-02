@@ -3,12 +3,6 @@ __all__ = ["Commit"]
 from datetime import datetime
 from pathlib import Path
 
-from .recurring_strings import\
-	COMMA_SPACE,\
-	PAR_CLOSING,\
-	PAR_OPENING,\
-	QUOTE,\
-	QUOTE_COMMA_SPACE
 from .repo_identity import RepoIdentity
 
 
