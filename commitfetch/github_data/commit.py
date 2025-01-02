@@ -3,7 +3,6 @@ __all__ = ["Commit"]
 from datetime import datetime
 from pathlib import Path
 
-from . import recurring_strings as rs
 from .repo_identity import RepoIdentity
 
 
@@ -61,15 +60,18 @@ class Commit:
 		self._files = *(Path(file) for file in files),
 
 	def __repr__(self):
-		str_paths = *(str(file) for file in self._files),
+		paths_as_strings = *(str(file) for file in self._files),
 
-		return self.__class__.__name__ + rs.PAR_OPENING\
-			+ rs.QUOTE + self._sha + rs.QUOTE_COMMA_SPACE\
-			+ repr(self._message) + rs.COMMA_SPACE\
-			+ rs.QUOTE + str(self._repository) + rs.QUOTE_COMMA_SPACE\
-			+ rs.QUOTE + self.moment_to_str() + rs.QUOTE_COMMA_SPACE\
-			+ repr(self._author) + rs.COMMA_SPACE\
-			+ str(str_paths) + rs.PAR_CLOSING
+		arguments = (
+			self._sha,
+			self._message,
+			str(self._repository),
+			self.moment_to_str(),
+			self._author,
+			paths_as_strings
+		)
+
+		return self.__class__.__name__ + repr(arguments)
 
 	@property
 	def author(self):

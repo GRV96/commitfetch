@@ -1,7 +1,5 @@
 __all__ = ["RepoIdentity"]
 
-from . import recurring_strings as rs
-
 
 _SLASH = "/"
 
@@ -24,12 +22,17 @@ class RepoIdentity:
 		self._name = name
 
 	def __repr__(self):
-		return self.__class__.__name__ + rs.PAR_OPENING\
-			+ rs.QUOTE + self._owner + rs.QUOTE_COMMA_SPACE\
-			+ rs.QUOTE + self._name + rs.QUOTE_PAR_CLOSING\
+		return self.__class__.__name__\
+			+ f"('{self._owner}', '{self._name}')"
 
 	def __str__(self):
 		return self.get_full_name()
+
+	def __eq__(self, value):
+		if not isinstance(value, RepoIdentity):
+			return False
+
+		return self._owner == value._owner and self._name == value._name
 
 	@staticmethod
 	def from_full_name(full_name):
