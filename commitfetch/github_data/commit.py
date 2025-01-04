@@ -35,9 +35,8 @@ class Commit:
 				made. If it is a string, it must match format
 				%Y-%m-%dT%H:%M:%SZ.
 			author (GitHubUser): the GitHub user who made this commit.
-			files (generator, list, set or tuple): the paths
-				(str or pathlib.Path) to the files created, modified or deleted
-				in this commit.
+			files (generator, list, set or tuple): the paths (str) to the files
+				created, modified or deleted in this commit.
 
 		Raises:
 			ValueError: if argument repository or moment is a string and does
@@ -57,18 +56,16 @@ class Commit:
 			if isinstance(moment, str)\
 			else moment
 
-		self._files = *(Path(file) for file in files),
+		self._files = tuple(files)
 
 	def __repr__(self):
-		paths_as_strings = *(str(file) for file in self._files),
-
 		arguments = (
 			self._sha,
 			self._message,
 			str(self._repository),
 			self.moment_to_str(),
 			self._author,
-			paths_as_strings
+			self._files
 		)
 
 		return self.__class__.__name__ + repr(arguments)
@@ -83,8 +80,8 @@ class Commit:
 	@property
 	def files(self):
 		"""
-		tuple: the paths (pathlib.Path) to the files created, modified or
-			deleted in this commit.
+		tuple: the paths (str) to the files created, modified or deleted in
+			this commit.
 		"""
 		return self._files
 
