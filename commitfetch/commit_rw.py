@@ -1,7 +1,6 @@
 # __all__ declared at the module's end
 
-from sys import\
-	modules as sys_modules
+import sys
 
 from repr_rw import\
 	read_reprs,\
@@ -56,7 +55,7 @@ def read_commit_reprs(file_path):
 	# been imported at least once and thus, included in sys.modules. This makes
 	# commitfetch available for import with no modifications to sys.path.
 
-	if _LIB_NAME not in sys_modules:
+	if _LIB_NAME not in sys.modules:
 		_add_lib_to_sys_modules()
 
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
