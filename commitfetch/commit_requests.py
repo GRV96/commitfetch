@@ -136,9 +136,9 @@ def _make_commit_from_api_data(commit_data, username, token):
 	author = _request_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
-	files = *(fd[_KEY_FILENAME] for fd in file_data),
+	file_generator = (fd[_KEY_FILENAME] for fd in file_data)
 
-	return Commit(sha, message, repo_identity, moment, author, files)
+	return Commit(sha, message, repo_identity, moment, author, file_generator)
 
 
 def _make_github_user_from_api_data(github_user_data):
