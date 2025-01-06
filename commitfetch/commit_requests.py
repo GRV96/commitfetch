@@ -210,7 +210,11 @@ def _request_commit(commit_sha, repository, username, token):
 
 	_raise_github_api_exception(commit_url, commit_data)
 
-	commit = _make_commit_from_api_data(commit_data, username, token)
+	try:
+		commit = _make_commit_from_api_data(commit_data, username, token)
+	except RuntimeError as rte:
+		raise RuntimeError(f"{rte}\nCommit URL: {commit_url}")
+
 	return commit
 
 
@@ -268,7 +272,10 @@ def _request_github_user(user_login, username, token):
 	user_response = requests.get(user_url, auth=(username, token))
 	github_user_data = json.loads(user_response.content)
 
-	_raise_github_api_exception(user_url, github_user_data)
+	try:
+		_raise_github_api_exception(user_url, github_user_data)
+	except RuntimeError as rte:
+		raise RuntimeError(f"{rte}\nUser URL: {user_url}")
 
 	github_user = _make_github_user_from_api_data(github_user_data)
 	return github_user
