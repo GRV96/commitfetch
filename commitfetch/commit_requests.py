@@ -71,6 +71,8 @@ def _get_commit_author_login(commit_data):
 	if committer_struct is not None:
 		return committer_struct[_KEY_LOGIN]
 
+	return None
+
 
 def get_repo_commits(repository, credentials, can_wait):
 	"""
@@ -142,8 +144,10 @@ def _make_commit_from_api_data(commit_data, username, token):
 	commit_author_struct = commit_struct[_KEY_AUTHOR]
 	moment = commit_author_struct[_KEY_DATE]
 
+	author = None
 	author_login = _get_commit_author_login(commit_data)
-	author = _request_github_user(author_login, username, token)
+	if author_login is not None:
+		author = _request_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
 	file_generator = (fd[_KEY_FILENAME] for fd in file_data)
