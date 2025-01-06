@@ -175,7 +175,7 @@ def _raise_github_api_exception(request_url, api_data):
 		doc_url = api_data.get(_KEY_DOCUMENTATION_URL)
 
 		if message is not None and doc_url is not None:
-			exc_msg = f"{message}. Documentation: {doc_url}. {request_url}"
+			exc_msg = f"{message} ({request_url}). Documentation: {doc_url}."
 			raise RuntimeError(exc_msg)
 
 
