@@ -61,4 +61,5 @@ try:
 	write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commit_generator)
 finally:
 	end_moment = dt_now()
-	print(f"Execution time: {end_moment - start_moment}")
+	exec_time = end_moment - start_moment
+	print(f"Execution time: {exec_time.seconds}.{exec_time.microseconds} seconds")
