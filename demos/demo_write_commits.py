@@ -56,9 +56,10 @@ credentials = GitHubCredentials(username, token_generator)
 commit_generator = get_repo_commits(str(repository), credentials, can_wait)
 
 dt_now = datetime.now
+commit_file_path = repository.get_full_name("_") + "_commits.txt"
 try:
 	start_moment = dt_now()
-	write_commit_reprs(repository.get_full_name("_") + "_commits.txt", commit_generator)
+	write_commit_reprs(commit_file_path, commit_generator)
 finally:
 	end_moment = dt_now()
 	exec_time = end_moment - start_moment
