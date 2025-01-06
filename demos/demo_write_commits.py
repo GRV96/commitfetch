@@ -63,4 +63,4 @@ try:
 finally:
 	end_moment = dt_now()
 	exec_time = end_moment - start_moment
-	print(f"Execution time: {exec_time.total_seconds()} seconds")
+	print(f"Execution time: {exec_time} ({exec_time.total_seconds()} seconds)")
