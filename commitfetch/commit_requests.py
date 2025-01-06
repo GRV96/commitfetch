@@ -63,15 +63,18 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 
 
 def _get_commit_author_login(commit_data):
+	author_login = None
+
 	author_struct = commit_data[_KEY_AUTHOR]
 	if author_struct is not None:
-		return author_struct[_KEY_LOGIN]
+		author_login = author_struct[_KEY_LOGIN]
 
-	committer_struct = commit_data[_KEY_COMMITTER]
-	if committer_struct is not None:
-		return committer_struct[_KEY_LOGIN]
+	if author_login is None:
+		committer_struct = commit_data[_KEY_COMMITTER]
+		if committer_struct is not None:
+			author_login = committer_struct[_KEY_LOGIN]
 
-	return None
+	return author_login
 
 
 def get_repo_commits(repository, credentials, can_wait):
