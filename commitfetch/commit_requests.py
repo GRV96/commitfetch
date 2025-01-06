@@ -14,6 +14,7 @@ from .github_data import\
 
 _KEY_AUTHOR = "author"
 _KEY_COMMIT = "commit"
+_KEY_COMMITTER = "committer"
 _KEY_DATE = "date"
 _KEY_DOCUMENTATION_URL = "documentation_url"
 _KEY_FILENAME = "filename"
@@ -59,6 +60,21 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 
 	else:
 		raise api_except
+
+
+def _get_commit_author_login(commit_data):
+	author_login = None
+
+	author_struct = commit_data[_KEY_AUTHOR]
+	if author_struct is not None:
+		author_login = author_struct[_KEY_LOGIN]
+
+	if author_login is None:
+		committer_struct = commit_data[_KEY_COMMITTER]
+		if committer_struct is not None:
+			author_login = committer_struct[_KEY_LOGIN]
+
+	return author_login
 
 
 def get_repo_commits(repository, credentials, can_wait):
@@ -131,9 +147,10 @@ def _make_commit_from_api_data(commit_data, username, token):
 	commit_author_struct = commit_struct[_KEY_AUTHOR]
 	moment = commit_author_struct[_KEY_DATE]
 
-	author_struct = commit_data[_KEY_AUTHOR]
-	author_login = author_struct[_KEY_LOGIN]
-	author = _request_github_user(author_login, username, token)
+	author = None
+	author_login = _get_commit_author_login(commit_data)
+	if author_login is not None:
+		author = _request_github_user(author_login, username, token)
 
 	file_data = commit_data[_KEY_FILES]
 	file_generator = (fd[_KEY_FILENAME] for fd in file_data)
