@@ -169,7 +169,7 @@ def _make_github_user_from_api_data(github_user_data):
 	return github_user
 
 
-def _raise_github_api_exception(request_url, api_data):
+def _raise_github_api_error(request_url, api_data):
 	if isinstance(api_data, dict):
 		message = api_data.get(_KEY_MESSAGE)
 		doc_url = api_data.get(_KEY_DOCUMENTATION_URL)
@@ -208,7 +208,7 @@ def _request_commit(commit_sha, repository, username, token):
 	commit_response = requests.get(commit_url, auth=(username, token))
 	commit_data = json.loads(commit_response.content)
 
-	_raise_github_api_exception(commit_url, commit_data)
+	_raise_github_api_error(commit_url, commit_data)
 
 	try:
 		commit = _make_commit_from_api_data(commit_data, username, token)
@@ -242,7 +242,7 @@ def _request_commit_page(repository, page_num, username, token):
 	commits_response = requests.get(commit_page_url, auth=(username, token))
 	commit_page_data = json.loads(commits_response.content)
 
-	_raise_github_api_exception(commit_page_url, commit_page_data)
+	_raise_github_api_error(commit_page_url, commit_page_data)
 
 	return commit_page_data
 
@@ -274,7 +274,7 @@ def _request_github_user(user_login, username, token):
 	github_user_data = json.loads(user_response.content)
 
 	try:
-		_raise_github_api_exception(user_url, github_user_data)
+		_raise_github_api_error(user_url, github_user_data)
 	except Exception as ex:
 		ex.add_note(f"User URL: {user_url}")
 		raise
