@@ -74,14 +74,14 @@ def _get_commit_author_login_and_id(commit_data):
 
 	author_struct = commit_data[_KEY_AUTHOR]
 	if author_struct is not None:
-		author_login = author_struct[_KEY_LOGIN]
-		author_id = author_struct[_KEY_ID]
+		author_login = author_struct.get(_KEY_LOGIN)
+		author_id = author_struct.get(_KEY_ID)
 
 	if author_login is None:
 		committer_struct = commit_data[_KEY_COMMITTER]
 		if committer_struct is not None:
-			author_login = committer_struct[_KEY_LOGIN]
-			author_id = committer_struct[_KEY_ID]
+			author_login = committer_struct.get(_KEY_LOGIN)
+			author_id = committer_struct.get(_KEY_ID)
 
 	return author_login, author_id
 
