@@ -101,7 +101,7 @@ def get_repo_commits(repository, credentials, can_wait):
 		Commit: data about one commit from the specified repository.
 
 	Raises:
-		RuntimeError: if an error occured upon a request to the GitHub API.
+		GitHubAPIError: if an error occured upon a request to the GitHub API.
 	"""
 	page_num = 1
 	username = credentials.username
@@ -206,7 +206,7 @@ def _request_commit(commit_sha, repository, username, token):
 		Commit: an object that contains the wanted commit's data.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
 	commit_response = requests.get(commit_url, auth=(username, token))
@@ -239,7 +239,7 @@ def _request_commit_page(repository, page_num, username, token):
 		list: the data of the commits from the wanted page.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
@@ -267,7 +267,7 @@ def _request_github_user(user_login, username, token):
 		GitHubUser: data about the specified GitHub user.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	github_user = _USER_REPO.get_user(user_login)
 	if github_user is not None:
