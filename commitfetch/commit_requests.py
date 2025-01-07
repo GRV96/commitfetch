@@ -58,7 +58,7 @@ def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
 
 
 def _catch_github_api_exception(api_except, credentials, can_wait):
-	if _RATE_LIMIT_EXCEEDED in str(api_except):
+	if _RATE_LIMIT_EXCEEDED in api_except.message:
 		return _catch_api_rate_limit_exception(
 			api_except, credentials, can_wait)
 
