@@ -12,6 +12,10 @@ d'authentification.
 
 Cette classe contient des données d'un commit de GitHub.
 
+**`GitHubAPIError`**
+
+Cette exception est levée quand une requête à l'API de GitHub échoue.
+
 **`GitHubCredentials`**
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
@@ -142,6 +146,10 @@ GitHub API. Authentication with GitHub credentials is required.
 **`Commit`**
 
 This class contains data about a GitHub commit.
+
+**`GitHubAPIError`**
+
+This exception is raised when a request to the GitHub API fails.
 
 **`GitHubCredentials`**
 

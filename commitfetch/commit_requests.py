@@ -5,6 +5,9 @@ import requests
 from time import\
 	sleep
 
+from .github_api_error import\
+	GitHubAPIError
+
 from .github_data import\
 	Commit,\
 	GitHubUser,\
@@ -24,6 +27,7 @@ _KEY_LOGIN = "login"
 _KEY_MESSAGE = "message"
 _KEY_NAME = "name"
 _KEY_SHA = "sha"
+_KEY_STATUS = "status"
 _KEY_URL = "url"
 
 _PATH_COMMITS = "/commits/"
@@ -54,7 +58,7 @@ def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
 
 
 def _catch_github_api_exception(api_except, credentials, can_wait):
-	if _RATE_LIMIT_EXCEEDED in str(api_except):
+	if _RATE_LIMIT_EXCEEDED in api_except.message:
 		return _catch_api_rate_limit_exception(
 			api_except, credentials, can_wait)
 
@@ -97,7 +101,7 @@ def get_repo_commits(repository, credentials, can_wait):
 		Commit: data about one commit from the specified repository.
 
 	Raises:
-		RuntimeError: if an error occured upon a request to the GitHub API.
+		GitHubAPIError: if an error occured upon a request to the GitHub API.
 	"""
 	page_num = 1
 	username = credentials.username
@@ -109,7 +113,7 @@ def get_repo_commits(repository, credentials, can_wait):
 			all_commit_data = _request_commit_page(
 				repository, page_num, username, token)
 
-		except RuntimeError as rte:
+		except GitHubAPIError as rte:
 			token = _catch_github_api_exception(rte, credentials, can_wait)
 			continue
 
@@ -127,7 +131,7 @@ def get_repo_commits(repository, credentials, can_wait):
 				commit = _request_commit(commit_sha, repository, username, token)
 				yield commit
 
-			except RuntimeError as rte:
+			except GitHubAPIError as rte:
 				token = _catch_github_api_exception(rte, credentials, can_wait)
 				continue
 
@@ -169,14 +173,14 @@ def _make_github_user_from_api_data(github_user_data):
 	return github_user
 
 
-def _raise_github_api_exception(request_url, api_data):
+def _raise_github_api_error(request_url, api_data):
 	if isinstance(api_data, dict):
 		message = api_data.get(_KEY_MESSAGE)
 		doc_url = api_data.get(_KEY_DOCUMENTATION_URL)
+		status = api_data.get(_KEY_STATUS)
 
-		if message is not None and doc_url is not None:
-			exc_msg = f"{message} ({request_url}). Documentation: {doc_url}."
-			raise RuntimeError(exc_msg)
+		if message is not None and doc_url is not None and status is not None:
+			raise GitHubAPIError(message, doc_url, status, request_url)
 
 
 def _repo_from_commit_api_url(url):
@@ -202,13 +206,13 @@ def _request_commit(commit_sha, repository, username, token):
 		Commit: an object that contains the wanted commit's data.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
 	commit_response = requests.get(commit_url, auth=(username, token))
 	commit_data = json.loads(commit_response.content)
 
-	_raise_github_api_exception(commit_url, commit_data)
+	_raise_github_api_error(commit_url, commit_data)
 
 	try:
 		commit = _make_commit_from_api_data(commit_data, username, token)
@@ -235,14 +239,14 @@ def _request_commit_page(repository, page_num, username, token):
 		list: the data of the commits from the wanted page.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
 	commits_response = requests.get(commit_page_url, auth=(username, token))
 	commit_page_data = json.loads(commits_response.content)
 
-	_raise_github_api_exception(commit_page_url, commit_page_data)
+	_raise_github_api_error(commit_page_url, commit_page_data)
 
 	return commit_page_data
 
@@ -263,7 +267,7 @@ def _request_github_user(user_login, username, token):
 		GitHubUser: data about the specified GitHub user.
 
 	Raises:
-		RuntimeError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occured.
 	"""
 	github_user = _USER_REPO.get_user(user_login)
 	if github_user is not None:
@@ -274,7 +278,7 @@ def _request_github_user(user_login, username, token):
 	github_user_data = json.loads(user_response.content)
 
 	try:
-		_raise_github_api_exception(user_url, github_user_data)
+		_raise_github_api_error(user_url, github_user_data)
 	except Exception as ex:
 		ex.add_note(f"User URL: {user_url}")
 		raise

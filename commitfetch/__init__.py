@@ -5,6 +5,8 @@ from .commit_rw import\
 	write_commit_reprs
 from .file_io import\
 	extract_text_lines
+from .github_api_error import\
+	GitHubAPIError
 from .github_data import\
 	Commit,\
 	GitHubCredentials,\
@@ -14,6 +16,7 @@ from .github_data import\
 
 __all__ = [
 	Commit.__name__,
+	GitHubAPIError.__name__,
 	GitHubCredentials.__name__,
 	GitHubUser.__name__,
 	GitHubUserRepository.__name__,
