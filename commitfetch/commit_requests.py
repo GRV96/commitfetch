@@ -38,6 +38,8 @@ _PATH_USERS = "https://api.github.com/users/"
 
 _RATE_LIMIT_EXCEEDED = "API rate limit exceeded"
 
+_STATUS_404 = "404"
+
 _TIME_BEFORE_API_AVAILABLE = 3602 # seconds
 
 _USER_REPO = GitHubUserRepository()
@@ -66,19 +68,22 @@ def _catch_github_api_exception(api_except, credentials, can_wait):
 		raise api_except
 
 
-def _get_commit_author_login(commit_data):
+def _get_commit_author_login_and_id(commit_data):
 	author_login = None
+	author_id = None
 
 	author_struct = commit_data[_KEY_AUTHOR]
 	if author_struct is not None:
 		author_login = author_struct[_KEY_LOGIN]
+		author_id = author_struct[_KEY_ID]
 
 	if author_login is None:
 		committer_struct = commit_data[_KEY_COMMITTER]
 		if committer_struct is not None:
 			author_login = committer_struct[_KEY_LOGIN]
+			author_id = committer_struct[_KEY_ID]
 
-	return author_login
+	return author_login, author_id
 
 
 def get_repo_commits(repository, credentials, can_wait):
@@ -152,9 +157,16 @@ def _make_commit_from_api_data(commit_data, username, token):
 	moment = commit_author_struct[_KEY_DATE]
 
 	author = None
-	author_login = _get_commit_author_login(commit_data)
-	if author_login is not None:
-		author = _request_github_user(author_login, username, token)
+	author_login, author_id = _get_commit_author_login_and_id(commit_data)
+
+	try:
+		if author_login is not None:
+			author = _request_github_user(author_login, username, token)
+	except GitHubAPIError as ghae:
+		if ghae.status != _STATUS_404:
+			raise
+
+		author = GitHubUser(author_id, author_login, None)
 
 	file_data = commit_data[_KEY_FILES]
 	file_generator = (fd[_KEY_FILENAME] for fd in file_data)
