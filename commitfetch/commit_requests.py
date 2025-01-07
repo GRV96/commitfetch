@@ -113,7 +113,7 @@ def get_repo_commits(repository, credentials, can_wait):
 			all_commit_data = _request_commit_page(
 				repository, page_num, username, token)
 
-		except RuntimeError as rte:
+		except GitHubAPIError as rte:
 			token = _catch_github_api_exception(rte, credentials, can_wait)
 			continue
 
@@ -131,7 +131,7 @@ def get_repo_commits(repository, credentials, can_wait):
 				commit = _request_commit(commit_sha, repository, username, token)
 				yield commit
 
-			except RuntimeError as rte:
+			except GitHubAPIError as rte:
 				token = _catch_github_api_exception(rte, credentials, can_wait)
 				continue
 
