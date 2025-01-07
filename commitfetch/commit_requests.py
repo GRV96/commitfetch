@@ -169,13 +169,14 @@ def _make_github_user_from_api_data(github_user_data):
 	return github_user
 
 
-def _raise_github_api_exception(api_data):
+def _raise_github_api_exception(request_url, api_data):
 	if isinstance(api_data, dict):
 		message = api_data.get(_KEY_MESSAGE)
 		doc_url = api_data.get(_KEY_DOCUMENTATION_URL)
 
 		if message is not None and doc_url is not None:
-			raise RuntimeError(message + ". Documentation: " + doc_url)
+			exc_msg = f"{message} ({request_url}). Documentation: {doc_url}."
+			raise RuntimeError(exc_msg)
 
 
 def _repo_from_commit_api_url(url):
@@ -207,9 +208,13 @@ def _request_commit(commit_sha, repository, username, token):
 	commit_response = requests.get(commit_url, auth=(username, token))
 	commit_data = json.loads(commit_response.content)
 
-	_raise_github_api_exception(commit_data)
+	_raise_github_api_exception(commit_url, commit_data)
 
-	commit = _make_commit_from_api_data(commit_data, username, token)
+	try:
+		commit = _make_commit_from_api_data(commit_data, username, token)
+	except Exception as ex:
+		raise type(ex)(f"{ex}\nCommit URL: {commit_url}")
+
 	return commit
 
 
@@ -234,11 +239,11 @@ def _request_commit_page(repository, page_num, username, token):
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
 	commits_response = requests.get(commit_page_url, auth=(username, token))
-	commit_data = json.loads(commits_response.content)
+	commit_page_data = json.loads(commits_response.content)
 
-	_raise_github_api_exception(commit_data)
+	_raise_github_api_exception(commit_page_url, commit_page_data)
 
-	return commit_data
+	return commit_page_data
 
 
 def _request_github_user(user_login, username, token):
@@ -267,7 +272,10 @@ def _request_github_user(user_login, username, token):
 	user_response = requests.get(user_url, auth=(username, token))
 	github_user_data = json.loads(user_response.content)
 
-	_raise_github_api_exception(github_user_data)
+	try:
+		_raise_github_api_exception(user_url, github_user_data)
+	except Exception as ex:
+		raise type(ex)(f"{ex}\nUser URL: {user_url}")
 
 	github_user = _make_github_user_from_api_data(github_user_data)
 	return github_user
