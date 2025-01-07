@@ -21,7 +21,7 @@ class GitHubUser:
 
 	def __repr__(self):
 		return self.__class__.__name__\
-			+ f"({self._id}, '{self._login}', '{self._name}')"
+			+ f"({repr(self._id)}, {repr(self._login)}, {repr(self._name)})"
 
 	def __eq__(self, value):
 		if not isinstance(value, GitHubUser):
