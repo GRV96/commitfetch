@@ -213,7 +213,8 @@ def _request_commit(commit_sha, repository, username, token):
 	try:
 		commit = _make_commit_from_api_data(commit_data, username, token)
 	except Exception as ex:
-		raise type(ex)(f"{ex}\nCommit URL: {commit_url}")
+		ex.add_note(f"Commit URL: {commit_url}")
+		raise
 
 	return commit
 
@@ -275,7 +276,8 @@ def _request_github_user(user_login, username, token):
 	try:
 		_raise_github_api_exception(user_url, github_user_data)
 	except Exception as ex:
-		raise type(ex)(f"{ex}\nUser URL: {user_url}")
+		ex.add_note(f"User URL: {user_url}")
+		raise
 
 	github_user = _make_github_user_from_api_data(github_user_data)
 	return github_user
