@@ -159,14 +159,14 @@ def _make_commit_from_api_data(commit_data, username, token):
 	author = None
 	author_login, author_id = _get_commit_author_login_and_id(commit_data)
 
-	try:
-		if author_login is not None:
+	if author_login is not None:
+		try:
 			author = _request_github_user(author_login, username, token)
-	except GitHubAPIError as ghae:
-		if ghae.status != _STATUS_404:
-			raise
+		except GitHubAPIError as ghae:
+			if ghae.status != _STATUS_404:
+				raise
 
-		author = GitHubUser(author_id, author_login, None)
+			author = GitHubUser(author_id, author_login, None)
 
 	file_data = commit_data[_KEY_FILES]
 	file_generator = (fd[_KEY_FILENAME] for fd in file_data)
