@@ -23,8 +23,8 @@ class GitHubAPIError(Exception):
 
 	def __repr__(self):
 		return self.__class__.__name__\
-			+ f"({self._message}, {self._doc_url}, "\
-			+ f"{self._status}, {self._req_url})"
+			+ f"('{self._message}', '{self._doc_url}', "\
+			+ f"'{self._status}', '{self._req_url}')"
 
 	@property
 	def message(self):
