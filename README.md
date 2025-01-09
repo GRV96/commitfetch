@@ -18,16 +18,6 @@ Cette exception est levée quand une requête à l'API de GitHub échoue.
 
 **`GitHubCredRepository`**
 
-Cette classe contient le nom d'un utilisateur de GitHub et des jetons
-d'authentification qu'il possède. Elle aide à effectuer des requêtes
-authentifiées à l'API de GitHub. Chaque jeton permet 5000 requêtes par heure.
-
-**`GitHubUser`**
-
-Cette classe contient des données d'un utilisateur de GitHub.
-
-**`GitHubUserRepository`**
-
 Une authentification consiste en un nom d'utilisateur de GitHub et en un jeton
 d'accès personnel (*personal access token*, *PAT*). Cette classe conserve des
 tuples contenant un nom d'utilisateur (str, indice 0) et un jeton
@@ -35,8 +25,17 @@ tuples contenant un nom d'utilisateur (str, indice 0) et un jeton
 quel à authentifier une requête à l'API de GitHub.
 
 L'API de GitHub permet 5000 requêtes authentifiées par utilisateur par heure.
-Pour faciliter l'envoi de nombreuses requêtes dans une courte période, cette
-classe permet d'itérer dans les authentifications.
+Pour faciliter l'envoi de nombreuses requêtes dans 
+
+**`GitHubUser`**
+
+Cette classe contient des données d'un utilisateur de GitHub.
+
+**`GitHubUserRepository`**
+
+Ce singleton conserve des instances de `GitHubUser` identifiées par leur
+proprité `login`. Ainsi, il aide à éviter la création de nombreuses instances
+identiques de `GitHubUser`.
 
 **`RepoIdentity`**
 
