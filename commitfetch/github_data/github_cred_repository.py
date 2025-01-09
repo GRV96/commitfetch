@@ -36,7 +36,7 @@ class GitHubCredRepository:
 		credentials have been used.
 
 		Returns:
-			tuple: the next unused credential, None if all tokens have been used.
+			tuple: the next unused credential, None if all credentials have been used.
 		"""
 		try:
 			credential = next(self._cred_iterator)

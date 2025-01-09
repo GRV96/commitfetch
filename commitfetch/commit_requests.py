@@ -217,16 +217,15 @@ def _repo_from_commit_api_url(url):
 
 def _request_commit(commit_sha, repository, credential):
 	"""
-	Requests a commit from the GitHub API. The caller must provide GitHub
-	credentials to authenticate the requests to the GitHub API.
+	Requests a commit from the GitHub API. The caller must provide a GitHub
+	credential to authenticate the requests to the GitHub API.
 
 	Parameters:
 		commit_sha (str): a SHA hash that identifies a commit.
 		repository (str): a GitHub repository name in the format
 			<owner>/<name>.
-		username (str): a GitHub username for request authentication.
-		token (str): a token owned by the GitHub user identified by argument
-			username.
+		credential (tuple): a GitHub credential consisting of a username
+			(str, index 0) and a PAT (str, index 1).
 	
 	Returns:
 		Commit: an object that contains the wanted commit's data.
@@ -257,9 +256,8 @@ def _request_commit_page(repository, page_num, credential):
 	Parameters:
 		repository (str): a GitHub repository name in the format <owner>/<name>.
 		page_num (int): the number of a commit page on the GitHub API, >= 1.
-		username (str): a GitHub username for request authentication.
-		token (str): a token owned by the GitHub user identified by argument
-			username.
+		credential (tuple): a GitHub credential consisting of a username
+			(str, index 0) and a PAT (str, index 1).
 
 	Returns:
 		list: the data of the commits from the wanted page.
@@ -285,9 +283,8 @@ def _request_github_user(user_login, credential):
 	Parameters:
 		user_login (str): the wanted user's login name, which corresponds to
 			property GitHubUser.login.
-		username (str): a GitHub username for request authentication.
-		token (str): a token owned by the GitHub user identified by argument
-			username.
+		credential (tuple): a GitHub credential consisting of a username
+			(str, index 0) and a PAT (str, index 1).
 
 	Returns:
 		GitHubUser: data about the specified GitHub user.
