@@ -13,6 +13,7 @@ from datetime import\
 from pathlib import\
 	Path
 
+# syspathmodif is a dependency of repr_rw.
 from syspathmodif import\
 	sp_append,\
 	sp_remove
