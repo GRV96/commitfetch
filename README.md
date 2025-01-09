@@ -3,8 +3,26 @@
 ## FRANÇAIS
 
 Cette bibliothèque aide à obtenir les données des commits d'un dépôt au moyen
-de l'API de GitHub. L'utilisateur doit fournir ses informations
-d'authentification.
+de l'API de GitHub. Puisqu'il faut authentifier les requêtes à cette API,
+l'utilisateur doit fournir des authentifications.
+
+### Authentification des requêtes
+
+Une authentification consiste en un nom d'utilisateur de GitHub et en un jeton
+d'accès personnel (*personal access token*, *PAT*) appartenant à l'utilisateur
+correspondant. L'API de GitHub autorise à chaque utilisateur authentifié 5000
+requêtes par heure. Une fois cette limite atteinte, on peut utiliser une autre
+authentification pour effectuer plus de requêtes.
+
+Cette bibliothèque représente les authentifications par des tuples contenant un
+nom d'utilisateur (str, indice 0) et un jeton (str, indice 1). Les requêtes
+reçoivent ces tuples en paramètre.
+
+Il est possible d'écrire des authentifications dans un fichier texte. Le
+générateur `read_github_credentials` décrit ci-dessous lit un tel fichier et
+produit une authentification par itération. Pour que ce dépôt ignore les
+fichiers de jetons, leur nom devrait correspondre au modèle `*cred*.txt`, où
+l'astérisque (`*`) représente une chaîne de caractères quelconque.
 
 ### Contenu
 
@@ -18,15 +36,9 @@ Cette exception est levée quand une requête à l'API de GitHub échoue.
 
 **`GitHubCredRepository`**
 
-Une authentification consiste en un nom d'utilisateur de GitHub et en un jeton
-d'accès personnel (*personal access token*, *PAT*). Cette classe conserve des
-tuples contenant un nom d'utilisateur (str, indice 0) et un jeton
-(str, indice 1). Ces authentifications sous forme de tuples peuvent servir tel
-quel à authentifier une requête à l'API de GitHub.
-
-L'API de GitHub permet 5000 requêtes authentifiées par utilisateur par heure.
-Pour faciliter l'envoi de nombreuses requêtes dans une courte période, cette
-classe permet d'itérer dans les authentifications.
+Cette classe conserve des authentifications sous forme de tuples. Pour
+faciliter l'envoi de nombreuses requêtes dans une courte période, cette classe
+permet d'itérer dans les authentifications.
 
 **`GitHubUser`**
 
@@ -61,10 +73,9 @@ fonction `repr`. Chaque ligne du fichier doit être une représentation d'un
 
 Ce générateur fournit des authentifications GitHub conservées dans un fichier
 texte. Chaque ligne doit consister en un nom d'utilisateur GitHub et en un
-jeton d'accès personnel (*personal access token*, *PAT*) séparés par un
-deux-points. Les espaces sont autorisées avant et après le deux-points. Les
-lignes vides sont ignorées. Chaque itération produit une authentification
-formée d'un nom d'utilisateur et d'un jeton.
+jeton séparés par un deux-points. Les espaces sont autorisées avant et après
+le deux-points. Les lignes vides sont ignorées. Chaque itération produit une
+authentification sous forme de tuple.
 
 Exemples de lignes valides dans le fichier d'authentifications:
 
@@ -97,10 +108,8 @@ bibliothèque `commitfetch`.
 #### Enregistrement des commits
 
 `demo_write_commits.py` obtient les commits d'un dépôt GitHub et écrit leur
-représentation dans un fichier texte. Il a besoin d'un fichier listant les
-jetons d'authentification de l'utilisateur un par ligne pour effectuer des
-requêtes à l'API GitHub. Pour que ce dépôt ignore les fichiers de jetons, leur
-nom devrait contenir la chaîne «`token`».
+représentation dans un fichier texte. Il a besoin d'un fichier d'authentifications
+lisible par `read_github_credentials`.
 
 Aide:
 
@@ -111,11 +120,11 @@ python demos/demo_write_commits.py -h
 Exemples d'exécution:
 
 ```
-python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r GRV96/commitfetch
+python demos/demo_write_commits.py -c credentials.txt -r GRV96/commitfetch
 ```
 
 ```
-python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+python demos/demo_write_commits.py -c credentials.txt -r scottyab/rootbeer
 ```
 
 Pour essayer `demo_write_commits.py` avec des nombres de commits variés,
@@ -154,7 +163,24 @@ python demos/demo_read_commits.py -c scottyab_rootbeer_commits.txt
 ## ENGLISH
 
 This library helps obtaining the data of a repository's commits through the
-GitHub API. Authentication with GitHub credentials is required.
+GitHub API. The requests must be authentified with GitHub credentials.
+
+### Request authentification
+
+A GitHub credential consists of a GitHub username and a personal access
+token (PAT) owned by the corresponding user. The GitHub API allows each
+authenticated user 5000 requests per hour. After this limit is reached, another
+credential can be used to make more requests.
+
+This library represents credentials with tuples containing a username
+(str, index 0) and a token (str, index 1). The request take these tuples as
+arguments.
+
+It is possible to write credentials in a text file. Generator
+`read_github_credentials` described below reads such a file and yields one
+credential per iteration. For this repository to ignore credential files, their
+name should match pattern `*cred*.txt`, where the asterisk (`*`) stands for any
+character string.
 
 ### Content
 
@@ -168,15 +194,8 @@ This exception is raised when a request to the GitHub API fails.
 
 **`GitHubCredRepository`**
 
-A GitHub credential consists of a GitHub username and a personal access
-token (PAT) owned by the specified user. This class stores tuples
-containing a username (str, index 0) and a token (str, index 1). These
-credentials in the form of tuples can be directly used to authenticate a
-request to the GitHub API.
-
-The GitHub API allows 5000 authenticated requests per user per hour. To
-facilitate sending many requests in a short period, this class allows to
-iterate through the credentials.
+This class stores credential tuples. To facilitate sending many requests in a
+short period, this class allows to iterate through the credentials.
 
 **`GitHubUser`**
 
@@ -209,10 +228,9 @@ line in the file must be a `Commit` representation. Empty lines are ignored.
 **`read_github_credentials`**
 
 This generator provides GitHub credentials stored in a text file. Each line
-must consist of a GitHub username and a personal access token (PAT) owned
-by the corresponding user separated by a colon. Whitespaces are allowed
-before and after the colon. Empty lines are ignored. Each iteration yields
-one credential made of a username and a PAT.
+must consist of a GitHub username and a personal access token (PAT) separated
+by a colon. Whitespaces are allowed before and after the colon. Empty lines are
+ignored. Each iteration yields one credential tuple.
 
 Examples of valid lines in the credential file:
 
@@ -243,10 +261,8 @@ See scripts in directory `demos` to know how to use library `commitfetch`.
 #### Recording commits
 
 `demo_write_commits.py` obtains a GitHub repository's commits and writes their
-representation in a text file. It needs a file that lists the user's
-authentication tokens one per line to perform requests to the GitHub API. This
-repository will ignore the token files if their name contains the string
-"`token`".
+representation in a text file. It needs a credential file readable by
+`read_github_credentials`.
 
 Help:
 
@@ -257,11 +273,11 @@ python demos/demo_write_commits.py -h
 Execution examples:
 
 ```
-python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r GRV96/commitfetch
+python demos/demo_write_commits.py -c credentials.txt -r GRV96/commitfetch
 ```
 
 ```
-python demos/demo_write_commits.py -u GRV96 -t tokens.txt -r scottyab/rootbeer
+python demos/demo_write_commits.py -c credentials.txt -r scottyab/rootbeer
 ```
 
 To try `demo_write_commits.py` with varied numbers of commits, use the
