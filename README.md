@@ -37,12 +37,6 @@ identiques de `GitHubUser`.
 Cette classe identifie un dépôt GitHub par le nom de son propriétaire et le nom
 du dépôt. L'identité est souvent écrite sous le format `propriétaire`/`nom`.
 
-**`extract_text_lines`**
-
-Ce générateur lit le fichier texte spécifié et renvoie une de ses lignes à
-chaque itération. Il permet par exemple d'accéder à des jetons enregistrés
-dans un fichier texte, un par ligne.
-
 **`get_repo_commits`**
 
 Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
@@ -171,12 +165,6 @@ instances.
 
 This class identifies a GitHub repository by its owner's name and the
 repository's name. The identity is often written in the format `owner`/`name`.
-
-**`extract_text_lines`**
-
-This generator reads the specified text file and yields one of its lines at
-each iteration. It allows for example to access tokens stored in a text file,
-one per line.
 
 **`get_repo_commits`**
 
