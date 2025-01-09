@@ -4,7 +4,7 @@
 class GitHubCredRepository:
 	"""
 	A GitHub credential consists of a GitHub username and a personal access
-	token (PAT) owned by the specified user. This class stores tuples
+	token (PAT) owned by the corresponding user. This class stores tuples
 	containing a username (str, index 0) and a token (str, index 1). These
 	credentials in the form of tuples can be directly used to authenticate a
 	request to the GitHub API.
