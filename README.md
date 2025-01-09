@@ -16,7 +16,7 @@ Cette classe contient des données d'un commit de GitHub.
 
 Cette exception est levée quand une requête à l'API de GitHub échoue.
 
-**`GitHubCredentials`**
+**`GitHubCredRepository`**
 
 Cette classe contient le nom d'un utilisateur de GitHub et des jetons
 d'authentification qu'il possède. Elle aide à effectuer des requêtes
@@ -28,9 +28,15 @@ Cette classe contient des données d'un utilisateur de GitHub.
 
 **`GitHubUserRepository`**
 
-Ce singleton conserve des instances de `GitHubUser` identifiées par leur
-proprité `login`. Ainsi, il aide à éviter la création de nombreuses instances
-identiques de `GitHubUser`.
+Une authentification consiste en un nom d'utilisateur de GitHub et en un jeton
+d'accès personnel (*personal access token*, *PAT*). Cette classe conserve des
+tuples contenant un nom d'utilisateur (str, indice 0) et un jeton
+(str, indice 1). Ces authentifications sous forme de tuples peuvent servir tel
+quel à authentifier une requête à l'API de GitHub.
+
+L'API de GitHub permet 5000 requêtes authentifiées par utilisateur par heure.
+Pour faciliter l'envoi de nombreuses requêtes dans une courte période, cette
+classe permet d'itérer dans les authentifications.
 
 **`RepoIdentity`**
 
@@ -41,9 +47,7 @@ du dépôt. L'identité est souvent écrite sous le format `propriétaire`/`nom`
 
 Ce générateur est l'élément principal de `commitfetch`. C'est lui qui effectue
 les requêtes à l'API de GitHub pour obtenir les données des commits d'un dépôt.
-Chaque itération produit une instance de `Commit`. Il faut fournir à ce
-générateur des informations d'authentification dans une instance de
-`GitHubCredentials`.
+Chaque itération produit une instance de `Commit`.
 
 **`read_commit_reprs`**
 
@@ -52,6 +56,23 @@ de `Commit` et recrée ces objets. Chaque itération produit une instance de
 `Commit`. Les représetations sont des chaînes de caractères renvoyées par la
 fonction `repr`. Chaque ligne du fichier doit être une représentation d'un
 `Commit`. Les lignes vides sont ignorées.
+
+**`read_github_credentials`**
+
+Ce générateur fournit des authentifications GitHub conservées dans un fichier
+texte. Chaque ligne doit consister en un nom d'utilisateur GitHub et en un
+jeton d'accès personnel (*personal access token*, *PAT*) séparés par un
+deux-points. Les espaces sont autorisées avant et après le deux-points. Les
+lignes vides sont ignorées. Chaque itération produit une authentification
+formée d'un nom d'utilisateur et d'un jeton.
+
+Exemples de lignes valides dans le fichier d'authentifications:
+
+`NomUtilisateur:ghp_a1b2c3d4e5f6`
+
+`NomUtilisateur: ghp_a1b2c3d4e5f6`
+
+`NomUtilisateur : ghp_a1b2c3d4e5f6`
 
 **`write_commit_reprs`**
 
@@ -145,11 +166,17 @@ This class contains data about a GitHub commit.
 
 This exception is raised when a request to the GitHub API fails.
 
-**`GitHubCredentials`**
+**`GitHubCredRepository`**
 
-This class contains the name of a GitHub user and authentication tokens that
-they own. It helps making authenticated requests to the GitHub API. Each token
-allows 5000 requests per hour.
+A GitHub credential consists of a GitHub username and a personal access
+token (PAT) owned by the specified user. This class stores tuples
+containing a username (str, index 0) and a token (str, index 1). These
+credentials in the form of tuples can be directly used to authenticate a
+request to the GitHub API.
+
+The GitHub API allows 5000 authenticated requests per user per hour. To
+facilitate sending many requests in a short period, this class allows to
+iterate through the credentials.
 
 **`GitHubUser`**
 
@@ -170,8 +197,7 @@ repository's name. The identity is often written in the format `owner`/`name`.
 
 This generator is the core element of `commitfetch`. It performs requests to
 the GitHub API to obtain data about a repository's commits. Each iteration
-yields a `Commit` instance. The user must provide their credentials in a
-`GitHubCredentials` instance.
+yields a `Commit` instance.
 
 **`read_commit_reprs`**
 
@@ -179,6 +205,22 @@ This generator reads a text file that contains the representations of `Commit`
 instances and recreates those objects. Each iteration yields a `Commit`
 instance. The representations are strings returned by function `repr`. Each
 line in the file must be a `Commit` representation. Empty lines are ignored.
+
+**`read_github_credentials`**
+
+This generator provides GitHub credentials stored in a text file. Each line
+must consist of a GitHub username and a personal access token (PAT) owned
+by the corresponding user separated by a colon. Whitespaces are allowed
+before and after the colon. Empty lines are ignored. Each iteration yields
+one credential made of a username and a PAT.
+
+Examples of valid lines in the credential file:
+
+`MyUsername:ghp_a1b2c3d4e5f6`
+
+`MyUsername: ghp_a1b2c3d4e5f6`
+
+`MyUsername : ghp_a1b2c3d4e5f6`
 
 **`write_commit_reprs`**
 

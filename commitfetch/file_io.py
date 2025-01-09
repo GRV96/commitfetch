@@ -13,13 +13,13 @@ _MODE_R = "r"
 
 def read_github_credentials(file_path):
 	"""
-	This generator obtains GitHub credentials stored in a text file. Each line
+	This generator provides GitHub credentials stored in a text file. Each line
 	must consist of a GitHub username and a personal access token (PAT) owned
 	by the corresponding user separated by a colon. Whitespaces are allowed
 	before and after the colon. Empty lines are ignored. Each iteration yields
-	one credential consisting of a username and a PAT.
+	one credential made of a username and a PAT.
 
-	Examples of valid lines in the text file:
+	Examples of valid lines in the credential file:
 
 	MyUsername:ghp_a1b2c3d4e5f6
 
