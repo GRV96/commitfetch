@@ -25,7 +25,8 @@ tuples contenant un nom d'utilisateur (str, indice 0) et un jeton
 quel à authentifier une requête à l'API de GitHub.
 
 L'API de GitHub permet 5000 requêtes authentifiées par utilisateur par heure.
-Pour faciliter l'envoi de nombreuses requêtes dans 
+Pour faciliter l'envoi de nombreuses requêtes dans une courte période, cette
+classe permet d'itérer dans les authentifications.
 
 **`GitHubUser`**
 
