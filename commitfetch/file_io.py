@@ -21,11 +21,11 @@ def read_github_credentials(file_path):
 
 	Examples of valid lines in the text file:
 
-	MyLoginName:ghp_a1b2c3d4e5f6
+	MyUsername:ghp_a1b2c3d4e5f6
 
-	MyLoginName: ghp_a1b2c3d4e5f6
+	MyUsername: ghp_a1b2c3d4e5f6
 
-	MyLoginName : ghp_a1b2c3d4e5f6
+	MyUsername : ghp_a1b2c3d4e5f6
 
 	Parameters:
 		file_path (str or pathlib.Path): the path to a text file containing
