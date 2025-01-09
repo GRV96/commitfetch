@@ -10,6 +10,7 @@ from .github_api_error import\
 
 from .github_data import\
 	Commit,\
+	GitHubCredRepository,\
 	GitHubUser,\
 	GitHubUserRepository,\
 	RepoIdentity
@@ -46,17 +47,17 @@ _USER_REPO = GitHubUserRepository()
 
 
 def _catch_api_rate_limit_exception(api_except, credentials, can_wait):
-	token = credentials.get_next_token()
+	credential = credentials.get_next_credential()
 
-	if token is None:
+	if credential is None:
 		if can_wait:
 			sleep(_TIME_BEFORE_API_AVAILABLE)
-			credentials.reset_token_iter()
-			token = credentials.get_next_token()
+			credentials.reset_credential_iter()
+			credential = credentials.get_next_credential()
 		else:
 			raise api_except
 
-	return token
+	return credential
 
 
 def _catch_github_api_exception(api_except, credentials, can_wait):
@@ -89,37 +90,50 @@ def _get_commit_author_login_and_id(commit_data):
 def get_repo_commits(repository, credentials, can_wait):
 	"""
 	This generator obtains data about all the commits in a GitHub repository
-	through the GitHub API. Each iteration yields data about one commit. The
-	caller must provide GitHub credentials to authenticate the requests to the
-	GitHub API.
+	through the GitHub API. Each iteration yields data about one commit.
+	
+	The caller must provide GitHub credentials to authenticate the requests to
+	the GitHub API. Each credential must be a tuple containing a GitHub usename
+	(str, index 0) and a token owned by the corresponding user (str, index 1).
+
+	If argument credentials is of type GitHubCredRepository, it will be used as
+	is. If it is a generator, a list, a set or a tuple, its content will be
+	used to create a GitHubCredRepository.
+
+	The GitHub API allows 5000 authenticated requests per user per hour. When
+	the request rate limit is exceeded, an error occurs. At that moment, if
+	argument can_wait is False, this generator raises an exception. If can_wait
+	is True, this generator waits for one hour then resumes sending requests.
 
 	Parameters:
 		repository (str): a repository's full name in the format
 			<owner>/<name>.
-		credentials (GitHubCredentials): the username and tokens of a GitHub
-			user.
-		can_wait (bool): If it is set to True and and the GitHub API request
-			rate limit is exceeded for all the user's tokens, the function
-			waits for one hour until it can make more requests.
+		credentials: GitHub credentials.
+		can_wait (bool): allows this generator to wait if the GitHub API's
+			request rate limit is exceeded.
 
 	Yields:
 		Commit: data about one commit from the specified repository.
 
 	Raises:
-		GitHubAPIError: if an error occured upon a request to the GitHub API.
+		GitHubAPIError: if an error occurred upon a request to the GitHub API.
 	"""
+	cred_repo = credentials
+	if not isinstance(cred_repo, GitHubCredRepository):
+		cred_repo = GitHubCredRepository(credentials)
+
+	credential = cred_repo.get_next_credential()
+
 	page_num = 1
-	username = credentials.username
-	token = credentials.get_next_token()
 
 	# Loop through all the commit pages until an empty page is encountered.
 	while True:
 		try:
 			all_commit_data = _request_commit_page(
-				repository, page_num, username, token)
+				repository, page_num, credential)
 
-		except GitHubAPIError as rte:
-			token = _catch_github_api_exception(rte, credentials, can_wait)
+		except GitHubAPIError as ghae:
+			credential = _catch_github_api_exception(ghae, cred_repo, can_wait)
 			continue
 
 		commit_data_len = len(all_commit_data)
@@ -133,11 +147,11 @@ def get_repo_commits(repository, credentials, can_wait):
 			commit_sha = all_commit_data[commit_data_index][_KEY_SHA]
 
 			try:
-				commit = _request_commit(commit_sha, repository, username, token)
+				commit = _request_commit(commit_sha, repository, credential)
 				yield commit
 
-			except GitHubAPIError as rte:
-				token = _catch_github_api_exception(rte, credentials, can_wait)
+			except GitHubAPIError as ghae:
+				credential = _catch_github_api_exception(ghae, cred_repo, can_wait)
 				continue
 
 			commit_data_index += 1
@@ -145,7 +159,7 @@ def get_repo_commits(repository, credentials, can_wait):
 		page_num += 1
 
 
-def _make_commit_from_api_data(commit_data, username, token):
+def _make_commit_from_api_data(commit_data, credential):
 	sha = commit_data[_KEY_SHA]
 
 	api_url = commit_data[_KEY_URL]
@@ -161,7 +175,7 @@ def _make_commit_from_api_data(commit_data, username, token):
 
 	if author_login is not None:
 		try:
-			author = _request_github_user(author_login, username, token)
+			author = _request_github_user(author_login, credential)
 		except GitHubAPIError as ghae:
 			if ghae.status != _STATUS_404:
 				raise
@@ -201,7 +215,7 @@ def _repo_from_commit_api_url(url):
 	return RepoIdentity.from_full_name(repo_full_name)
 
 
-def _request_commit(commit_sha, repository, username, token):
+def _request_commit(commit_sha, repository, credential):
 	"""
 	Requests a commit from the GitHub API. The caller must provide GitHub
 	credentials to authenticate the requests to the GitHub API.
@@ -218,16 +232,16 @@ def _request_commit(commit_sha, repository, username, token):
 		Commit: an object that contains the wanted commit's data.
 
 	Raises:
-		GitHubAPIError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occurred.
 	"""
 	commit_url = _PATH_REPOS + repository + _PATH_COMMITS + commit_sha
-	commit_response = requests.get(commit_url, auth=(username, token))
+	commit_response = requests.get(commit_url, auth=credential)
 	commit_data = json.loads(commit_response.content)
 
 	_raise_github_api_error(commit_url, commit_data)
 
 	try:
-		commit = _make_commit_from_api_data(commit_data, username, token)
+		commit = _make_commit_from_api_data(commit_data, credential)
 	except Exception as ex:
 		ex.add_note(f"Commit URL: {commit_url}")
 		raise
@@ -235,7 +249,7 @@ def _request_commit(commit_sha, repository, username, token):
 	return commit
 
 
-def _request_commit_page(repository, page_num, username, token):
+def _request_commit_page(repository, page_num, credential):
 	"""
 	Requests a page of commit data from the GitHub API. The caller must provide
 	GitHub credentials to authenticate the requests to the GitHub API.
@@ -251,11 +265,11 @@ def _request_commit_page(repository, page_num, username, token):
 		list: the data of the commits from the wanted page.
 
 	Raises:
-		GitHubAPIError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occurred.
 	"""
 	commit_page_url = _PATH_REPOS + repository\
 		+ '/commits?page=' + str(page_num)
-	commits_response = requests.get(commit_page_url, auth=(username, token))
+	commits_response = requests.get(commit_page_url, auth=credential)
 	commit_page_data = json.loads(commits_response.content)
 
 	_raise_github_api_error(commit_page_url, commit_page_data)
@@ -263,7 +277,7 @@ def _request_commit_page(repository, page_num, username, token):
 	return commit_page_data
 
 
-def _request_github_user(user_login, username, token):
+def _request_github_user(user_login, credential):
 	"""
 	Request data about a GitHub user from the GitHub API. The caller must
 	provide GitHub credentials to authenticate the requests to the GitHub API.
@@ -279,14 +293,14 @@ def _request_github_user(user_login, username, token):
 		GitHubUser: data about the specified GitHub user.
 
 	Raises:
-		GitHubAPIError: if the response indicates that an error occured.
+		GitHubAPIError: if the response indicates that an error occurred.
 	"""
 	github_user = _USER_REPO.get_user(user_login)
 	if github_user is not None:
 		return github_user
 
 	user_url = _PATH_USERS + user_login
-	user_response = requests.get(user_url, auth=(username, token))
+	user_response = requests.get(user_url, auth=credential)
 	github_user_data = json.loads(user_response.content)
 
 	try:
