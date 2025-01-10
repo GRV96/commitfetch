@@ -1,7 +1,6 @@
 # __all__ declared at the module's end
 
 from datetime import datetime
-from pathlib import Path
 
 from .repo_identity import RepoIdentity
 
