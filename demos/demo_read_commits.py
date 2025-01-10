@@ -33,7 +33,7 @@ def make_arg_parser():
 
 parser = make_arg_parser()
 args = parser.parse_args()
-commit_file = args.commit_file
+commit_file = args.commit_file.resolve()
 
 commit_generator = read_commit_reprs(commit_file)
 

@@ -45,7 +45,7 @@ def make_arg_parser():
 parser = make_arg_parser()
 args = parser.parse_args()
 repository = args.repository
-cred_file = args.cred_file
+cred_file = args.cred_file.resolve()
 can_wait = args.can_wait
 
 cred_generator = read_github_credentials(cred_file)
