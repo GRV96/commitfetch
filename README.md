@@ -10,8 +10,8 @@ l'utilisateur doit fournir des authentifications.
 
 Une authentification consiste en un nom d'utilisateur de GitHub et en un jeton
 d'accès personnel (*personal access token*, *PAT*) appartenant à l'utilisateur
-correspondant. L'API de GitHub autorise à chaque utilisateur authentifié 5000
-requêtes par heure. Une fois cette limite atteinte, on peut utiliser une autre
+correspondant. Chaque authentification permet d'envoyer 5000 requêtes par heure
+à l'API de GitHub. Une fois cette limite atteinte, on peut utiliser une autre
 authentification pour effectuer plus de requêtes.
 
 Cette bibliothèque représente les authentifications par des tuples contenant un
@@ -168,9 +168,9 @@ GitHub API. The requests must be authentified with GitHub credentials.
 
 ### Request authentification
 
-A GitHub credential consists of a GitHub username and a personal access
-token (PAT) owned by the corresponding user. The GitHub API allows each
-authenticated user 5000 requests per hour. After this limit is reached, another
+A GitHub credential consists of a GitHub username and a personal access token
+(PAT) owned by the corresponding user. Each credential allows to send 5000
+requests per hour to the GitHub API. After this limit is reached, another
 credential can be used to make more requests.
 
 This library represents credentials with tuples containing a username
