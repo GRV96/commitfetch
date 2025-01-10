@@ -129,14 +129,14 @@ def get_repo_commits(repository, credentials, can_wait):
 	# Loop through all the commit pages until an empty page is encountered.
 	while True:
 		try:
-			all_commit_data = _request_commit_page(
+			commit_page_data = _request_commit_page(
 				repository, page_num, credential)
 
 		except GitHubAPIError as ghae:
 			credential = _catch_github_api_exception(ghae, cred_repo, can_wait)
 			continue
 
-		commit_data_len = len(all_commit_data)
+		commit_data_len = len(commit_page_data)
 		if commit_data_len == 0:
 			# Stop the loop if there are no more commits in the pages.
 			break
@@ -144,7 +144,7 @@ def get_repo_commits(repository, credentials, can_wait):
 		# Iterate through the list of commits from the page.
 		commit_data_index = 0
 		while commit_data_index < commit_data_len:
-			commit_sha = all_commit_data[commit_data_index][_KEY_SHA]
+			commit_sha = commit_page_data[commit_data_index][_KEY_SHA]
 
 			try:
 				commit = _request_commit(commit_sha, repository, credential)
