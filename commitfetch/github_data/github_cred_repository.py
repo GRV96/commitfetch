@@ -6,11 +6,11 @@ class GitHubCredRepository:
 	A GitHub credential consists of a GitHub username and a personal access
 	token (PAT) owned by the corresponding user. This class stores tuples
 	containing a username (str, index 0) and a token (str, index 1). These
-	credentials in the form of tuples can be directly used to authenticate a
-	request to the GitHub API.
+	credentials in the form of tuples can authenticate a request to the GitHub
+	API.
 
-	The GitHub API allows 5000 authenticated requests per user per hour. To
-	facilitate sending many requests in a short period, this class allows to
+	Each credential allows to send 5000 requests per hour to the GitHub API. To
+	facilitate making many requests in a short period, this class allows to
 	iterate through the credentials.
 	"""
 
@@ -36,7 +36,8 @@ class GitHubCredRepository:
 		credentials have been used.
 
 		Returns:
-			tuple: the next unused credential, None if all credentials have been used.
+			tuple: the next unused credential, None if all credentials have
+				been used.
 		"""
 		try:
 			credential = next(self._cred_iterator)
