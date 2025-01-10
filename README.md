@@ -109,7 +109,8 @@ bibliothèque `commitfetch`.
 
 `demo_write_commits.py` obtient les commits d'un dépôt GitHub et écrit leur
 représentation dans un fichier texte. Il a besoin d'un fichier d'authentifications
-lisible par `read_github_credentials`.
+lisible par `read_github_credentials`. Ce dépôt ignore le fichier produit par
+`demo_write_commits.py`.
 
 Aide:
 
@@ -262,7 +263,8 @@ See scripts in directory `demos` to know how to use library `commitfetch`.
 
 `demo_write_commits.py` obtains a GitHub repository's commits and writes their
 representation in a text file. It needs a credential file readable by
-`read_github_credentials`.
+`read_github_credentials`. This repository ignores the file produced by
+`demo_write_commits.py`.
 
 Help:
 
