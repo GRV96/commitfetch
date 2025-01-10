@@ -173,7 +173,7 @@ authenticated user 5000 requests per hour. After this limit is reached, another
 credential can be used to make more requests.
 
 This library represents credentials with tuples containing a username
-(str, index 0) and a token (str, index 1). The request take these tuples as
+(str, index 0) and a token (str, index 1). The requests take these tuples as
 arguments.
 
 It is possible to write credentials in a text file. Generator
