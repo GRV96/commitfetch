@@ -18,7 +18,7 @@ Cette bibliothèque représente les authentifications par des tuples contenant u
 nom d'utilisateur (`str`, indice 0) et un jeton (`str`, indice 1). Les requêtes
 reçoivent ces tuples en paramètre.
 
-Il est possible d'écrire des authentifications dans un fichier texte. Le
+Il est possible de conserver des authentifications dans un fichier texte. Le
 générateur `read_github_credentials` décrit ci-dessous lit un tel fichier et
 produit une authentification par itération. Pour que ce dépôt ignore les
 fichiers de jetons, leur nom devrait correspondre au modèle `*cred*.txt`, où
@@ -177,7 +177,7 @@ This library represents credentials with tuples containing a username
 (`str`, index 0) and a token (`str`, index 1). The requests take these tuples
 as arguments.
 
-It is possible to write credentials in a text file. Generator
+It is possible to keep credentials in a text file. Generator
 `read_github_credentials` described below reads such a file and yields one
 credential per iteration. For this repository to ignore credential files, their
 name should match pattern `*cred*.txt`, where the asterisk (`*`) stands for any
