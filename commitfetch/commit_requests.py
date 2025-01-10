@@ -251,10 +251,11 @@ def _request_commit(commit_sha, repository, credential):
 def _request_commit_page(repository, page_num, credential):
 	"""
 	Requests a page of commit data from the GitHub API. The caller must provide
-	GitHub credentials to authenticate the requests to the GitHub API.
+	a GitHub credential to authenticate the requests to the GitHub API.
 
 	Parameters:
-		repository (str): a GitHub repository name in the format <owner>/<name>.
+		repository (str): a GitHub repository name in the format
+			<owner>/<name>.
 		page_num (int): the number of a commit page on the GitHub API, >= 1.
 		credential (tuple): a GitHub credential consisting of a username
 			(str, index 0) and a PAT (str, index 1).
@@ -278,7 +279,7 @@ def _request_commit_page(repository, page_num, credential):
 def _request_github_user(user_login, credential):
 	"""
 	Request data about a GitHub user from the GitHub API. The caller must
-	provide GitHub credentials to authenticate the requests to the GitHub API.
+	provide a GitHub credential to authenticate the requests to the GitHub API.
 
 	Parameters:
 		user_login (str): the wanted user's login name, which corresponds to
