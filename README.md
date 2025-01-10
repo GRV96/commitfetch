@@ -15,7 +15,7 @@ requêtes par heure. Une fois cette limite atteinte, on peut utiliser une autre
 authentification pour effectuer plus de requêtes.
 
 Cette bibliothèque représente les authentifications par des tuples contenant un
-nom d'utilisateur (str, indice 0) et un jeton (str, indice 1). Les requêtes
+nom d'utilisateur (`str`, indice 0) et un jeton (`str`, indice 1). Les requêtes
 reçoivent ces tuples en paramètre.
 
 Il est possible d'écrire des authentifications dans un fichier texte. Le
@@ -173,8 +173,8 @@ authenticated user 5000 requests per hour. After this limit is reached, another
 credential can be used to make more requests.
 
 This library represents credentials with tuples containing a username
-(str, index 0) and a token (str, index 1). The requests take these tuples as
-arguments.
+(`str`, index 0) and a token (`str`, index 1). The requests take these tuples
+as arguments.
 
 It is possible to write credentials in a text file. Generator
 `read_github_credentials` described below reads such a file and yields one
