@@ -4,12 +4,12 @@ from .commit_rw import\
 	read_commit_reprs,\
 	write_commit_reprs
 from .file_io import\
-	extract_text_lines
+	read_github_credentials
 from .github_api_error import\
 	GitHubAPIError
 from .github_data import\
 	Commit,\
-	GitHubCredentials,\
+	GitHubCredRepository,\
 	GitHubUser,\
 	GitHubUserRepository,\
 	RepoIdentity
@@ -17,12 +17,12 @@ from .github_data import\
 __all__ = [
 	Commit.__name__,
 	GitHubAPIError.__name__,
-	GitHubCredentials.__name__,
+	GitHubCredRepository.__name__,
 	GitHubUser.__name__,
 	GitHubUserRepository.__name__,
 	RepoIdentity.__name__,
-	extract_text_lines.__name__,
 	get_repo_commits.__name__,
 	read_commit_reprs.__name__,
+	read_github_credentials.__name__,
 	write_commit_reprs.__name__
 ]

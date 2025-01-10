@@ -10,6 +10,7 @@ from argparse import\
 from pathlib import\
 	Path
 
+# syspathmodif is a dependency of repr_rw.
 from syspathmodif import\
 	sp_append,\
 	sp_remove
@@ -32,7 +33,7 @@ def make_arg_parser():
 
 parser = make_arg_parser()
 args = parser.parse_args()
-commit_file = args.commit_file
+commit_file = args.commit_file.resolve()
 
 commit_generator = read_commit_reprs(commit_file)
 

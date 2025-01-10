@@ -6,7 +6,7 @@ _SLASH = "/"
 
 class RepoIdentity:
 	"""
-	This class comprises the name of a GitHub repository's owner and the
+	This class comprises the username of a GitHub repository's owner and the
 	repository's name, which constitute the repository's identity.
 	"""
 
@@ -15,7 +15,7 @@ class RepoIdentity:
 		The constructor requires the repository's owner and name.
 
 		Parameters:
-			owner (str): the name of the repository's owner.
+			owner (str): the username of the repository's owner.
 			name (str): the repository's name.
 		"""
 		self._owner = owner
@@ -59,9 +59,9 @@ class RepoIdentity:
 
 	def get_full_name(self, separator=_SLASH):
 		"""
-		Provides the repository's full name by joining the owner's name and the
-		repository's name with the given separator. Calling this method without
-		specifying a separator is equivalent to using function str.
+		Provides the repository's full name by joining the owner's username and
+		the repository's name with the given separator. Calling this method
+		without specifying a separator is equivalent to using function str.
 
 		Parameters:
 			separator (str): It comes between the owner's name and the
@@ -83,7 +83,7 @@ class RepoIdentity:
 	@property
 	def owner(self):
 		"""
-		str: the name of the repository's owner.
+		str: the username of the repository's owner.
 		"""
 		return self._owner
 

@@ -4,7 +4,13 @@
 class GitHubUser:
 	"""
 	This immutable class contains data about a GitHub user.
+
+	Here, "login name" and "login" are used as synonyms of "username" for
+	consistency with the GitHub API.
 	"""
+
+	# This class must stay immutable because instances are
+	# stored in singleton GitHubUserRepository to be reused.
 
 	def __init__(self, id, login, name):
 		"""
