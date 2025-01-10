@@ -89,8 +89,8 @@ Exemples de lignes valides dans le fichier d'authentifications:
 
 Cette fonction écrit les représentations d'instances de `Commit` dans un
 fichier texte. Les représetations sont des chaînes de caractères renvoyées par
-la fonction `repr`. Chaque ligne du fichier est une représentation. La fonction
-`read_commit_reprs` peut lire ce fichier.
+la fonction `repr`. Chaque ligne du fichier est une représentation. Le
+générateur `read_commit_reprs` peut lire ce fichier.
 
 ### Dépendances
 
@@ -245,7 +245,7 @@ Examples of valid lines in the credential file:
 
 This function writes the representations of `Commit` instances in a text file.
 The representations are strings returned by function `repr`. Each line of the
-file is a representation. Function `read_commit_reprs` can read this file.
+file is a representation. Generator `read_commit_reprs` can read this file.
 
 ### Dependencies
 
