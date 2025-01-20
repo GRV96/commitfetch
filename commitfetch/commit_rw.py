@@ -1,6 +1,8 @@
 # __all__ declared at the module's end
 
-import sys
+# syspathmodif is a dependency of repr_rw.
+from syspathmodif import\
+	sm_contains
 
 from repr_rw import\
 	read_reprs,\
@@ -55,7 +57,7 @@ def read_commit_reprs(file_path):
 	# been imported at least once and thus, included in sys.modules. This makes
 	# commitfetch available for import with no modifications to sys.path.
 
-	if _LIB_NAME not in sys.modules:
+	if not sm_contains(_LIB_NAME):
 		_add_lib_to_sys_modules()
 
 	commit_generator = read_reprs(file_path, _COMMIT_READING_IMPORTATIONS)
