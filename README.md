@@ -73,7 +73,7 @@ jeton séparés par un deux-points. Les espaces sont autorisées avant et après
 le deux-points. Les lignes vides sont ignorées. Chaque itération produit une
 authentification sous forme de tuple.
 
-Exemples de lignes valides dans le fichier d'authentifications:
+Exemples de lignes valides dans un fichier d'authentifications:
 
 `NomUtilisateur:ghp_a1b2c3d4e5f6`
 
@@ -225,7 +225,7 @@ must consist of a GitHub username and a personal access token (PAT) separated
 by a colon. Whitespaces are allowed before and after the colon. Empty lines are
 ignored. Each iteration yields one credential tuple.
 
-Examples of valid lines in the credential file:
+Examples of valid lines in a credential file:
 
 `MyUsername:ghp_a1b2c3d4e5f6`
 
