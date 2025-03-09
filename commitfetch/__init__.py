@@ -5,8 +5,6 @@ from .commit_rw import\
 	write_commit_reprs
 from .file_io import\
 	read_github_credentials
-from .github_api_error import\
-	GitHubAPIError
 from .github_data import\
 	Commit,\
 	GitHubCredRepository,\
@@ -16,7 +14,6 @@ from .github_data import\
 
 __all__ = [
 	Commit.__name__,
-	GitHubAPIError.__name__,
 	GitHubCredRepository.__name__,
 	GitHubUser.__name__,
 	GitHubUserRepository.__name__,
