@@ -19,7 +19,7 @@ nom d'utilisateur (`str`, indice 0) et un jeton (`str`, indice 1). Les requêtes
 reçoivent ces tuples en paramètre.
 
 Il est possible de conserver des authentifications dans un fichier texte. Le
-générateur `read_github_credentials` décrit ci-dessous lit un tel fichier et
+générateur `read_github_credentials` décrit ci-dessous lit de tels fichiers et
 produit une authentification par itération. Pour que ce dépôt ignore les
 fichiers de jetons, leur nom devrait correspondre au modèle `*cred*.txt`, où
 l'astérisque (`*`) représente une chaîne de caractères quelconque.
@@ -29,10 +29,6 @@ l'astérisque (`*`) représente une chaîne de caractères quelconque.
 **`Commit`**
 
 Cette classe contient des données d'un commit de GitHub.
-
-**`GitHubAPIError`**
-
-Cette exception est levée quand une requête à l'API de GitHub échoue.
 
 **`GitHubCredRepository`**
 
@@ -77,7 +73,7 @@ jeton séparés par un deux-points. Les espaces sont autorisées avant et après
 le deux-points. Les lignes vides sont ignorées. Chaque itération produit une
 authentification sous forme de tuple.
 
-Exemples de lignes valides dans le fichier d'authentifications:
+Exemples de lignes valides dans un fichier d'authentifications:
 
 `NomUtilisateur:ghp_a1b2c3d4e5f6`
 
@@ -178,7 +174,7 @@ This library represents credentials with tuples containing a username
 as arguments.
 
 It is possible to keep credentials in a text file. Generator
-`read_github_credentials` described below reads such a file and yields one
+`read_github_credentials` described below reads such files and yields one
 credential per iteration. For this repository to ignore credential files, their
 name should match pattern `*cred*.txt`, where the asterisk (`*`) stands for any
 character string.
@@ -188,10 +184,6 @@ character string.
 **`Commit`**
 
 This class contains data about a GitHub commit.
-
-**`GitHubAPIError`**
-
-This exception is raised when a request to the GitHub API fails.
 
 **`GitHubCredRepository`**
 
@@ -233,7 +225,7 @@ must consist of a GitHub username and a personal access token (PAT) separated
 by a colon. Whitespaces are allowed before and after the colon. Empty lines are
 ignored. Each iteration yields one credential tuple.
 
-Examples of valid lines in the credential file:
+Examples of valid lines in a credential file:
 
 `MyUsername:ghp_a1b2c3d4e5f6`
 

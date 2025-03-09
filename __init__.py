@@ -1,6 +1,5 @@
 from .commitfetch import\
 	Commit,\
-	GitHubAPIError,\
 	GitHubCredRepository,\
 	GitHubUser,\
 	GitHubUserRepository,\
@@ -12,7 +11,6 @@ from .commitfetch import\
 
 __all__ = [
 	Commit.__name__,
-	GitHubAPIError.__name__,
 	GitHubCredRepository.__name__,
 	GitHubUser.__name__,
 	GitHubUserRepository.__name__,
